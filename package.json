@@ -1,0 +1,46 @@
+{
+  "name": "HeyAPI",
+  "version": "1.0.0",
+  "description": "GraphQL API for a sumo database.",
+  "main": "./src/server.ts",
+  "scripts": {
+    "test": "mocha test/**/*.test.ts",
+    "start:dev": "cross-env NODE_ENV=dev nodemon",
+    "start:prod": "cross-env NODE_ENV=prod ts-node"
+  },
+  "keywords": [
+    "sumo",
+    "graphql",
+    "api",
+    "apollo",
+    "typescript"
+  ],
+  "author": "Tommy Andrews",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^14.6.0",
+    "chai": "^4.2.0",
+    "cross-env": "^7.0.2",
+    "mocha": "^8.1.1",
+    "nodemon": "^2.0.4",
+    "supertest": "^4.0.2",
+    "typescript": "^3.9.7"
+  },
+  "dependencies": {
+    "@types/config": "0.0.36",
+    "@types/lodash": "^4.14.159",
+    "apollo-server": "^2.16.1",
+    "class-validator": "^0.12.2",
+    "config": "^3.3.1",
+    "graphql": "^15.3.0",
+    "graphql-iso-date": "^3.6.1",
+    "knex": "^0.21.5",
+    "lodash": "^4.17.20",
+    "pg": "^8.3.2",
+    "reflect-metadata": "^0.1.13",
+    "slonik": "^22.4.12",
+    "ts-postgres": "^1.1.3",
+    "type-graphql": "^1.0.0",
+    "typedi": "^0.8.0"
+  }
+}
