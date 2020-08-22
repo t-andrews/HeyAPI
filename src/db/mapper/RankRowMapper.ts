@@ -5,8 +5,8 @@ import { Service } from "typedi";
 @Service()
 export class RankRowMapper implements RowMapper<Rank> {
 
-    map(row: any): Rank {
-        return {
+    map(row: any): Rank | undefined {
+        return row.rank_id ? {
             id: row.rank_id,
             division: row.division,
             position: row.position,
@@ -14,6 +14,7 @@ export class RankRowMapper implements RowMapper<Rank> {
             region: row.region,
             startDate: row.start_date,
             endDate: row.end_date
-        };
+        }
+        : undefined;
     }
 }

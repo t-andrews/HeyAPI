@@ -22,6 +22,6 @@ export class Rank extends BaseModel {
     @Field(type => GraphQLISODateTime)
     startDate!: Date;
 
-    @Field(type => GraphQLISODateTime)
+    @Field(type => GraphQLISODateTime, { nullable: true })
     endDate?: Date;
 }
