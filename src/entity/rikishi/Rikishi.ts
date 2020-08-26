@@ -1,11 +1,14 @@
 import { Field, GraphQLISODateTime, Int, ObjectType } from "type-graphql";
 import { Heya } from "./Heya";
 import { Rank } from "./Rank";
-import { Career } from "./Career";
 import { BaseModel } from "../BaseModel";
+import { Bout } from "../Bout";
 
 @ObjectType({ description: "The Rikishi model" })
 export class Rikishi extends BaseModel {
+
+    rankId!: number;
+    heyaId!: number;
 
     @Field()
     name!: string;
@@ -19,6 +22,6 @@ export class Rikishi extends BaseModel {
     @Field(type => Rank)
     rank!: Rank;
 
-    // @Field(type => Career)
-    // career!: Career;
+    @Field(type => [Bout])
+    bouts!: Bout[];
 }

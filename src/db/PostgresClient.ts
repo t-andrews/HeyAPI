@@ -1,5 +1,5 @@
 import { Service } from "typedi";
-import Knex, { QueryBuilder } from "knex";
+import Knex, { QueryBuilder, Raw } from "knex";
 import config from "config";
 
 @Service()
@@ -22,5 +22,9 @@ export class PostgresClient {
 
     queryTable(tableName: string): QueryBuilder {
         return this.db(tableName);
+    }
+
+    raw(rawSql: string): Raw {
+        return this.db.raw(rawSql);
     }
 }

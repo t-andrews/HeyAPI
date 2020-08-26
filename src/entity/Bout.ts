@@ -1,17 +1,22 @@
 import { Field, ObjectType, Int, GraphQLISODateTime } from "type-graphql";
 import { Rikishi } from "./rikishi/Rikishi";
 import { Kimarite } from "../constant/Kimarite";
-import { Basho } from "./basho/Basho";
+import { Basho } from "./Basho";
 import { BaseModel } from "./BaseModel";
 
 @ObjectType({ description: "The Bout model" })
 export class Bout extends BaseModel {
 
+    opponentId1!: number;
+    opponentId2!: number;
+    winnerId!: number;
+    bashoId!: number;
+
     @Field(type => GraphQLISODateTime)
     date!: Date;
 
     @Field(type => Int)
-    day!: number;
+    bashoDay!: number;
 
     @Field(type => Int)
     order!: number;
