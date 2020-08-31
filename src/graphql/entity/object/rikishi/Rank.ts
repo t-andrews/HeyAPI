@@ -1,11 +1,11 @@
+import { BaseObjectType } from "../BaseObjectType";
+import { Region } from "../../../../constant/Region";
+import { Division } from "../../../../constant/Division";
+import { MakuuchiRank } from "../../../../constant/MakuuchiRank";
 import { Field, GraphQLISODateTime, Int, ObjectType } from "type-graphql";
-import { Division } from "../../constant/Division";
-import { MakuuchiRank } from "../../constant/MakuuchiRank";
-import { Region } from "../../constant/Region";
-import { BaseModel } from "../BaseModel";
 
 @ObjectType({ description: "The Rank model" })
-export class Rank extends BaseModel {
+export class Rank extends BaseObjectType {
 
     @Field()
     division!: Division;

@@ -1,6 +1,6 @@
 import "reflect-metadata";
-import { Schema } from "./graphql/schema/Schema";
 import { ApolloServer } from "apollo-server";
+import { Schema } from "./graphql/schema/Schema";
 
 async function bootstrap() {
 

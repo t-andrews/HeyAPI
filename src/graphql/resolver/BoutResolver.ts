@@ -1,23 +1,26 @@
-import { Arg, Ctx, FieldResolver, Info, Query, Resolver, Root } from "type-graphql";
-import { Inject, Service } from "typedi";
-import { PostgresClient } from "../../db/PostgresClient";
+import { Service } from "typedi";
 import { GraphQLResolveInfo } from "graphql";
-import { ExecutionContext } from "graphql/execution/execute";
-import { Bout } from "../../entity/Bout";
-import { Rikishi } from "../../entity/rikishi/Rikishi";
+import { Bout } from "../entity/object/Bout";
+import { Basho } from "../entity/object/Basho";
 import { RikishiResolver } from "./RikishiResolver";
+import { Rikishi } from "../entity/object/rikishi/Rikishi";
+import { ExecutionContext } from "graphql/execution/execute";
 import { BoutRepository } from "../../db/repository/BoutRepository";
-import { Basho } from "../../entity/Basho";
 import { BashoRepository } from "../../db/repository/BashoRepository";
+import { Arg, Ctx, FieldResolver, Info, Int, Mutation, Query, Resolver, ResolverInterface, Root } from "type-graphql";
+import { CreateBashoInput } from "../entity/input/basho/CreateBashoInput";
+import { CreateBoutInput } from "../entity/input/bout/CreateBoutInput";
+import { IdMutationResponse } from "../entity/object/response/mutation/IdMutationResponse";
 
 @Service()
 @Resolver(of => Bout)
-export class BoutResolver {
+export class BoutResolver implements ResolverInterface<Bout>{
 
-    @Inject() private rikishiResolver!: RikishiResolver;
-    @Inject() private boutRepository!: BoutRepository;
-    @Inject() private bashoRepository!: BashoRepository;
-    @Inject() private postgresClient!: PostgresClient;
+    constructor(
+        private rikishiResolver: RikishiResolver,
+        private boutRepository: BoutRepository,
+        private bashoRepository: BashoRepository,
+    ) {}
 
     @FieldResolver()
     async basho(@Root() source: Bout): Promise<Basho> {
@@ -31,14 +34,25 @@ export class BoutResolver {
 
     @FieldResolver()
     async opponents(@Root() source: Bout, @Ctx() ctx: ExecutionContext, @Info() info: GraphQLResolveInfo): Promise<Rikishi[]> {
-        const opponnent1: Rikishi = await this.rikishiResolver.rikishi(source.opponentId1, ctx, info);
-        const opponnent2: Rikishi = await this.rikishiResolver.rikishi(source.opponentId2, ctx, info);
+        const opponent1: Rikishi = await this.rikishiResolver.rikishi(source.opponentId1, ctx, info);
+        const opponent2: Rikishi = await this.rikishiResolver.rikishi(source.opponentId2, ctx, info);
 
-        return [opponnent1, opponnent2];
+        return [opponent1, opponent2];
     }
 
     @Query(returns => [Bout])
     async bouts(@Arg("rikishiId") id: number): Promise<Bout[]> {
         return await this.boutRepository.findByRikishiId(id);
+    }
+
+    @Mutation(returns => IdMutationResponse)
+    async createBout(@Arg("bout") bout: CreateBoutInput): Promise<IdMutationResponse> {
+        const response: IdMutationResponse = new IdMutationResponse();
+        try {
+            response.id = await this.boutRepository.create(bout as Bout);
+        } catch (e) {
+            response.error = (e as Error).message;
+        }
+        return response;
     }
 }

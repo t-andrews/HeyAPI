@@ -1,11 +1,11 @@
-import { Field, GraphQLISODateTime, ObjectType } from "type-graphql";
-import { Rikishi } from "./rikishi/Rikishi";
-import { BaseModel } from "./BaseModel";
-import { HonBasho } from "../constant/HonBasho";
 import { Bout } from "./Bout";
+import { BaseObjectType } from "./BaseObjectType";
+import { Rikishi } from "./rikishi/Rikishi";
+import { HonBasho } from "../../../constant/HonBasho";
+import { Field, GraphQLISODateTime, ObjectType } from "type-graphql";
 
 @ObjectType({ description: "The Basho model" })
-export class Basho extends BaseModel {
+export class Basho extends BaseObjectType {
 
     winnerId!: number;
 
@@ -24,6 +24,6 @@ export class Basho extends BaseModel {
     @Field(type => GraphQLISODateTime)
     startDate!: Date;
 
-    @Field(type => GraphQLISODateTime)
-    endDate!: Date;
+    @Field(type => GraphQLISODateTime, { nullable: true })
+    endDate?: Date;
 }

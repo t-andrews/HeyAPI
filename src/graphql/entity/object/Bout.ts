@@ -1,11 +1,11 @@
-import { Field, ObjectType, Int, GraphQLISODateTime } from "type-graphql";
-import { Rikishi } from "./rikishi/Rikishi";
-import { Kimarite } from "../constant/Kimarite";
 import { Basho } from "./Basho";
-import { BaseModel } from "./BaseModel";
+import { BaseObjectType } from "./BaseObjectType";
+import { Rikishi } from "./rikishi/Rikishi";
+import { Kimarite } from "../../../constant/Kimarite";
+import { Field, ObjectType, Int, GraphQLISODateTime } from "type-graphql";
 
 @ObjectType({ description: "The Bout model" })
-export class Bout extends BaseModel {
+export class Bout extends BaseObjectType {
 
     opponentId1!: number;
     opponentId2!: number;

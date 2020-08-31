@@ -1,8 +1,8 @@
+import { BaseObjectType } from "../BaseObjectType";
 import { Field, ObjectType, GraphQLISODateTime } from "type-graphql";
-import { BaseModel } from "../BaseModel";
 
 @ObjectType({ description: "The Heya model" })
-export class Heya extends BaseModel {
+export class Heya extends BaseObjectType {
 
     @Field()
     name!: string;

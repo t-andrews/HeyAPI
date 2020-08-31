@@ -1,50 +1,53 @@
-import { Repository } from "./Repository";
-import { QueryBuilder } from "knex";
-import { Inject, Service } from "typedi";
-import { PostgresClient } from "../PostgresClient";
-import { BoutRowMapper } from "../mapper/BoutRowMapper";
-import { Bout } from "../../entity/Bout";
+import { Service } from "typedi";
+import { Bout } from "../../graphql/entity/object/Bout";
+import { AbstractRepository } from "./AbstractRepository";
+import { BoutRowMapper } from "../mapper/row/BoutRowMapper";
+import { BoutModelMapper } from "../mapper/model/BoutModelMapper";
 
 @Service()
-export class BoutRepository implements Repository<Bout> {
+export class BoutRepository extends AbstractRepository<Bout> {
 
-    @Inject() private boutRowMapper!: BoutRowMapper;
-    @Inject() private postgresClient!: PostgresClient;
-
-    async create(item: Bout): Promise<boolean> {
-        return undefined!;
+    constructor(
+        boutModelMapper: BoutModelMapper,
+        boutRowMapper: BoutRowMapper,
+    ) {
+        super("bouts", boutRowMapper, boutModelMapper);
     }
 
-    async delete(id: number): Promise<boolean> {
-        return undefined!;
-    }
+    async createMany(bouts: Bout[]): Promise<number[]> {
+        const boutIds: number[] = [];
 
-    async find(id: number): Promise<Bout> {
-        const queryBuilder: QueryBuilder = this.postgresClient.queryTable("bouts")
-            .where({ "id": id });
+        await this.postgresClient.insert(
+            bouts.map((bout: Bout) => this.modelMapper.map(bout))
+        )
+            .returning("id")
+            .into(this.table)
+            .then(result => {
+                result.forEach(row => {
+                    boutIds.push(row.id);
+                });
+            });
 
-        return this.boutRowMapper.map((await queryBuilder)[0]);
+        return boutIds;
     }
 
     async findByRikishiId(id: number): Promise<Bout[]> {
-        const queryBuilder: QueryBuilder = this.postgresClient.queryTable("bouts")
-            .where({ "opponent_id_1": id }).orWhere({ "opponent_id_2": id });
-
-        const queryResult = await queryBuilder;
+        const queryResult: any[] = await this.postgresClient.queryTable(this.table)
+            .where({ "opponent_id_1": id }).orWhere({ "opponent_id_2": id })
+            .then(result => result);
 
         return queryResult.map(
-            (row: any): Bout => this.boutRowMapper.map(row)
+            (row: any): Bout => this.rowMapper.map(row)
         );
     }
 
     async findByBashoId(id: number): Promise<Bout[]> {
-        const queryBuilder: QueryBuilder = this.postgresClient.queryTable("bouts")
-            .where({ "basho_id": id });
-
-        const queryResult = await queryBuilder;
+        const queryResult: any[] = await this.postgresClient.queryTable(this.table)
+            .where({ "basho_id": id })
+            .then(result => result);;
 
         return queryResult.map(
-            (row: any): Bout => this.boutRowMapper.map(row)
+            (row: any): Bout => this.rowMapper.map(row)
         );
     }
 

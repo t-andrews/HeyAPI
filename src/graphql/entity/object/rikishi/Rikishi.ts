@@ -1,11 +1,11 @@
-import { Field, GraphQLISODateTime, Int, ObjectType } from "type-graphql";
 import { Heya } from "./Heya";
 import { Rank } from "./Rank";
-import { BaseModel } from "../BaseModel";
 import { Bout } from "../Bout";
+import { BaseObjectType } from "../BaseObjectType";
+import { Field, GraphQLISODateTime, ObjectType } from "type-graphql";
 
 @ObjectType({ description: "The Rikishi model" })
-export class Rikishi extends BaseModel {
+export class Rikishi extends BaseObjectType {
 
     rankId!: number;
     heyaId!: number;

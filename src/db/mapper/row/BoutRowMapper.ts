@@ -1,14 +1,18 @@
-import { RowMapper } from "./RowMapper";
-import { Inject, Service } from "typedi";
-import { Bout } from "../../entity/Bout";
-import { RikishiRowMapper } from "./RikishiRowMapper";
+import { Service } from "typedi";
+import { AbstractRowMapper } from "./AbstractRowMapper";
+import { Bout } from "../../../graphql/entity/object/Bout";
+import { BoutRowValidator } from "./validator/BoutRowValidator";
 
 @Service()
-export class BoutRowMapper implements RowMapper<Bout> {
+export class BoutRowMapper extends AbstractRowMapper<Bout> {
 
-    @Inject() private rikishiRowMapper!: RikishiRowMapper;
+    constructor(
+        rowValidator: BoutRowValidator
+    ) {
+        super(rowValidator);
+    }
 
-    map(row: any): Bout {
+    doMap(row: any): Bout {
         return {
             id: row.id,
             opponentId1: row.opponent_id_1,
