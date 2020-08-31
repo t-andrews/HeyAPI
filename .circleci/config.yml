@@ -11,7 +11,7 @@ jobs:
           command: npm install
       - run:
           name: Running tests with coverage
-          command: npm run coverage
+          command: npm run coverage:sonar
       - sonarcloud/scan
 
 orbs:
