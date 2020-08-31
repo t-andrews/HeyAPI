@@ -1,11 +1,10 @@
 import * as sinon from "sinon";
 import sinonChai from "sinon-chai";
 import chai, { expect } from "chai";
-import { Bout } from "../../../../../src/graphql/entity/object/Bout";
+import { HonBasho } from "../../../../../src/constant/HonBasho";
+import { Basho } from "../../../../../src/graphql/entity/object/Basho";
 import { BashoRowMapper } from "../../../../../src/db/mapper/row/BashoRowMapper";
 import { BashoRowValidator } from "../../../../../src/db/mapper/row/validator/BashoRowValidator";
-import { Basho } from "../../../../../src/graphql/entity/object/Basho";
-import { HonBasho } from "../../../../../src/constant/HonBasho";
 
 let sandbox: sinon.SinonSandbox;
 
