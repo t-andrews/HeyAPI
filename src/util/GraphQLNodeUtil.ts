@@ -13,6 +13,6 @@ export class GraphQLNodeUtil {
             return false;
         }
 
-        return !!node.selectionSet!.selections.find(x => (<FieldNode> x).name.value === fieldName);
+        return !!node.selectionSet!.selections.find(selection => (<FieldNode> selection).name.value === fieldName);
     }
 }

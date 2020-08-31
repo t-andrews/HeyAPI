@@ -1,46 +1,28 @@
-import { Arg, Ctx, Info, Query, Resolver } from "type-graphql";
-import { Rikishi } from "../../entity/rikishi/Rikishi";
-import { Inject, Service } from "typedi";
-import { HydrateResolver } from "./HydrateResolver";
-import { HeyaRowMapper } from "../../db/mapper/HeyaRowMapper";
-import { RankRowMapper } from "../../db/mapper/RankRowMapper";
-import { PostgresClient } from "../../db/PostgresClient";
+import { Service } from "typedi";
 import { GraphQLResolveInfo } from "graphql";
-import { GraphQLNodeUtil } from "../../util/GraphQLNodeUtil";
-import { QueryBuilder } from "knex";
+import { Bout } from "../entity/object/Bout";
+import { Rikishi } from "../entity/object/rikishi/Rikishi";
 import { ExecutionContext } from "graphql/execution/execute";
+import { BoutRepository } from "../../db/repository/BoutRepository";
+import { RikishiRepository } from "../../db/repository/RikishiRepository";
+import { Arg, Ctx, FieldResolver, Info, Query, Resolver, ResolverInterface, Root } from "type-graphql";
 
 @Service()
 @Resolver(of => Rikishi)
-export class RikishiResolver implements HydrateResolver<Rikishi> {
+export class RikishiResolver implements ResolverInterface<Rikishi> {
 
-    @Inject() private heyaRowMapper!: HeyaRowMapper;
-    @Inject() private rankRowMapper!: RankRowMapper;
-    @Inject() private postgresClient!: PostgresClient;
+    constructor(
+        private rikishiRepository: RikishiRepository,
+        private boutRepository: BoutRepository,
+    ) {}
 
-    @Query(returns => [Rikishi])
-    async rikishi(@Arg("id") id: number, @Ctx() ctx: ExecutionContext, @Info() info: GraphQLResolveInfo): Promise<Rikishi[]> {
-        const queryBuilder: QueryBuilder = this.postgresClient.queryTable("rikishi")
-            .where({ "rikishi.id": id });
-
-        if(GraphQLNodeUtil.doesSelectionFieldExist(info.fieldNodes, "rikishi", "rank")) {
-            queryBuilder.leftJoin("rank", "rank.id", "rikishi.rank_id");
-        }
-
-        if(GraphQLNodeUtil.doesSelectionFieldExist(info.fieldNodes, "rikishi", "heya")) {
-            queryBuilder.leftJoin("heya", "heya.id", "rikishi.heya_id");
-        }
-
-        return this.hydrate(await queryBuilder);
+    @FieldResolver()
+    async bouts(@Root() source: Rikishi): Promise<Bout[]> {
+        return await this.boutRepository.findByRikishiId(source.id);
     }
 
-    hydrate(queryResult: any): Rikishi[] {
-        return queryResult.map((row: any): Rikishi => ({
-            id: row.id,
-            name: row.rikishi_name,
-            birthDate: row.birth_date,
-            heya: this.heyaRowMapper.map(row)!,
-            rank: this.rankRowMapper.map(row)!,
-        }));
+    @Query(returns => Rikishi)
+    async rikishi(@Arg("id") id: number, @Ctx() ctx: ExecutionContext, @Info() info: GraphQLResolveInfo): Promise<Rikishi> {
+        return await this.rikishiRepository.findDetailled(id, info.fieldNodes);
     }
 }

@@ -1,11 +1,12 @@
 {
     "knex": {
-        "client": "postgres",
-        "host": "test_host",
-        "port": 5432,
-        "user": "test_user",
-        "password": "test_password",
-        "database": "sumodb-test",
+        "connection": {
+            "host": "localhost",
+            "port": 5432,
+            "user": "sumoApiUser",
+            "password": "sumoApiPassword",
+            "database": "sumodb-test"
+        },
         "debug": true
     }
 }
