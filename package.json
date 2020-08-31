@@ -5,6 +5,7 @@
   "main": "./src/server.ts",
   "scripts": {
     "test": "mocha test/**/*.test.ts",
+    "build": "docker build -t bakou912/heyapi .",
     "start:dev": "cross-env NODE_ENV=dev nodemon",
     "start:prod": "cross-env NODE_ENV=prod ts-node"
   },
