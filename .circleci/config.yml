@@ -8,7 +8,7 @@ jobs:
       - checkout
       - run:
           name: Install dependencies and build project
-          command: npm build
+          command: npm run build
       - sonarcloud/scan
 
 orbs:

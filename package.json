@@ -4,7 +4,8 @@
   "description": "GraphQL API for a sumo database.",
   "main": "./src/server.ts",
   "scripts": {
-    "test": "mocha test/**/*.test.ts",
+    "test:unit": "mocha -r ts-node/register test/unit/**/*.test.ts",
+    "coverage": "nyc --reporter=lcov --reporter=text-lcov npm run test:unit",
     "build": "docker build -t bakou912/heyapi .",
     "start:dev": "cross-env NODE_ENV=dev nodemon",
     "start:prod": "cross-env NODE_ENV=prod ts-node"
@@ -25,11 +26,14 @@
     "mocha": "^8.1.1",
     "nodemon": "^2.0.4",
     "supertest": "^4.0.2",
+    "ts-node": "^9.0.0",
     "typescript": "^3.9.7"
   },
   "dependencies": {
+    "@types/chai": "^4.2.12",
     "@types/config": "0.0.36",
     "@types/lodash": "^4.14.159",
+    "@types/mocha": "^8.0.3",
     "apollo-server": "^2.16.1",
     "class-validator": "^0.12.2",
     "config": "^3.3.1",

@@ -1,6 +1,8 @@
 #Generated output and modules
 dist
 node_modules
+coverage
+.nyc_output/
 
 # Logs
 logs

@@ -10,4 +10,4 @@ COPY . .
 
 EXPOSE 4000
 
-CMD [ "npm", "start:dev" ]
+ENTRYPOINT [ "npm", "start:dev" ]
