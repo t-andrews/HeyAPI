@@ -10,7 +10,7 @@ jobs:
           name: Install dependencies and build project
           command: npm install
       - run:
-          name: Running tests with coverage
+          name: Run tests with coverage
           command: npm run coverage:sonar
       - sonarcloud/scan
 
