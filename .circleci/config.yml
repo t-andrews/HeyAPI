@@ -8,7 +8,10 @@ jobs:
       - checkout
       - run:
           name: Install dependencies and build project
-          command: npm build
+          command: npm install
+      - run:
+          name: Run tests with coverage
+          command: npm run coverage:sonar
       - sonarcloud/scan
 
 orbs:

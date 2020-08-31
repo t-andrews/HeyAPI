@@ -11,7 +11,7 @@ export class RankModelMapper implements ModelMapper<Rank, RankModel> {
         return {
             division: object.division,
             position: object.position,
-            makuuchiRank: object.makuuchiRank,
+            makuuchi_rank: object.makuuchiRank,
             region: object.region,
             start_date: ModelDateFormatter.format(object.startDate),
             end_date: ModelDateFormatter.format(object.endDate!)
