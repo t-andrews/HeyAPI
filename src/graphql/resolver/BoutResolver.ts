@@ -7,10 +7,9 @@ import { Rikishi } from "../entity/object/rikishi/Rikishi";
 import { ExecutionContext } from "graphql/execution/execute";
 import { BoutRepository } from "../../db/repository/BoutRepository";
 import { BashoRepository } from "../../db/repository/BashoRepository";
-import { Arg, Ctx, FieldResolver, Info, Int, Mutation, Query, Resolver, ResolverInterface, Root } from "type-graphql";
-import { CreateBashoInput } from "../entity/input/basho/CreateBashoInput";
 import { CreateBoutInput } from "../entity/input/bout/CreateBoutInput";
 import { IdMutationResponse } from "../entity/object/response/mutation/IdMutationResponse";
+import { Arg, Ctx, FieldResolver, Info, Mutation, Query, Resolver, ResolverInterface, Root } from "type-graphql";
 
 @Service()
 @Resolver(of => Bout)

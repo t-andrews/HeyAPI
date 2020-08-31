@@ -44,7 +44,7 @@ export class BoutRepository extends AbstractRepository<Bout> {
     async findByBashoId(id: number): Promise<Bout[]> {
         const queryResult: any[] = await this.postgresClient.queryTable(this.table)
             .where({ "basho_id": id })
-            .then(result => result);;
+            .then(result => result);
 
         return queryResult.map(
             (row: any): Bout => this.rowMapper.map(row)
