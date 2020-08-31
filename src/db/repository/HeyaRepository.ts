@@ -14,7 +14,7 @@ export class HeyaRepository extends AbstractRepository<Heya> {
         super("heyas", heyaRowMapper, heyaModelMapper);
     }
 
-    async update(id: number, item: Heya): Promise<boolean> {
+    public async update(id: number, item: Heya): Promise<boolean> {
         return undefined!;
     }
 

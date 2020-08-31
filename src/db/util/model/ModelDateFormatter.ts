@@ -1,5 +1,5 @@
 export class ModelDateFormatter {
-    static format(date: Date): string {
+    public static format(date: Date): string {
         if (!date) {
             return undefined!;
         }

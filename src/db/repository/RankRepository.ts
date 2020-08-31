@@ -14,7 +14,7 @@ export class RankRepository extends AbstractRepository<Rank> {
         super("ranks", rankRowMapper, rankModelMapper);
     }
 
-    async update(id: number, item: Rank): Promise<boolean> {
+    public async update(id: number, item: Rank): Promise<boolean> {
         return undefined!;
     }
 

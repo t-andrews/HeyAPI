@@ -9,8 +9,7 @@ export class BashoRowValidator extends RowValidator<Basho>{
         super([
             "basho_name",
             "basho_location",
-            "start_date",
-            "end_date"
+            "start_date"
         ]);
     }
 }

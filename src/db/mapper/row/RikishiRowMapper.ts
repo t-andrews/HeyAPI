@@ -16,7 +16,7 @@ export class RikishiRowMapper extends AbstractRowMapper<Rikishi> {
         super(rowValidator);
     }
 
-    doMap(row: any): Rikishi {
+    protected doMap(row: any): Rikishi {
         return {
             heyaId: row.heya_id,
             rankId: row.rank_id,
@@ -25,7 +25,7 @@ export class RikishiRowMapper extends AbstractRowMapper<Rikishi> {
             birthDate: row.birth_date,
             heya: this.heyaRowMapper.map(row),
             rank: this.rankRowMapper.map(row),
-            bouts: row.bouts
+            bouts: undefined!
         };
     }
 }

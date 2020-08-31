@@ -9,12 +9,12 @@ export class BoutRepository extends AbstractRepository<Bout> {
 
     constructor(
         boutModelMapper: BoutModelMapper,
-        boutRowMapper: BoutRowMapper,
+        boutRowMapper: BoutRowMapper
     ) {
         super("bouts", boutRowMapper, boutModelMapper);
     }
 
-    async createMany(bouts: Bout[]): Promise<number[]> {
+    public async createMany(bouts: Bout[]): Promise<number[]> {
         const boutIds: number[] = [];
 
         await this.postgresClient.insert(
@@ -31,7 +31,7 @@ export class BoutRepository extends AbstractRepository<Bout> {
         return boutIds;
     }
 
-    async findByRikishiId(id: number): Promise<Bout[]> {
+    public async findByRikishiId(id: number): Promise<Bout[]> {
         const queryResult: any[] = await this.postgresClient.queryTable(this.table)
             .where({ "opponent_id_1": id }).orWhere({ "opponent_id_2": id })
             .then(result => result);
@@ -41,7 +41,7 @@ export class BoutRepository extends AbstractRepository<Bout> {
         );
     }
 
-    async findByBashoId(id: number): Promise<Bout[]> {
+    public async findByBashoId(id: number): Promise<Bout[]> {
         const queryResult: any[] = await this.postgresClient.queryTable(this.table)
             .where({ "basho_id": id })
             .then(result => result);
@@ -51,7 +51,7 @@ export class BoutRepository extends AbstractRepository<Bout> {
         );
     }
 
-    async update(id: number, item: Bout): Promise<boolean> {
+    public async update(id: number, item: Bout): Promise<boolean> {
         return undefined!;
     }
 

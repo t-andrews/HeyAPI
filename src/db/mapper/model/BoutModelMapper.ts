@@ -7,7 +7,7 @@ import { ModelDateFormatter } from "../../util/model/ModelDateFormatter";
 @Service()
 export class BoutModelMapper implements ModelMapper<Bout, BoutModel> {
 
-    map(object: Bout): BoutModel {
+    public map(object: Bout): BoutModel {
         return {
             date: ModelDateFormatter.format(object.date),
             basho_day: object.bashoDay,

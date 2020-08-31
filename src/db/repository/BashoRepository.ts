@@ -13,12 +13,12 @@ export class BashoRepository extends AbstractRepository<Basho> {
     constructor(
         private bashoModelValidator: BashoModelValidator,
         private bashoModelMapper: BashoModelMapper,
-        private bashoRowMapper: BashoRowMapper,
+        private bashoRowMapper: BashoRowMapper
     ) {
         super("bashos", bashoRowMapper, bashoModelMapper);
     }
 
-    async update(id: number, item: Basho): Promise<boolean> {
+    public async update(id: number, item: Basho): Promise<boolean> {
         const bashoModel: BashoModel = this.modelMapper.map(item);
 
         if (!this.bashoModelValidator.validate(bashoModel)) {

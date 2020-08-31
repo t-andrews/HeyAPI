@@ -6,7 +6,7 @@ export abstract class RowValidator<T> {
         this.keys = keys;
     }
 
-    validate(row: any): boolean {
+    public validate(row: any): boolean {
         if (!row) {
             return false;
         } else {

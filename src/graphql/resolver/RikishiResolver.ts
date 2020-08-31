@@ -13,16 +13,16 @@ export class RikishiResolver implements ResolverInterface<Rikishi> {
 
     constructor(
         private rikishiRepository: RikishiRepository,
-        private boutRepository: BoutRepository,
+        private boutRepository: BoutRepository
     ) {}
 
     @FieldResolver()
-    async bouts(@Root() source: Rikishi): Promise<Bout[]> {
+    public async bouts(@Root() source: Rikishi): Promise<Bout[]> {
         return await this.boutRepository.findByRikishiId(source.id);
     }
 
     @Query(returns => Rikishi)
-    async rikishi(@Arg("id") id: number, @Ctx() ctx: ExecutionContext, @Info() info: GraphQLResolveInfo): Promise<Rikishi> {
+    public async rikishi(@Arg("id") id: number, @Ctx() ctx: ExecutionContext, @Info() info: GraphQLResolveInfo): Promise<Rikishi> {
         return await this.rikishiRepository.findDetailled(id, info.fieldNodes);
     }
 }

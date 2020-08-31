@@ -14,16 +14,16 @@ export class PostgresClient {
         })
     }
 
-    queryTable(tableName: string): QueryBuilder {
+    public queryTable(tableName: string): QueryBuilder {
         return this.db(tableName);
     }
 
-    insert(object: Object): QueryBuilder {
+    public insert(object: Object): QueryBuilder {
         return this.db.insert(object);
     }
 
 
-    raw(rawSql: string): Raw {
+    public raw(rawSql: string): Raw {
         return this.db.raw(rawSql);
     }
 }

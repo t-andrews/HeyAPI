@@ -7,7 +7,7 @@ import { ModelDateFormatter } from "../../util/model/ModelDateFormatter";
 @Service()
 export class RankModelMapper implements ModelMapper<Rank, RankModel> {
 
-    map(object: Rank): RankModel {
+    public map(object: Rank): RankModel {
         return {
             division: object.division,
             position: object.position,

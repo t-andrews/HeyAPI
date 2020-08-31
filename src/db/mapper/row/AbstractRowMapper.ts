@@ -13,5 +13,5 @@ export abstract class AbstractRowMapper<T> implements RowMapper<T>{
         return this.rowValidator.validate(row) ? this.doMap(row) : undefined!;
     }
 
-    abstract doMap(row: any): T
+    protected abstract doMap(row: any): T
 }

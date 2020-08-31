@@ -12,7 +12,7 @@ export class BashoRowMapper extends AbstractRowMapper<Basho> {
         super(rowValidator);
     }
 
-    doMap(row: any): Basho {
+    protected doMap(row: any): Basho {
         return {
             id: row.id,
             winnerId: row.winner_id,
