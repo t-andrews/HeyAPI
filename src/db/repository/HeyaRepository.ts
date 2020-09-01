@@ -8,13 +8,13 @@ import { HeyaModelMapper } from "../mapper/model/HeyaModelMapper";
 export class HeyaRepository extends AbstractRepository<Heya> {
 
     constructor(
-        private heyaModelMapper: HeyaModelMapper,
-        private heyaRowMapper: HeyaRowMapper
+        heyaModelMapper: HeyaModelMapper,
+        heyaRowMapper: HeyaRowMapper
     ) {
         super("heyas", heyaRowMapper, heyaModelMapper);
     }
 
-    async update(id: number, item: Heya): Promise<boolean> {
+    public async update(id: number, item: Heya): Promise<boolean> {
         return undefined!;
     }
 

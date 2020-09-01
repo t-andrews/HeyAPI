@@ -13,12 +13,12 @@ import { Arg, Ctx, FieldResolver, Info, Mutation, Query, Resolver, ResolverInter
 
 @Service()
 @Resolver(of => Bout)
-export class BoutResolver implements ResolverInterface<Bout>{
+export class BoutResolver implements ResolverInterface<Bout> {
 
     constructor(
         private rikishiResolver: RikishiResolver,
         private boutRepository: BoutRepository,
-        private bashoRepository: BashoRepository,
+        private bashoRepository: BashoRepository
     ) {}
 
     @FieldResolver()
@@ -27,12 +27,12 @@ export class BoutResolver implements ResolverInterface<Bout>{
     }
 
     @FieldResolver()
-    async winner(@Root() source: Bout, @Ctx() ctx: ExecutionContext, @Info() info: GraphQLResolveInfo): Promise<Rikishi> {
+    public async winner(@Root() source: Bout, @Ctx() ctx: ExecutionContext, @Info() info: GraphQLResolveInfo): Promise<Rikishi> {
         return await this.rikishiResolver.rikishi(source.winnerId, ctx, info);
     }
 
     @FieldResolver()
-    async opponents(@Root() source: Bout, @Ctx() ctx: ExecutionContext, @Info() info: GraphQLResolveInfo): Promise<Rikishi[]> {
+    public async opponents(@Root() source: Bout, @Ctx() ctx: ExecutionContext, @Info() info: GraphQLResolveInfo): Promise<Rikishi[]> {
         const opponent1: Rikishi = await this.rikishiResolver.rikishi(source.opponentId1, ctx, info);
         const opponent2: Rikishi = await this.rikishiResolver.rikishi(source.opponentId2, ctx, info);
 
@@ -40,12 +40,12 @@ export class BoutResolver implements ResolverInterface<Bout>{
     }
 
     @Query(returns => [Bout])
-    async bouts(@Arg("rikishiId") id: number): Promise<Bout[]> {
+    public async bouts(@Arg("rikishiId") id: number): Promise<Bout[]> {
         return await this.boutRepository.findByRikishiId(id);
     }
 
     @Mutation(returns => IdMutationResponse)
-    async createBout(@Arg("bout") bout: CreateBoutInput): Promise<IdMutationResponse> {
+    public async createBout(@Arg("bout") bout: CreateBoutInput): Promise<IdMutationResponse> {
         const response: IdMutationResponse = new IdMutationResponse();
         try {
             response.id = await this.boutRepository.create(bout as Bout);

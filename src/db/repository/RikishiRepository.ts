@@ -11,13 +11,13 @@ import { RikishiModelMapper } from "../mapper/model/RikishiModelMapper";
 export class RikishiRepository extends AbstractRepository<Rikishi> {
 
     constructor(
-        private rankModelMapper: RikishiModelMapper,
-        private rikishiRowMapper: RikishiRowMapper
+        rankModelMapper: RikishiModelMapper,
+        rikishiRowMapper: RikishiRowMapper
     ) {
         super("ranks", rikishiRowMapper, rankModelMapper);
     }
 
-    async findDetailled(id: number, fieldNodes: ReadonlyArray<FieldNode>): Promise<Rikishi> {
+    public async findDetailled(id: number, fieldNodes: ReadonlyArray<FieldNode>): Promise<Rikishi> {
         const queryBuilder: QueryBuilder = this.postgresClient.queryTable("rikishis")
             .where({ "rikishis.id": id });
 
@@ -31,10 +31,10 @@ export class RikishiRepository extends AbstractRepository<Rikishi> {
 
         const queryResult = await queryBuilder.then(result => result[0]);
 
-        return this.rikishiRowMapper.map(queryResult)
+        return this.rowMapper.map(queryResult);
     }
 
-    async update(id: number, item: Rikishi): Promise<boolean> {
+    public async update(id: number, item: Rikishi): Promise<boolean> {
         return undefined!;
     }
 

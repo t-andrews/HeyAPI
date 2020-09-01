@@ -7,7 +7,7 @@ import { ModelDateFormatter } from "../../util/model/ModelDateFormatter";
 @Service()
 export class HeyaModelMapper implements ModelMapper<Heya, HeyaModel> {
 
-    map(object: Heya): HeyaModel {
+    public map(object: Heya): HeyaModel {
         return {
             heya_name: object.name,
             ichimon: object.ichimon,

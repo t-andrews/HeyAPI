@@ -7,7 +7,7 @@ import { ModelDateFormatter } from "../../util/model/ModelDateFormatter";
 @Service()
 export class RikishiModelMapper implements ModelMapper<Rikishi, RikishiModel> {
 
-    map(object: Rikishi): RikishiModel {
+    public map(object: Rikishi): RikishiModel {
         return {
             heya_id: object.heyaId,
             rank_id: object.rankId,

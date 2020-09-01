@@ -7,7 +7,7 @@ import { ModelDateFormatter } from "../../util/model/ModelDateFormatter";
 @Service()
 export class BashoModelMapper implements ModelMapper<Basho, BashoModel> {
 
-    map(object: Basho): BashoModel {
+    public map(object: Basho): BashoModel {
         return {
             basho_name: object.name,
             basho_location: object.location,

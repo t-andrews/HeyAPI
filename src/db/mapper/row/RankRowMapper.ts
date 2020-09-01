@@ -1,7 +1,7 @@
 import { Service } from "typedi";
 import { AbstractRowMapper } from "./AbstractRowMapper";
-import { Rank } from "../../../graphql/entity/object/rikishi/Rank";
 import { RankRowValidator } from "./validator/RankRowValidator";
+import { Rank } from "../../../graphql/entity/object/rikishi/Rank";
 
 @Service()
 export class RankRowMapper extends AbstractRowMapper<Rank> {
@@ -12,7 +12,7 @@ export class RankRowMapper extends AbstractRowMapper<Rank> {
         super(rowValidator);
     }
 
-    doMap(row: any): Rank {
+    protected doMap(row: any): Rank {
         return {
             id: row.rank_id ?? row.id,
             division: row.division,

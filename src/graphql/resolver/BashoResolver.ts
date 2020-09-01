@@ -24,12 +24,12 @@ export class BashoResolver implements ResolverInterface<Basho> {
     ) {}
 
     @FieldResolver()
-    async bouts(@Root() source: Basho): Promise<Bout[]> {
+    public async bouts(@Root() source: Basho): Promise<Bout[]> {
         return await this.boutRepository.findByBashoId(source.id);
     }
 
     @FieldResolver()
-    async winner(@Root() source: Basho, @Ctx() ctx: ExecutionContext, @Info() info: GraphQLResolveInfo): Promise<Rikishi> {
+    public async winner(@Root() source: Basho, @Ctx() ctx: ExecutionContext, @Info() info: GraphQLResolveInfo): Promise<Rikishi> {
         if (!source.winnerId) {
             return undefined!;
         }
@@ -37,7 +37,7 @@ export class BashoResolver implements ResolverInterface<Basho> {
     }
 
     @Mutation(type => IdMutationResponse)
-    async createBasho(@Arg("basho") basho: CreateBashoInput): Promise<IdMutationResponse> {
+    public async createBasho(@Arg("basho") basho: CreateBashoInput): Promise<IdMutationResponse> {
         const response: IdMutationResponse = new IdMutationResponse();
         try {
             response.id = await this.bashoRepository.create(basho as Basho);
@@ -48,7 +48,7 @@ export class BashoResolver implements ResolverInterface<Basho> {
     }
 
     @Mutation(returns => BooleanMutationResponse)
-    async updateBasho(
+    public async updateBasho(
         @Arg("id") id: number,
         @Arg("basho") basho: UpdateBashoInput
     ): Promise<BooleanMutationResponse> {

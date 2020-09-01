@@ -8,13 +8,13 @@ import { RankModelMapper } from "../mapper/model/RankModelMapper";
 export class RankRepository extends AbstractRepository<Rank> {
 
     constructor(
-        private rankModelMapper: RankModelMapper,
-        private rankRowMapper: RankRowMapper
+        rankModelMapper: RankModelMapper,
+        rankRowMapper: RankRowMapper
     ) {
         super("ranks", rankRowMapper, rankModelMapper);
     }
 
-    async update(id: number, item: Rank): Promise<boolean> {
+    public async update(id: number, item: Rank): Promise<boolean> {
         return undefined!;
     }
 

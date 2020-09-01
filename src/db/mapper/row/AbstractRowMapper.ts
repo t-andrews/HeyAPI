@@ -1,7 +1,7 @@
 import { RowMapper } from "./RowMapper";
 import { RowValidator } from "./validator/RowValidator";
 
-export abstract class AbstractRowMapper<T> implements RowMapper<T>{
+export abstract class AbstractRowMapper<T> implements RowMapper<T> {
 
     protected rowValidator: RowValidator<T>;
 
@@ -13,5 +13,5 @@ export abstract class AbstractRowMapper<T> implements RowMapper<T>{
         return this.rowValidator.validate(row) ? this.doMap(row) : undefined!;
     }
 
-    abstract doMap(row: any): T
+    protected abstract doMap(row: any): T
 }

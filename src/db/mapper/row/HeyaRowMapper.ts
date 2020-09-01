@@ -12,7 +12,7 @@ export class HeyaRowMapper extends AbstractRowMapper<Heya> {
         super(rowValidator);
     }
 
-    doMap(row: any): Heya {
+    protected doMap(row: any): Heya {
         return {
             id: row.heya_id ?? row.id,
             name: row.heya_name,
