@@ -2,4 +2,4 @@
     "all": true,
     "include": ["**/src/**/*"],
     "extension": [".ts"]
-}bo
+}
