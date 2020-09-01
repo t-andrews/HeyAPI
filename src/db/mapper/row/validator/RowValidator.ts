@@ -1,22 +1,18 @@
 export abstract class RowValidator<T> {
 
-    protected keys: string[];
+    private keys: string[];
 
     protected constructor(keys: string[]) {
         this.keys = keys;
     }
 
     public validate(row: any): boolean {
-        if (!row) {
-            return false;
-        } else {
-            let valid: boolean = true;
-            this.keys.forEach((key: string) => {
-                if (!row.hasOwnProperty(key) || !row[key]) {
-                    valid = false
-                }
-            })
-            return valid;
-        }
+        return row === undefined ? false : this.areAllKeysValid(row);
+    }
+
+    private areAllKeysValid(row: any): boolean {
+        return !this.keys.some(
+            (key: string) => !row.hasOwnProperty(key) || row[key] === undefined
+        );
     }
 }

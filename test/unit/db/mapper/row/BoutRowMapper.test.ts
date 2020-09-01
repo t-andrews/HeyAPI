@@ -55,7 +55,7 @@ describe("Bout Row Mapper", () => {
             winningMethod: validRow.winning_method
         };
 
-        it("Should return a Heya for a valid row using heya_id", () => {
+        it("Should return a Bout for a valid row", () => {
             boutRowMapper = new BoutRowMapper(boutRowValidator);
 
             expect(boutRowMapper.map(validRow)).to.deep.equal(createdBout);

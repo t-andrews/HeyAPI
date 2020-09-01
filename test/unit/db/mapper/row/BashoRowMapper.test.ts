@@ -46,7 +46,7 @@ describe("Basho Row Mapper", () => {
             id: validRow.id
         };
 
-        it("Should return a Heya for a valid row using heya_id", () => {
+        it("Should return a Basho for a valid row", () => {
             bashoRowMapper = new BashoRowMapper(bashoRowValidator);
 
             expect(bashoRowMapper.map(validRow)).to.deep.equal(createdBasho);

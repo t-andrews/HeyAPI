@@ -6,17 +6,13 @@ export abstract class ModelValidator<T> {
         this.keys = keys;
     }
 
-    validate(row: any): boolean {
-        if (!row) {
-            return false;
-        } else {
-            let valid: boolean = false;
-            this.keys.forEach((key: string) => {
-                if (row.hasOwnProperty(key) && row[key] !== undefined) {
-                    valid = true
-                }
-            })
-            return valid;
-        }
+    public validate(row: any): boolean {
+        return row === undefined ? false : this.isSomeKeyValid(row);
+    }
+
+    private isSomeKeyValid(row: any): boolean {
+        return this.keys.some(
+            (key: string) => row.hasOwnProperty(key) && row[key] !== undefined
+        );
     }
 }

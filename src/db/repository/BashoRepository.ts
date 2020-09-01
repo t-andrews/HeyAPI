@@ -12,8 +12,8 @@ export class BashoRepository extends AbstractRepository<Basho> {
 
     constructor(
         private bashoModelValidator: BashoModelValidator,
-        private bashoModelMapper: BashoModelMapper,
-        private bashoRowMapper: BashoRowMapper
+        bashoModelMapper: BashoModelMapper,
+        bashoRowMapper: BashoRowMapper
     ) {
         super("bashos", bashoRowMapper, bashoModelMapper);
     }

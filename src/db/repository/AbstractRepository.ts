@@ -1,17 +1,16 @@
-import { Inject, Service } from "typedi";
+import { Container } from "typedi";
 import { Repository } from "./Repository";
 import { PostgresClient } from "../PostgresClient";
 import { ModelMapper } from "../mapper/model/ModelMapper";
 import { AbstractRowMapper } from "../mapper/row/AbstractRowMapper";
 import { DatabaseException } from "../../graphql/entity/object/exception/db/DatabaseException";
 
-@Service()
 export abstract class AbstractRepository<T> implements Repository<T> {
 
     protected table: string;
     protected rowMapper: AbstractRowMapper<T>;
     protected modelMapper: ModelMapper<T, any>;
-    @Inject() protected postgresClient!: PostgresClient;
+    protected postgresClient: PostgresClient;
 
     protected constructor(
         table: string,
@@ -21,6 +20,7 @@ export abstract class AbstractRepository<T> implements Repository<T> {
         this.table = table;
         this.rowMapper = rowMapper;
         this.modelMapper = modelMapper;
+        this.postgresClient = Container.get(PostgresClient);
     }
 
     public async create(item: T): Promise<number> {

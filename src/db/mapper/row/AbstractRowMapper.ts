@@ -1,7 +1,7 @@
 import { RowMapper } from "./RowMapper";
 import { RowValidator } from "./validator/RowValidator";
 
-export abstract class AbstractRowMapper<T> implements RowMapper<T>{
+export abstract class AbstractRowMapper<T> implements RowMapper<T> {
 
     protected rowValidator: RowValidator<T>;
 

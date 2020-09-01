@@ -8,8 +8,8 @@ import { RankModelMapper } from "../mapper/model/RankModelMapper";
 export class RankRepository extends AbstractRepository<Rank> {
 
     constructor(
-        private rankModelMapper: RankModelMapper,
-        private rankRowMapper: RankRowMapper
+        rankModelMapper: RankModelMapper,
+        rankRowMapper: RankRowMapper
     ) {
         super("ranks", rankRowMapper, rankModelMapper);
     }

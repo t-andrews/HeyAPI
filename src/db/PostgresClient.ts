@@ -22,7 +22,6 @@ export class PostgresClient {
         return this.db.insert(object);
     }
 
-
     public raw(rawSql: string): Raw {
         return this.db.raw(rawSql);
     }

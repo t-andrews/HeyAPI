@@ -11,8 +11,8 @@ import { RikishiModelMapper } from "../mapper/model/RikishiModelMapper";
 export class RikishiRepository extends AbstractRepository<Rikishi> {
 
     constructor(
-        private rankModelMapper: RikishiModelMapper,
-        private rikishiRowMapper: RikishiRowMapper
+        rankModelMapper: RikishiModelMapper,
+        rikishiRowMapper: RikishiRowMapper
     ) {
         super("ranks", rikishiRowMapper, rankModelMapper);
     }
@@ -31,7 +31,7 @@ export class RikishiRepository extends AbstractRepository<Rikishi> {
 
         const queryResult = await queryBuilder.then(result => result[0]);
 
-        return this.rikishiRowMapper.map(queryResult);
+        return this.rowMapper.map(queryResult);
     }
 
     public async update(id: number, item: Rikishi): Promise<boolean> {
