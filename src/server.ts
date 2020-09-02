@@ -1,8 +1,11 @@
 import "reflect-metadata";
 import { ApolloServer } from "apollo-server";
 import { Schema } from "./graphql/schema/Schema";
+import { PostgresClient } from "./db/PostgresClient";
 
 async function bootstrap() {
+
+    PostgresClient.initObjection();
 
     const server = new ApolloServer({
         schema: Schema,

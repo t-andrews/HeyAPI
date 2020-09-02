@@ -1,41 +1,77 @@
 import { Service } from "typedi";
-import { QueryBuilder } from "knex";
 import { FieldNode } from "graphql";
-import { AbstractRepository } from "./AbstractRepository";
+import { Repository } from "./Repository";
 import { GraphQLNodeUtil } from "../../util/GraphQLNodeUtil";
-import { RikishiRowMapper } from "../mapper/row/RikishiRowMapper";
+import { PartialModelObject, QueryBuilder } from "objection";
 import { Rikishi } from "../../graphql/entity/object/rikishi/Rikishi";
-import { RikishiModelMapper } from "../mapper/model/RikishiModelMapper";
+import { DatabaseException } from "../../graphql/entity/object/exception/db/DatabaseException";
 
 @Service()
-export class RikishiRepository extends AbstractRepository<Rikishi> {
+export class RikishiRepository implements Repository<Rikishi> {
 
-    constructor(
-        rankModelMapper: RikishiModelMapper,
-        rikishiRowMapper: RikishiRowMapper
-    ) {
-        super("ranks", rikishiRowMapper, rankModelMapper);
+    public async create(item: PartialModelObject<Rikishi>): Promise<number> {
+        try {
+            return await Rikishi.query().insert(item).then(result => result.id);
+        } catch (e) {
+            throw new DatabaseException((e as Error).message);
+        }
     }
 
-    public async findDetailled(id: number, fieldNodes: ReadonlyArray<FieldNode>): Promise<Rikishi> {
-        const queryBuilder: QueryBuilder = this.postgresClient.queryTable("rikishis")
-            .where({ "rikishis.id": id });
-
-        if(GraphQLNodeUtil.doesSelectionFieldExist(fieldNodes, fieldNodes[0].name.value, "rank")) {
-            queryBuilder.leftJoin("ranks", "ranks.id", "rikishis.rank_id");
-        }
-
-        if(GraphQLNodeUtil.doesSelectionFieldExist(fieldNodes, fieldNodes[0].name.value, "heya")) {
-            queryBuilder.leftJoin("heyas", "heyas.id", "rikishis.heya_id");
-        }
-
-        const queryResult = await queryBuilder.then(result => result[0]);
-
-        return this.rowMapper.map(queryResult);
+    public async find(id: number): Promise<Rikishi> {
+        return await Rikishi.query()
+            .findById(id)
+            .then(result => result);
     }
 
-    public async update(id: number, item: Rikishi): Promise<boolean> {
+    public update(id: number, item: PartialModelObject<Rikishi>): Promise<boolean> {
         return undefined!;
     }
 
+    public async delete(id: number): Promise<boolean> {
+        try {
+            return await Rikishi.query()
+                .deleteById(id)
+                .then(result => {
+                    return result > 0;
+                });
+        } catch {
+            return false;
+        }
+    }
+
+    public async findDetailled(id: number, fieldNodes: ReadonlyArray<FieldNode>): Promise<Rikishi> {
+        const queryBuilder: QueryBuilder<Rikishi> = Rikishi.query().where({ "rikishis.id": id });
+        const relationsToFetch: string[] = [];
+        const createBouts: boolean = GraphQLNodeUtil.doesSelectionFieldExist(
+            fieldNodes, fieldNodes[0].name.value, "bouts"
+        );
+
+        if(GraphQLNodeUtil.doesSelectionFieldExist(fieldNodes, fieldNodes[0].name.value, "rank")) {
+            relationsToFetch.push("rank");
+        }
+
+        if(GraphQLNodeUtil.doesSelectionFieldExist(fieldNodes, fieldNodes[0].name.value, "heya")) {
+            relationsToFetch.push("heya");
+        }
+
+        if(GraphQLNodeUtil.doesSelectionFieldExist(fieldNodes, fieldNodes[0].name.value, "wins") || createBouts) {
+            relationsToFetch.push("wins");
+        }
+
+        if(GraphQLNodeUtil.doesSelectionFieldExist(fieldNodes, fieldNodes[0].name.value, "losses") || createBouts) {
+            relationsToFetch.push("losses");
+        }
+
+        if (relationsToFetch.length > 0) {
+            queryBuilder.withGraphJoined(`[${relationsToFetch.join(",")}]`);
+        }
+
+        const rikishi: Rikishi = await queryBuilder.then(result => result[0]);
+
+        if (createBouts) {
+            rikishi.bouts = [...rikishi.losses, ...rikishi.wins]
+        }
+
+        return rikishi;
+    }
 }

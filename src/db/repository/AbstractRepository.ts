@@ -1,54 +1,41 @@
-import { Container } from "typedi";
 import { Repository } from "./Repository";
-import { PostgresClient } from "../PostgresClient";
-import { ModelMapper } from "../mapper/model/ModelMapper";
-import { AbstractRowMapper } from "../mapper/row/AbstractRowMapper";
+import { PartialModelObject, QueryBuilder } from "objection";
+import { BaseObjectType } from "../../graphql/entity/object/BaseObjectType";
 import { DatabaseException } from "../../graphql/entity/object/exception/db/DatabaseException";
 
-export abstract class AbstractRepository<T> implements Repository<T> {
+export abstract class AbstractRepository<T extends BaseObjectType> implements Repository<T> {
 
-    protected table: string;
-    protected rowMapper: AbstractRowMapper<T>;
-    protected modelMapper: ModelMapper<T, any>;
-    protected postgresClient: PostgresClient;
+    abstract create(item: PartialModelObject<T>): Promise<number>
+    abstract find(id: number): Promise<T>
+    abstract update(id: number, item: PartialModelObject<T>): Promise<boolean>
+    abstract delete(id: number): Promise<boolean>
 
-    protected constructor(
-        table: string,
-        rowMapper: AbstractRowMapper<T>,
-        modelMapper: ModelMapper<T, any>
-    ) {
-        this.table = table;
-        this.rowMapper = rowMapper;
-        this.modelMapper = modelMapper;
-        this.postgresClient = Container.get(PostgresClient);
-    }
-
-    public async create(item: T): Promise<number> {
+    protected async doCreate(item: PartialModelObject<T>, queryBuilder: QueryBuilder<T>): Promise<number> {
         try {
-            return await this.postgresClient.insert(this.modelMapper.map(item))
-                .returning("id")
-                .into(this.table)
-                .then(result => result[0]);
+            return await queryBuilder.insert(item).then(result => result.id);
         } catch (e) {
             throw new DatabaseException((e as Error).message);
         }
     }
 
-    public async find(id: number): Promise<T> {
-        const queryResult = await this.postgresClient.queryTable(this.table)
-            .where({ "id": id })
-            .then(result => result[0]);
-
-        return this.rowMapper.map(queryResult);
+    protected async doFind(id: number, queryBuilder: QueryBuilder<T>): Promise<T> {
+        return await queryBuilder
+            .findById(id)
+            .then(result => result);
     }
 
-    public abstract update(id: number, item: T): Promise<boolean>;
+    protected async doUpdate(id: number, item: PartialModelObject<T>, queryBuilder: QueryBuilder<T>): Promise<boolean> {
+        return await queryBuilder
+            .findById(id)
+            .patch(item)
+            .returning("id")
+            .then(result => result[0].id != undefined);
+    }
 
-    public async delete(id: number): Promise<boolean> {
+    protected async doDelete(id: number, queryBuilder: QueryBuilder<T>): Promise<boolean> {
         try {
-            return await this.postgresClient.queryTable(this.table)
-                .where({ "id": id })
-                .delete()
+            return await queryBuilder
+                .deleteById(id)
                 .then(result => {
                     return result > 0;
                 });

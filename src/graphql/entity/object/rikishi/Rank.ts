@@ -7,6 +7,10 @@ import { Field, GraphQLISODateTime, Int, ObjectType } from "type-graphql";
 @ObjectType({ description: "The Rank model" })
 export class Rank extends BaseObjectType {
 
+    static get tableName() {
+        return "ranks";
+    }
+
     @Field()
     division!: Division;
 
@@ -19,9 +23,9 @@ export class Rank extends BaseObjectType {
     @Field({ nullable: true })
     region?: Region;
 
-    @Field(type => GraphQLISODateTime)
+    @Field(() => GraphQLISODateTime)
     startDate!: Date;
 
-    @Field(type => GraphQLISODateTime, { nullable: true })
+    @Field(() => GraphQLISODateTime, { nullable: true })
     endDate?: Date;
 }

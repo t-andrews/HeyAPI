@@ -1,8 +1,9 @@
+import { Model } from "objection";
 import { Field, Int, ObjectType } from "type-graphql";
 
 @ObjectType()
-export class BaseObjectType {
+export class BaseObjectType extends Model {
 
-    @Field(type => Int)
+    @Field(() => Int)
     id!: number;
 }

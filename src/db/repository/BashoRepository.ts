@@ -1,36 +1,56 @@
 import { Service } from "typedi";
-import { BashoModel } from "../model/BashoModel";
-import { AbstractRepository } from "./AbstractRepository";
+import { PartialModelObject, QueryBuilder } from "objection";
 import { Basho } from "../../graphql/entity/object/Basho";
-import { BashoRowMapper } from "../mapper/row/BashoRowMapper";
-import { BashoModelMapper } from "../mapper/model/BashoModelMapper";
-import { BashoModelValidator } from "../mapper/model/validator/BashoModelValidator";
-import { EmptyUpdateException } from "../../graphql/entity/object/exception/db/EmptyUpdateException";
+import { DatabaseException } from "../../graphql/entity/object/exception/db/DatabaseException";
+import { AbstractRepository } from "./AbstractRepository";
+import { FieldNode } from "graphql";
+import { Rikishi } from "../../graphql/entity/object/rikishi/Rikishi";
+import { GraphQLNodeUtil } from "../../util/GraphQLNodeUtil";
 
 @Service()
 export class BashoRepository extends AbstractRepository<Basho> {
 
-    constructor(
-        private bashoModelValidator: BashoModelValidator,
-        bashoModelMapper: BashoModelMapper,
-        bashoRowMapper: BashoRowMapper
-    ) {
-        super("bashos", bashoRowMapper, bashoModelMapper);
+    public async create(item: PartialModelObject<Basho>): Promise<number> {
+        try {
+            return await this.doCreate(item, Basho.query())
+        } catch (e) {
+            throw new DatabaseException((e as Error).message);
+        }
+    }
+
+    public async find(id: number): Promise<Basho> {
+        return await this.doFind(id, Basho.query())
     }
 
     public async update(id: number, item: Basho): Promise<boolean> {
-        const bashoModel: BashoModel = this.modelMapper.map(item);
+        return await this.doUpdate(id, item, Basho.query())
+    }
 
-        if (!this.bashoModelValidator.validate(bashoModel)) {
-            throw new EmptyUpdateException();
+    public async delete(id: number): Promise<boolean> {
+        try {
+            return await this.doDelete(id, Basho.query())
+        } catch {
+            return false;
+        }
+    }
+
+    public async findDetailled(id: number, fieldNodes: ReadonlyArray<FieldNode>): Promise<Basho> {
+        const queryBuilder: QueryBuilder<Basho> = Basho.query().where({ "bashos.id": id });
+
+        const relationsToFetch: string[] = [];
+
+        if(GraphQLNodeUtil.doesSelectionFieldExist(fieldNodes, fieldNodes[0].name.value, "bouts")) {
+            relationsToFetch.push("bouts");
         }
 
-        const queryResult: number = await this.postgresClient.queryTable(this.table)
-            .where({ "id": id })
-            .update(bashoModel)
-            .returning("id")
-            .then(result => result[0]);
+        if(GraphQLNodeUtil.doesSelectionFieldExist(fieldNodes, fieldNodes[0].name.value, "winner")) {
+            relationsToFetch.push("winner");
+        }
 
-        return queryResult > 0;
+        if (relationsToFetch.length > 0) {
+            queryBuilder.withGraphJoined(`[${relationsToFetch.join(",")}]`);
+        }
+
+        return await queryBuilder.then(result => result[0]);
     }
 }

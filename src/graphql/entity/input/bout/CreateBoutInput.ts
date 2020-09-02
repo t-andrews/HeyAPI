@@ -7,27 +7,24 @@ export class CreateBoutInput implements Partial<Bout> {
     @Field(type => GraphQLISODateTime)
     date!: Date;
 
-    @Field(type => Int)
+    @Field(() => Int)
     bashoId!: number;
 
-    @Field(type => Int)
+    @Field(() => Int)
     bashoDay!: number;
 
-    @Field(type => Int)
+    @Field(() => Int)
     order!: number;
 
-    @Field(type => Int)
-    opponentId1!: number;
-
-    @Field(type => Int)
-    opponentId2!: number;
-
-    @Field(type => Int)
+    @Field(() => Int)
     winnerId!: number;
+
+    @Field(() => Int)
+    loserId!: number;
 
     @Field()
     winningMethod!: Kimarite;
 
-    @Field(type => Int)
+    @Field(() => Int)
     duration!: number;
 }
