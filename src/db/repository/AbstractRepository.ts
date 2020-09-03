@@ -1,7 +1,6 @@
 import { Repository } from "./Repository";
 import { PartialModelObject, QueryBuilder } from "objection";
-import { BaseObjectType } from "../../graphql/entity/object/BaseObjectType";
-import { DatabaseException } from "../../graphql/entity/object/exception/db/DatabaseException";
+import { BaseObjectType } from "../../entity/object/BaseObjectType";
 
 export abstract class AbstractRepository<T extends BaseObjectType> implements Repository<T> {
 
@@ -11,11 +10,7 @@ export abstract class AbstractRepository<T extends BaseObjectType> implements Re
     abstract delete(id: number): Promise<boolean>
 
     protected async doCreate(item: PartialModelObject<T>, queryBuilder: QueryBuilder<T>): Promise<number> {
-        try {
-            return await queryBuilder.insert(item).then(result => result.id);
-        } catch (e) {
-            throw new DatabaseException((e as Error).message);
-        }
+        return await queryBuilder.insert(item).then(result => result.id);
     }
 
     protected async doFind(id: number, queryBuilder: QueryBuilder<T>): Promise<T> {

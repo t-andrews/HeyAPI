@@ -3,6 +3,6 @@ import { MutationResponse } from "./MutationResponse";
 
 @ObjectType()
 export class BooleanMutationResponse extends MutationResponse {
-    @Field(type => Boolean, { nullable: true })
+    @Field(() => Boolean, { nullable: true })
     success?: boolean
 }

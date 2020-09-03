@@ -1,13 +1,13 @@
 import { Service } from "typedi";
 import { GraphQLResolveInfo } from "graphql";
-import { Basho } from "../entity/object/Basho";
+import { Basho } from "../../entity/object/Basho";
 import { RikishiResolver } from "./RikishiResolver";
 import { Arg, Info, Mutation, Query, Resolver } from "type-graphql";
 import { BashoRepository } from "../../db/repository/BashoRepository";
-import { CreateBashoInput } from "../entity/input/basho/CreateBashoInput";
-import { UpdateBashoInput } from "../entity/input/basho/UpdateBashoInput";
-import { IdMutationResponse } from "../entity/object/response/mutation/IdMutationResponse";
-import { BooleanMutationResponse } from "../entity/object/response/mutation/BooleanMutationResponse";
+import { CreateBashoInput } from "../input/basho/CreateBashoInput";
+import { UpdateBashoInput } from "../input/basho/UpdateBashoInput";
+import { IdMutationResponse } from "../../entity/object/response/mutation/IdMutationResponse";
+import { BooleanMutationResponse } from "../../entity/object/response/mutation/BooleanMutationResponse";
 
 @Service()
 @Resolver(() => Basho)

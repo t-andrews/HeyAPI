@@ -1,13 +1,13 @@
 import { Service } from "typedi";
 import { GraphQLResolveInfo } from "graphql";
-import { Bout } from "../entity/object/Bout";
-import { Basho } from "../entity/object/Basho";
+import { Bout } from "../../entity/object/Bout";
+import { Basho } from "../../entity/object/Basho";
 import { BashoResolver } from "./BashoResolver";
 import { RikishiResolver } from "./RikishiResolver";
-import { Rikishi } from "../entity/object/rikishi/Rikishi";
+import { Rikishi } from "../../entity/object/rikishi/Rikishi";
 import { BoutRepository } from "../../db/repository/BoutRepository";
-import { CreateBoutInput } from "../entity/input/bout/CreateBoutInput";
-import { IdMutationResponse } from "../entity/object/response/mutation/IdMutationResponse";
+import { CreateBoutInput } from "../input/bout/CreateBoutInput";
+import { IdMutationResponse } from "../../entity/object/response/mutation/IdMutationResponse";
 import { Arg, FieldResolver, Info, Mutation, Query, Resolver, ResolverInterface, Root } from "type-graphql";
 
 @Service()

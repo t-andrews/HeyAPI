@@ -1,11 +1,11 @@
-import { Bout } from "../../object/Bout";
-import { Kimarite } from "../../../../constant/Kimarite";
+import { Bout } from "../../../entity/object/Bout";
+import { Kimarite } from "../../../constant/Kimarite";
 import { Field, GraphQLISODateTime, InputType, Int } from "type-graphql";
 
 @InputType()
 export class CreateBoutInput implements Partial<Bout> {
-    @Field(type => GraphQLISODateTime)
-    date!: Date;
+    @Field(() => GraphQLISODateTime)
+    date!: string;
 
     @Field(() => Int)
     bashoId!: number;

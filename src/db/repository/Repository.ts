@@ -1,5 +1,5 @@
 import { PartialModelObject } from "objection";
-import { BaseObjectType } from "../../graphql/entity/object/BaseObjectType";
+import { BaseObjectType } from "../../entity/object/BaseObjectType";
 
 export interface Repository<T extends BaseObjectType> {
     create(item: PartialModelObject<T>): Promise<number>

@@ -1,10 +1,10 @@
 import { Service } from "typedi";
 import { PartialModelObject, QueryBuilder } from "objection";
-import { Basho } from "../../graphql/entity/object/Basho";
-import { DatabaseException } from "../../graphql/entity/object/exception/db/DatabaseException";
+import { Basho } from "../../entity/object/Basho";
+import { DatabaseException } from "../../entity/object/exception/db/DatabaseException";
 import { AbstractRepository } from "./AbstractRepository";
 import { FieldNode } from "graphql";
-import { Rikishi } from "../../graphql/entity/object/rikishi/Rikishi";
+import { Rikishi } from "../../entity/object/rikishi/Rikishi";
 import { GraphQLNodeUtil } from "../../util/GraphQLNodeUtil";
 
 @Service()
@@ -27,11 +27,7 @@ export class BashoRepository extends AbstractRepository<Basho> {
     }
 
     public async delete(id: number): Promise<boolean> {
-        try {
-            return await this.doDelete(id, Basho.query())
-        } catch {
-            return false;
-        }
+        return await this.doDelete(id, Basho.query())
     }
 
     public async findDetailled(id: number, fieldNodes: ReadonlyArray<FieldNode>): Promise<Basho> {

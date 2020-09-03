@@ -3,18 +3,13 @@ import { FieldNode } from "graphql";
 import { Repository } from "./Repository";
 import { GraphQLNodeUtil } from "../../util/GraphQLNodeUtil";
 import { PartialModelObject, QueryBuilder } from "objection";
-import { Rikishi } from "../../graphql/entity/object/rikishi/Rikishi";
-import { DatabaseException } from "../../graphql/entity/object/exception/db/DatabaseException";
+import { Rikishi } from "../../entity/object/rikishi/Rikishi";
 
 @Service()
 export class RikishiRepository implements Repository<Rikishi> {
 
     public async create(item: PartialModelObject<Rikishi>): Promise<number> {
-        try {
-            return await Rikishi.query().insert(item).then(result => result.id);
-        } catch (e) {
-            throw new DatabaseException((e as Error).message);
-        }
+        return await Rikishi.query().insert(item).then(result => result.id);
     }
 
     public async find(id: number): Promise<Rikishi> {
@@ -28,15 +23,11 @@ export class RikishiRepository implements Repository<Rikishi> {
     }
 
     public async delete(id: number): Promise<boolean> {
-        try {
-            return await Rikishi.query()
-                .deleteById(id)
-                .then(result => {
-                    return result > 0;
-                });
-        } catch {
-            return false;
-        }
+        return await Rikishi.query()
+            .deleteById(id)
+            .then(result => {
+                return result > 0;
+            });
     }
 
     public async findDetailled(id: number, fieldNodes: ReadonlyArray<FieldNode>): Promise<Rikishi> {

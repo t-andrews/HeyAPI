@@ -3,6 +3,6 @@ import { MutationResponse } from "./MutationResponse";
 
 @ObjectType()
 export class IdMutationResponse extends MutationResponse {
-    @Field(type => Int, { nullable: true })
+    @Field(() => Int, { nullable: true })
     id?: number
 }

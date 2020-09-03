@@ -1,18 +1,13 @@
 import { Service } from "typedi";
 import { PartialModelObject } from "objection";
+import { Heya } from "../../entity/object/rikishi/Heya";
 import { AbstractRepository } from "./AbstractRepository";
-import { Heya } from "../../graphql/entity/object/rikishi/Heya";
-import { DatabaseException } from "../../graphql/entity/object/exception/db/DatabaseException";
 
 @Service()
 export class HeyaRepository extends AbstractRepository<Heya> {
 
     public async create(item: PartialModelObject<Heya>): Promise<number> {
-        try {
-            return await this.doCreate(item, Heya.query())
-        } catch (e) {
-            throw new DatabaseException((e as Error).message);
-        }
+        return await this.doCreate(item, Heya.query())
     }
 
     public async find(id: number): Promise<Heya> {
@@ -24,11 +19,7 @@ export class HeyaRepository extends AbstractRepository<Heya> {
     }
 
     public async delete(id: number): Promise<boolean> {
-        try {
-            return await this.doDelete(id, Heya.query())
-        } catch {
-            return false;
-        }
+        return await this.doDelete(id, Heya.query())
     }
 
 }

@@ -1,18 +1,13 @@
 import { Service } from "typedi";
 import { PartialModelObject } from "objection";
+import { Rank } from "../../entity/object/rikishi/Rank";
 import { AbstractRepository } from "./AbstractRepository";
-import { Rank } from "../../graphql/entity/object/rikishi/Rank";
-import { DatabaseException } from "../../graphql/entity/object/exception/db/DatabaseException";
 
 @Service()
 export class RankRepository extends AbstractRepository<Rank> {
 
     public async create(item: PartialModelObject<Rank>): Promise<number> {
-        try {
-            return await this.doCreate(item, Rank.query())
-        } catch (e) {
-            throw new DatabaseException((e as Error).message);
-        }
+        return await this.doCreate(item, Rank.query())
     }
 
     public async find(id: number): Promise<Rank> {
@@ -24,11 +19,7 @@ export class RankRepository extends AbstractRepository<Rank> {
     }
 
     public async delete(id: number): Promise<boolean> {
-        try {
-            return await this.doDelete(id, Rank.query())
-        } catch {
-            return false;
-        }
+        return await this.doDelete(id, Rank.query())
     }
 
 }

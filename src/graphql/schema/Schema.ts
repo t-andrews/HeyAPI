@@ -1,8 +1,8 @@
 import "reflect-metadata";
 import { Container } from "typedi";
 import { GraphQLSchema } from "graphql";
-import { Resolvers } from "../resolver/Resolvers";
 import { buildSchemaSync } from "type-graphql";
+import { Resolvers } from "../resolver/Resolvers";
 
 export const Schema: GraphQLSchema = buildSchemaSync({
     resolvers: Resolvers,

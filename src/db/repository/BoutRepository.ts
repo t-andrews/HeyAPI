@@ -1,34 +1,25 @@
 import { Service } from "typedi";
 import { PartialModelObject } from "objection";
-import { Bout } from "../../graphql/entity/object/Bout";
+import { Bout } from "../../entity/object/Bout";
 import { AbstractRepository } from "./AbstractRepository";
-import { DatabaseException } from "../../graphql/entity/object/exception/db/DatabaseException";
 
 @Service()
 export class BoutRepository extends AbstractRepository<Bout> {
 
     public async create(item: PartialModelObject<Bout>): Promise<number> {
-        try {
-            return await this.doCreate(item, Bout.query())
-        } catch (e) {
-            throw new DatabaseException((e as Error).message);
-        }
+        return await this.doCreate(item, Bout.query());
     }
 
     public async find(id: number): Promise<Bout> {
-        return await this.doFind(id, Bout.query())
+        return await this.doFind(id, Bout.query());
     }
 
     public async update(id: number, item: Bout): Promise<boolean> {
-        return await this.doUpdate(id, item, Bout.query())
+        return await this.doUpdate(id, item, Bout.query());
     }
 
     public async delete(id: number): Promise<boolean> {
-        try {
-            return await this.doDelete(id, Bout.query())
-        } catch {
-            return false;
-        }
+        return await this.doDelete(id, Bout.query());
     }
 
     public async createMany(bouts: Bout[]): Promise<number[]> {

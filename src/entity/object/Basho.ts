@@ -2,8 +2,9 @@ import { Bout } from "./Bout";
 import { Model } from "objection";
 import { Rikishi } from "./rikishi/Rikishi";
 import { BaseObjectType } from "./BaseObjectType";
-import { HonBasho } from "../../../constant/HonBasho";
+import { HonBasho } from "../../constant/HonBasho";
 import { Field, GraphQLISODateTime, ObjectType } from "type-graphql";
+import { GraphQLString } from "graphql";
 
 @ObjectType({ description: "The Basho model" })
 export class Basho extends BaseObjectType {
@@ -14,23 +15,46 @@ export class Basho extends BaseObjectType {
 
     winnerId!: number;
 
-    @Field()
+    @Field(() => GraphQLString)
     name!: HonBasho;
+
+    @Field(() => GraphQLString)
+    location!: string;
 
     @Field(() => [Bout])
     bouts!: Bout[];
-
-    @Field()
-    location!: string;
 
     @Field(() => Rikishi, { nullable: true })
     winner?: Rikishi;
 
     @Field(() => GraphQLISODateTime)
-    startDate!: Date;
+    startDate!: string;
 
     @Field(() => GraphQLISODateTime, { nullable: true })
-    endDate?: Date;
+    endDate?: string;
+
+    static get jsonSchema() {
+        return {
+            type: "object",
+            required: [
+                "name",
+                "location",
+                "startDate",
+                "winnerId"
+            ],
+            properties: {
+                id: { type: "integer" },
+                name: {
+                    type: "string",
+                    enum: Object.values(HonBasho)
+                },
+                location: { type: "string" },
+                startDate: { type: "string", "format": "date-time" },
+                endDate: { type: "string", "format": "date-time" },
+                winnerId: { type: "integer" },
+            }
+        };
+    }
 
     static get relationMappings() {
         return {

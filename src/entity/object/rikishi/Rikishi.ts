@@ -1,9 +1,10 @@
 import { Heya } from "./Heya";
 import { Rank } from "./Rank";
 import { Bout } from "../Bout";
+import { Model } from "objection";
 import { BaseObjectType } from "../BaseObjectType";
 import { Field, GraphQLISODateTime, ObjectType } from "type-graphql";
-import { Model } from "objection";
+import { GraphQLString } from "graphql";
 
 @ObjectType({ description: "The Rikishi model" })
 export class Rikishi extends BaseObjectType {
@@ -15,11 +16,11 @@ export class Rikishi extends BaseObjectType {
     rankId!: number;
     heyaId!: number;
 
-    @Field()
+    @Field(() => GraphQLString)
     name!: string;
 
     @Field(() => GraphQLISODateTime)
-    birthDate!: Date;
+    birthDate!: string;
 
     @Field(() => Heya)
     heya!: Heya;
@@ -35,6 +36,25 @@ export class Rikishi extends BaseObjectType {
 
     @Field(() => [Bout])
     bouts!: Bout[];
+
+    static get jsonSchema() {
+        return {
+            type: "object",
+            required: [
+                "rankId",
+                "heyaId",
+                "name",
+                "birthDate"
+            ],
+            properties: {
+                id: { type: "integer" },
+                rankId: { type: "integer" },
+                heyaId: { type: "integer" },
+                name: { type: "string" },
+                birthDate: { type: "string", "format": "date-time" },
+            }
+        };
+    }
 
     static get relationMappings() {
         return {
