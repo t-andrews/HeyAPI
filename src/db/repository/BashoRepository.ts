@@ -4,7 +4,6 @@ import { Basho } from "../../entity/object/Basho";
 import { AbstractRepository } from "./AbstractRepository";
 import { GraphQLNodeUtil } from "../../util/GraphQLNodeUtil";
 import { PartialModelObject, QueryBuilder } from "objection";
-import { DatabaseException } from "../../entity/object/exception/db/DatabaseException";
 
 
 @Service()
