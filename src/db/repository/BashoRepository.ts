@@ -1,21 +1,17 @@
 import { Service } from "typedi";
-import { PartialModelObject, QueryBuilder } from "objection";
-import { Basho } from "../../entity/object/Basho";
-import { DatabaseException } from "../../entity/object/exception/db/DatabaseException";
-import { AbstractRepository } from "./AbstractRepository";
 import { FieldNode } from "graphql";
-import { Rikishi } from "../../entity/object/rikishi/Rikishi";
+import { Basho } from "../../entity/object/Basho";
+import { AbstractRepository } from "./AbstractRepository";
 import { GraphQLNodeUtil } from "../../util/GraphQLNodeUtil";
+import { PartialModelObject, QueryBuilder } from "objection";
+import { DatabaseException } from "../../entity/object/exception/db/DatabaseException";
+
 
 @Service()
 export class BashoRepository extends AbstractRepository<Basho> {
 
     public async create(item: PartialModelObject<Basho>): Promise<number> {
-        try {
-            return await this.doCreate(item, Basho.query())
-        } catch (e) {
-            throw new DatabaseException((e as Error).message);
-        }
+        return await this.doCreate(item, Basho.query())
     }
 
     public async find(id: number): Promise<Basho> {

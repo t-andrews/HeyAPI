@@ -7,7 +7,7 @@ import { RikishiResolver } from "./RikishiResolver";
 import { Rikishi } from "../../entity/object/rikishi/Rikishi";
 import { BoutRepository } from "../../db/repository/BoutRepository";
 import { CreateBoutInput } from "../input/bout/CreateBoutInput";
-import { IdMutationResponse } from "../../entity/object/response/mutation/IdMutationResponse";
+import { IdMutationResponse } from "../response/mutation/IdMutationResponse";
 import { Arg, FieldResolver, Info, Mutation, Query, Resolver, ResolverInterface, Root } from "type-graphql";
 
 @Service()

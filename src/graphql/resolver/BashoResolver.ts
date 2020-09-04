@@ -6,8 +6,8 @@ import { Arg, Info, Mutation, Query, Resolver } from "type-graphql";
 import { BashoRepository } from "../../db/repository/BashoRepository";
 import { CreateBashoInput } from "../input/basho/CreateBashoInput";
 import { UpdateBashoInput } from "../input/basho/UpdateBashoInput";
-import { IdMutationResponse } from "../../entity/object/response/mutation/IdMutationResponse";
-import { BooleanMutationResponse } from "../../entity/object/response/mutation/BooleanMutationResponse";
+import { IdMutationResponse } from "../response/mutation/IdMutationResponse";
+import { BooleanMutationResponse } from "../response/mutation/BooleanMutationResponse";
 
 @Service()
 @Resolver(() => Basho)

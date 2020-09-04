@@ -4,10 +4,11 @@
   "description": "GraphQL API for a sumo database.",
   "main": "./src/server.ts",
   "scripts": {
+    "knex:migrate:make": "knex migrate:make -x ts sumodb",
+    "knex:seed:run": "knex seed:run",
     "test:unit": "cross-env NODE_ENV=test mocha -r ts-node/register test/unit/**/*.test.ts --file test/setup.ts",
     "coverage:sonar": "nyc --reporter=lcov npm run test:unit",
     "coverage": "nyc --reporter=text-summary --reporter=html npm run test:unit",
-    "build": "docker build -t bakou912/heyapi .",
     "start:dev": "cross-env NODE_ENV=dev nodemon",
     "start:prod": "cross-env NODE_ENV=prod ts-node"
   },
@@ -23,11 +24,11 @@
   "devDependencies": {
     "@types/chai": "^4.2.12",
     "@types/mocha": "^8.0.3",
-    "@types/node": "^14.6.0",
     "@types/sinon-chai": "^3.2.4",
     "chai": "^4.2.0",
     "cross-env": "^7.0.2",
     "mocha": "^8.1.1",
+    "mock-knex": "^0.4.9",
     "nodemon": "^2.0.4",
     "sinon": "^9.0.3",
     "sinon-chai": "^3.5.0",
@@ -36,9 +37,10 @@
     "typescript": "^3.9.7"
   },
   "dependencies": {
-    "@types/chai-as-promised": "^7.1.3",
     "@types/config": "0.0.36",
     "@types/lodash": "^4.14.159",
+    "@types/mock-knex": "^0.4.3",
+    "@types/node": "^14.6.0",
     "apollo-server": "^2.16.1",
     "class-validator": "^0.12.2",
     "config": "^3.3.1",

@@ -21,21 +21,15 @@ export abstract class AbstractRepository<T extends BaseObjectType> implements Re
 
     protected async doUpdate(id: number, item: PartialModelObject<T>, queryBuilder: QueryBuilder<T>): Promise<boolean> {
         return await queryBuilder
-            .findById(id)
-            .patch(item)
-            .returning("id")
-            .then(result => result[0].id != undefined);
+            .patchAndFetchById(id, item)
+            .then(result => result.id != undefined);
     }
 
     protected async doDelete(id: number, queryBuilder: QueryBuilder<T>): Promise<boolean> {
-        try {
-            return await queryBuilder
-                .deleteById(id)
-                .then(result => {
-                    return result > 0;
-                });
-        } catch {
-            return false;
-        }
+        return await queryBuilder
+            .deleteById(id)
+            .then(result => {
+                return result > 0 && result === id;
+            });
     }
 }

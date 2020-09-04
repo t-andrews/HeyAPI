@@ -14,7 +14,7 @@ export class HeyaRepository extends AbstractRepository<Heya> {
         return await this.doFind(id, Heya.query())
     }
 
-    public async update(id: number, item: Heya): Promise<boolean> {
+    public async update(id: number, item: PartialModelObject<Heya>): Promise<boolean> {
         return await this.doUpdate(id, item, Heya.query())
     }
 

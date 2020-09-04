@@ -57,6 +57,7 @@ export class Rank extends BaseObjectType {
                 },
                 startDate: { type: "string", "format": "date-time" },
                 endDate: { type: "string", "format": "date-time" },
+                rikishiId: { type: "integer" },
             }
         };
     }
