@@ -19,8 +19,8 @@ export class BashoRepository implements Repository<Basho> {
         return await this.repositoryUtil.find(id, Basho.query())
     }
 
-    public async update(id: number, item: Basho): Promise<boolean> {
-        return await this.repositoryUtil.update(id, item, Basho.query())
+    public async update(item: PartialModelObject<Basho>): Promise<boolean> {
+        return await this.repositoryUtil.update(item, Basho.query())
     }
 
     public async delete(id: number): Promise<boolean> {

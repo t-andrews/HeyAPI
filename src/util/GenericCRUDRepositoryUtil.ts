@@ -16,15 +16,17 @@ export class GenericCRUDRepositoryUtil {
             .then(result => result);
     }
 
-    public async update<T extends BaseObjectType> (id: number, item: PartialModelObject<T>, queryBuilder: QueryBuilder<T>): Promise<boolean> {
+    public async update<T extends BaseObjectType> (item: PartialModelObject<T>, queryBuilder: QueryBuilder<T>): Promise<boolean> {
         const validItem: boolean = ModelFieldValidator.validateUpdateItem(item, queryBuilder.modelClass().jsonSchema);
 
         if (!validItem) {
             throw new ValidationError({ type: "ModelValidation", message: "No valid field was supplied for the update" });
         }
 
+        const id: number = (<Partial<BaseObjectType>>item).id!;
+
         return await queryBuilder
-            .patchAndFetchById(id, item)
+            .patchAndFetchById(id , item)
             .then(result => result.id != undefined && result.id === id);
     }
 

@@ -12,7 +12,11 @@ export class RikishiRepository implements Repository<Rikishi> {
     constructor(private repositoryUtil: GenericCRUDRepositoryUtil) {}
 
     public async create(item: PartialModelObject<Rikishi>): Promise<number> {
-        return await Rikishi.query().insert(item).then(result => result.id);
+        await Rikishi.transaction(async trx => {
+
+        });
+
+        return 0;
     }
 
     public async find(id: number): Promise<Rikishi> {
@@ -21,7 +25,7 @@ export class RikishiRepository implements Repository<Rikishi> {
             .then(result => result);
     }
 
-    public update(id: number, item: PartialModelObject<Rikishi>): Promise<boolean> {
+    public update(item: PartialModelObject<Rikishi>): Promise<boolean> {
         return undefined!;
     }
 

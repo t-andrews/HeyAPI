@@ -1,22 +1,28 @@
+import { GraphQLString } from "graphql";
 import { Basho } from "../../../entity/object/Basho";
 import { HonBasho } from "../../../constant/HonBasho";
+import { IsDateString, IsIn, MaxLength, Min } from "class-validator";
 import { Field, GraphQLISODateTime, InputType, Int } from "type-graphql";
-import { GraphQLString } from "graphql";
 
 @InputType()
-export class CreateBashoInput implements Partial<Basho>{
+export class CreateBashoInput implements Partial<Basho> {
+    @IsIn(Object.values(HonBasho))
     @Field(() => GraphQLString)
     name!: HonBasho;
 
+    @MaxLength(255)
     @Field(() => GraphQLString)
     location!: string;
 
+    @Min(1)
     @Field(() => Int, { nullable: true })
     winnerId?: number;
 
+    @IsDateString()
     @Field(() => GraphQLISODateTime)
     startDate!: string;
 
+    @IsDateString()
     @Field(() => GraphQLISODateTime, { nullable: true })
     endDate?: string;
 }

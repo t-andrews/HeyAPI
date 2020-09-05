@@ -10,28 +10,47 @@ describe("GraphQL Node Util",  () => {
     describe("Positive scenarios",  () => {
 
         it("Should return true for a node with requested field selected", async () => {
-            const fieldName: string = "field_name";
+            const fieldName1: string = "field_name1";
+            const fieldName2: string = "field_name2";
+            const fieldName3: string = "field_name3";
 
             const nodes: ReadonlyArray<FieldNode> = [<FieldNode> {
                 name: {
                     value: "parent_name"
                 },
                 selectionSet: <SelectionSetNode> {
-                    selections: <any> [{
-                         name: {
-                             value: fieldName
-                         }
-                    }]
+                    selections: <any> [
+                        {
+                            name: {
+                                value: fieldName1
+                            }
+                        },
+                        {
+                            name: {
+                                value: fieldName2
+                            }
+                        },
+                        {
+                            name: {
+                                value: fieldName3
+                            }
+                        }
+                    ]
                 }
             }];
 
-            const result: boolean = GraphQLNodeUtil.doesSelectionFieldExist(nodes, fieldName);
+            const result1: boolean = GraphQLNodeUtil.doesSelectionFieldExist(nodes, fieldName1);
+            const result2: boolean = GraphQLNodeUtil.doesSelectionFieldExist(nodes, fieldName2);
+            const result3: boolean = GraphQLNodeUtil.doesSelectionFieldExist(nodes, fieldName3);
 
-            expect(result).to.be.true;
+            expect(result1).to.be.true;
+            expect(result2).to.be.true;
+            expect(result3).to.be.true;
         });
     });
 
     describe("Negative scenarios", async () => {
+
         it("Should return false for a node without the requested field selected", async () => {
             const fieldName: string = "field_name";
 

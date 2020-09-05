@@ -17,8 +17,8 @@ export class BoutRepository implements Repository<Bout> {
         return await this.repositoryUtil.find(id, Bout.query());
     }
 
-    public async update(id: number, item: Bout): Promise<boolean> {
-        return await this.repositoryUtil.update(id, item, Bout.query());
+    public async update(item: Bout): Promise<boolean> {
+        return await this.repositoryUtil.update(item, Bout.query());
     }
 
     public async delete(id: number): Promise<boolean> {

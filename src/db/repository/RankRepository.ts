@@ -17,8 +17,8 @@ export class RankRepository implements Repository<Rank> {
         return await this.repositoryUtil.find(id, Rank.query())
     }
 
-    public async update(id: number, item: Rank): Promise<boolean> {
-        return await this.repositoryUtil.update(id, item, Rank.query())
+    public async update(item: Rank): Promise<boolean> {
+        return await this.repositoryUtil.update(item, Rank.query())
     }
 
     public async delete(id: number): Promise<boolean> {

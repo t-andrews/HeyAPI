@@ -2,6 +2,7 @@ import "reflect-metadata";
 import { ApolloServer } from "apollo-server";
 import { Schema } from "./graphql/schema/Schema";
 import { PostgresClient } from "./db/PostgresClient";
+import { ErrorFormatter } from "./graphql/error/ErrorFormatter";
 
 async function bootstrap() {
 
@@ -11,6 +12,7 @@ async function bootstrap() {
         schema: Schema,
         playground: true,
         subscriptions: { path: "/graphql" },
+        formatError: err => ErrorFormatter.format(err)
     });
 
     const { url } = await server.listen(4000);

@@ -17,8 +17,8 @@ export class HeyaRepository implements Repository<Heya> {
         return await this.repositoryUtil.find(id, Heya.query())
     }
 
-    public async update(id: number, item: PartialModelObject<Heya>): Promise<boolean> {
-        return await this.repositoryUtil.update(id, item, Heya.query())
+    public async update(item: PartialModelObject<Heya>): Promise<boolean> {
+        return await this.repositoryUtil.update(item, Heya.query())
     }
 
     public async delete(id: number): Promise<boolean> {

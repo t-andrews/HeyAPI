@@ -115,6 +115,7 @@ describe("Bout Repository",  () => {
     });
 
     describe("Negative scenarios", async () => {
+
         it("Should throw an error on creation with a missing field", async () => {
 
             try {

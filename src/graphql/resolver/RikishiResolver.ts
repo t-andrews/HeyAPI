@@ -1,9 +1,8 @@
 import { Service } from "typedi";
 import { GraphQLResolveInfo } from "graphql";
 import { Rikishi } from "../../entity/object/rikishi/Rikishi";
+import { Arg, Info, Query, Resolver, Root } from "type-graphql";
 import { RikishiRepository } from "../../db/repository/RikishiRepository";
-import { Arg, FieldResolver, Info, Query, Resolver, Root } from "type-graphql";
-import { Bout } from "../../entity/object/Bout";
 
 @Service()
 @Resolver(() => Rikishi)

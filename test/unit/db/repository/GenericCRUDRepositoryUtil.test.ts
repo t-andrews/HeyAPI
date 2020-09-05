@@ -96,10 +96,11 @@ describe("Generic CRUD Repository Util",  () => {
             });
 
             const rank: Partial<Rank> = {
+                id: 123,
                 startDate: "2020-01-04 01:10:25+01:00",
             }
 
-            const result: boolean = await repository.update<Rank>(123, rank, Rank.query());
+            const result: boolean = await repository.update<Rank>(rank, Rank.query());
 
             expect(result).to.equal(true);
         });
@@ -120,6 +121,7 @@ describe("Generic CRUD Repository Util",  () => {
     });
 
     describe("Negative scenarios", async () => {
+
         it("Should throw an error on creation with a missing field", async () => {
 
             repository = new GenericCRUDRepositoryUtil();
@@ -143,7 +145,7 @@ describe("Generic CRUD Repository Util",  () => {
             repository = new GenericCRUDRepositoryUtil();
 
             try {
-                await repository.update(1, {}, Bout.query());
+                await repository.update({ id: 1 }, Bout.query());
             } catch (e) {
                 expect(e instanceof ValidationError).to.be.true;
                 expect((e as ValidationError).message).to.equal("No valid field was supplied for the update")
