@@ -1,12 +1,15 @@
 import { Service } from "typedi";
 import { FieldNode } from "graphql";
-import { Repository } from "./Repository";
 import { GraphQLNodeUtil } from "../../util/GraphQLNodeUtil";
+import { Repository } from "./Repository";
 import { PartialModelObject, QueryBuilder } from "objection";
 import { Rikishi } from "../../entity/object/rikishi/Rikishi";
+import { GenericCRUDRepositoryUtil } from "../../util/GenericCRUDRepositoryUtil";
 
 @Service()
 export class RikishiRepository implements Repository<Rikishi> {
+
+    constructor(private repositoryUtil: GenericCRUDRepositoryUtil) {}
 
     public async create(item: PartialModelObject<Rikishi>): Promise<number> {
         return await Rikishi.query().insert(item).then(result => result.id);
@@ -34,22 +37,22 @@ export class RikishiRepository implements Repository<Rikishi> {
         const queryBuilder: QueryBuilder<Rikishi> = Rikishi.query().where({ "rikishis.id": id });
         const relationsToFetch: string[] = [];
         const createBouts: boolean = GraphQLNodeUtil.doesSelectionFieldExist(
-            fieldNodes, fieldNodes[0].name.value, "bouts"
+            fieldNodes, "bouts"
         );
 
-        if(GraphQLNodeUtil.doesSelectionFieldExist(fieldNodes, fieldNodes[0].name.value, "rank")) {
+        if(GraphQLNodeUtil.doesSelectionFieldExist(fieldNodes, "rank")) {
             relationsToFetch.push("rank");
         }
 
-        if(GraphQLNodeUtil.doesSelectionFieldExist(fieldNodes, fieldNodes[0].name.value, "heya")) {
+        if(GraphQLNodeUtil.doesSelectionFieldExist(fieldNodes, "heya")) {
             relationsToFetch.push("heya");
         }
 
-        if(GraphQLNodeUtil.doesSelectionFieldExist(fieldNodes, fieldNodes[0].name.value, "wins") || createBouts) {
+        if(GraphQLNodeUtil.doesSelectionFieldExist(fieldNodes, "wins") || createBouts) {
             relationsToFetch.push("wins");
         }
 
-        if(GraphQLNodeUtil.doesSelectionFieldExist(fieldNodes, fieldNodes[0].name.value, "losses") || createBouts) {
+        if(GraphQLNodeUtil.doesSelectionFieldExist(fieldNodes, "losses") || createBouts) {
             relationsToFetch.push("losses");
         }
 

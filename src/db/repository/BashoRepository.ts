@@ -1,28 +1,30 @@
 import { Service } from "typedi";
 import { FieldNode } from "graphql";
+import { Repository } from "./Repository";
 import { Basho } from "../../entity/object/Basho";
-import { AbstractRepository } from "./AbstractRepository";
 import { GraphQLNodeUtil } from "../../util/GraphQLNodeUtil";
 import { PartialModelObject, QueryBuilder } from "objection";
-
+import { GenericCRUDRepositoryUtil } from "../../util/GenericCRUDRepositoryUtil";
 
 @Service()
-export class BashoRepository extends AbstractRepository<Basho> {
+export class BashoRepository implements Repository<Basho> {
+
+    constructor(private repositoryUtil: GenericCRUDRepositoryUtil) {}
 
     public async create(item: PartialModelObject<Basho>): Promise<number> {
-        return await this.doCreate(item, Basho.query())
+        return await this.repositoryUtil.create(item, Basho.query())
     }
 
     public async find(id: number): Promise<Basho> {
-        return await this.doFind(id, Basho.query())
+        return await this.repositoryUtil.find(id, Basho.query())
     }
 
     public async update(id: number, item: Basho): Promise<boolean> {
-        return await this.doUpdate(id, item, Basho.query())
+        return await this.repositoryUtil.update(id, item, Basho.query())
     }
 
     public async delete(id: number): Promise<boolean> {
-        return await this.doDelete(id, Basho.query())
+        return await this.repositoryUtil.delete(id, Basho.query())
     }
 
     public async findDetailled(id: number, fieldNodes: ReadonlyArray<FieldNode>): Promise<Basho> {
@@ -30,11 +32,11 @@ export class BashoRepository extends AbstractRepository<Basho> {
 
         const relationsToFetch: string[] = [];
 
-        if(GraphQLNodeUtil.doesSelectionFieldExist(fieldNodes, fieldNodes[0].name.value, "bouts")) {
+        if(GraphQLNodeUtil.doesSelectionFieldExist(fieldNodes, "bouts")) {
             relationsToFetch.push("bouts");
         }
 
-        if(GraphQLNodeUtil.doesSelectionFieldExist(fieldNodes, fieldNodes[0].name.value, "winner")) {
+        if(GraphQLNodeUtil.doesSelectionFieldExist(fieldNodes, "winner")) {
             relationsToFetch.push("winner");
         }
 

@@ -1,5 +1,5 @@
 import { Bout } from "./Bout";
-import { Model } from "objection";
+import { JSONSchema, Model } from "objection";
 import { Rikishi } from "./rikishi/Rikishi";
 import { BaseObjectType } from "./BaseObjectType";
 import { HonBasho } from "../../constant/HonBasho";
@@ -33,7 +33,7 @@ export class Basho extends BaseObjectType {
     @Field(() => GraphQLISODateTime, { nullable: true })
     endDate?: string;
 
-    static get jsonSchema() {
+    static get jsonSchema(): JSONSchema {
         return {
             type: "object",
             required: [

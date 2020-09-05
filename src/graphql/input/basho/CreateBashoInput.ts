@@ -1,13 +1,14 @@
 import { Basho } from "../../../entity/object/Basho";
 import { HonBasho } from "../../../constant/HonBasho";
 import { Field, GraphQLISODateTime, InputType, Int } from "type-graphql";
+import { GraphQLString } from "graphql";
 
 @InputType()
 export class CreateBashoInput implements Partial<Basho>{
-    @Field()
+    @Field(() => GraphQLString)
     name!: HonBasho;
 
-    @Field()
+    @Field(() => GraphQLString)
     location!: string;
 
     @Field(() => Int, { nullable: true })

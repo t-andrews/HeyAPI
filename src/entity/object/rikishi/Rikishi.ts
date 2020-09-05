@@ -1,7 +1,7 @@
 import { Heya } from "./Heya";
 import { Rank } from "./Rank";
 import { Bout } from "../Bout";
-import { Model } from "objection";
+import { JSONSchema, Model } from "objection";
 import { BaseObjectType } from "../BaseObjectType";
 import { Field, GraphQLISODateTime, ObjectType } from "type-graphql";
 import { GraphQLString } from "graphql";
@@ -37,7 +37,7 @@ export class Rikishi extends BaseObjectType {
     @Field(() => [Bout])
     bouts!: Bout[];
 
-    static get jsonSchema() {
+    static get jsonSchema(): JSONSchema {
         return {
             type: "object",
             required: [

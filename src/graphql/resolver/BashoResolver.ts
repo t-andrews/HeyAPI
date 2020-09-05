@@ -35,10 +35,7 @@ export class BashoResolver {
     }
 
     @Mutation(() => BooleanMutationResponse)
-    public async updateBasho(
-        @Arg("id") id: number,
-        @Arg("basho") basho: UpdateBashoInput
-    ): Promise<BooleanMutationResponse> {
+    public async updateBasho(@Arg("id") id: number, @Arg("basho") basho: UpdateBashoInput): Promise<BooleanMutationResponse> {
         const response: BooleanMutationResponse = new BooleanMutationResponse();
         try {
             response.success = await this.bashoRepository.update(id, basho as Basho);

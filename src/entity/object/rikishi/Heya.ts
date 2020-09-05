@@ -1,6 +1,7 @@
 import { BaseObjectType } from "../BaseObjectType";
 import { Field, ObjectType, GraphQLISODateTime } from "type-graphql";
 import { GraphQLString } from "graphql";
+import { JSONSchema } from "objection";
 
 @ObjectType({ description: "The Heya model" })
 export class Heya extends BaseObjectType {
@@ -21,7 +22,7 @@ export class Heya extends BaseObjectType {
     @Field(() => GraphQLISODateTime)
     creationDate!: string;
 
-    static get jsonSchema() {
+    static get jsonSchema(): JSONSchema {
         return {
             type: "object",
             required: [

@@ -2,17 +2,13 @@ import { FieldNode } from "graphql";
 
 export class GraphQLNodeUtil {
 
-    public static doesSelectionFieldExist(nodes: ReadonlyArray<FieldNode>, parentName: string, fieldName: string): boolean {
-        if (!nodes) {
+    public static doesSelectionFieldExist(nodes: ReadonlyArray<FieldNode>, fieldName: string): boolean {
+        if (!nodes || nodes.length < 1) {
             return false;
         }
 
-        const node = <FieldNode> nodes.find(x => x.name.value === parentName);
+        const parentNode: FieldNode = nodes[0];
 
-        if(!node) {
-            return false;
-        }
-
-        return !!node.selectionSet!.selections.find(selection => (<FieldNode> selection).name.value === fieldName);
+        return !!parentNode.selectionSet!.selections.find(selection => (<FieldNode> selection).name.value === fieldName);
     }
 }

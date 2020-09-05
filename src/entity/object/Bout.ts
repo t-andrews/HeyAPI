@@ -1,5 +1,5 @@
 import { Basho } from "./Basho";
-import { Model } from "objection";
+import { JSONSchema, Model } from "objection";
 import { Rikishi } from "./rikishi/Rikishi";
 import { BaseObjectType } from "./BaseObjectType";
 import { Kimarite } from "../../constant/Kimarite";
@@ -41,7 +41,7 @@ export class Bout extends BaseObjectType {
     @Field(() => Int)
     duration!: number;
 
-    static get jsonSchema() {
+    static get jsonSchema(): JSONSchema {
         return {
             type: "object",
             required: [

@@ -5,7 +5,7 @@ import { Field, GraphQLISODateTime, InputType, Int } from "type-graphql";
 
 @InputType()
 export class UpdateBashoInput implements Partial<Basho>{
-    @Field({ nullable: true })
+    @Field(() => GraphQLString, { nullable: true })
     name?: HonBasho;
 
     @Field(() => GraphQLString, { nullable: true })
