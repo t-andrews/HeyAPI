@@ -7,13 +7,11 @@ import { PartialModelObject, QueryBuilder, ValidationError } from "objection";
 export class GenericCRUDRepositoryUtil {
 
     public async create<T extends BaseObjectType> (item: PartialModelObject<T>, queryBuilder: QueryBuilder<T>): Promise<number> {
-        return await queryBuilder.insert(item).then(result => result.id);
+        return queryBuilder.insert(item).then(result => result.id);
     }
 
     public async find<T extends BaseObjectType> (id: number, queryBuilder: QueryBuilder<T>): Promise<T> {
-        return await queryBuilder
-            .findById(id)
-            .then(result => result);
+        return queryBuilder.findById(id);
     }
 
     public async update<T extends BaseObjectType> (item: PartialModelObject<T>, queryBuilder: QueryBuilder<T>): Promise<boolean> {
@@ -25,13 +23,13 @@ export class GenericCRUDRepositoryUtil {
 
         const id: number = (<Partial<BaseObjectType>>item).id!;
 
-        return await queryBuilder
+        return queryBuilder
             .patchAndFetchById(id , item)
             .then(result => result.id != undefined && result.id === id);
     }
 
     public async delete<T extends BaseObjectType> (id: number, queryBuilder: QueryBuilder<T>): Promise<boolean> {
-        return await queryBuilder
+        return queryBuilder
             .deleteById(id)
             .then(result => {
                 return result > 0 && result === id;

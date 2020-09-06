@@ -7,7 +7,6 @@ export class InputValidationError extends GraphQLError {
         return this._constraints;
     }
 
-
     constructor(constraints: string[]) {
         super(
             "Argument Validation Error",

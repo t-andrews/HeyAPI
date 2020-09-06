@@ -1,9 +1,9 @@
 import { GraphQLString } from "graphql";
-import { Heya } from "../../../entity/object/rikishi/Heya";
-import { Rank } from "../../../entity/object/rikishi/Rank";
-import { Rikishi } from "../../../entity/object/rikishi/Rikishi";
-import { Field, GraphQLISODateTime, InputType} from "type-graphql";
+import { CreateRankInput } from "./CreateRankInput";
 import { IsDateString, MaxLength } from "class-validator";
+import { Rikishi } from "../../../entity/object/rikishi/Rikishi";
+import { Field, InputType, Int } from "type-graphql";
+import { Rank } from "../../../entity/object/rikishi/Rank";
 
 @InputType()
 export class CreateRikishiInput implements Partial<Rikishi> {
@@ -12,12 +12,12 @@ export class CreateRikishiInput implements Partial<Rikishi> {
     name!: string;
 
     @IsDateString()
-    @Field(() => GraphQLISODateTime)
+    @Field(() => GraphQLString)
     birthDate!: string;
 
-    @Field(() => Heya)
-    heya?: Heya;
+    @Field(() => Int, { nullable: true })
+    heyaId?: number;
 
-    @Field(() => Rank)
-    rank?: Rank;
+    @Field(() => [CreateRankInput], { nullable: true })
+    ranks?: Rank[];
 }

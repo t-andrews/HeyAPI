@@ -11,14 +11,13 @@ export async function up(knex: Knex): Promise<void> {
                 table.increments("id").primary();
                 table.string("name", 255).notNullable();
                 table.timestamp("birth_date", { useTz: false }).notNullable();
-                table.integer("rank_id").notNullable();
-                table.integer("heya_id").notNullable();
+                table.integer("heya_id").nullable();
             });
             knex.schema.createTable("ranks", table => {
                 table.increments("id").primary();
                 table.string("division", 32).notNullable();
                 table.string("makuuchi_rank", 32).nullable();
-                table.string("region", 8).nullable();
+                table.string("region", 8).notNullable();
                 table.integer("position").nullable();
                 table.timestamp("start_date", { useTz: false }).notNullable();
                 table.timestamp("end_date", { useTz: false }).nullable();

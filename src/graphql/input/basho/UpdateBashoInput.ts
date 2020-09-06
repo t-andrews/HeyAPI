@@ -23,10 +23,10 @@ export class UpdateBashoInput implements Partial<Basho> {
     winnerId?: number;
 
     @IsDateString()
-    @Field(() => GraphQLISODateTime, { nullable: true })
+    @Field(() => GraphQLString, { nullable: true })
     startDate?: string;
 
     @IsDateString()
-    @Field(() => GraphQLISODateTime, { nullable: true })
+    @Field(() => GraphQLString, { nullable: true })
     endDate?: string;
 }

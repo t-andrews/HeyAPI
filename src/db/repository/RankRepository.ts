@@ -1,6 +1,6 @@
 import { Service } from "typedi";
-import { PartialModelObject } from "objection";
 import { Repository } from "./Repository";
+import { PartialModelObject } from "objection";
 import { Rank } from "../../entity/object/rikishi/Rank";
 import { GenericCRUDRepositoryUtil } from "../../util/GenericCRUDRepositoryUtil";
 
@@ -18,15 +18,15 @@ export class RankRepository implements Repository<Rank> {
     }
 
     public async update(item: Rank): Promise<boolean> {
-        return await this.repositoryUtil.update(item, Rank.query())
+        return this.repositoryUtil.update(item, Rank.query())
     }
 
     public async delete(id: number): Promise<boolean> {
-        return await this.repositoryUtil.delete(id, Rank.query())
+        return this.repositoryUtil.delete(id, Rank.query())
     }
 
     public async findByRikishiId(id: number): Promise<Rank[]> {
-        return await Rank.query()
+        return Rank.query()
             .where({ "rikishiId": id })
             .then(result => result);
     }

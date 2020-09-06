@@ -14,6 +14,8 @@ export class Rank extends BaseObjectType {
         return "ranks";
     }
 
+    rikishiId!: number;
+
     @Field(() => GraphQLString)
     division!: Division;
 
@@ -37,6 +39,7 @@ export class Rank extends BaseObjectType {
             type: "object",
             required: [
                 "division",
+                "region",
                 "startDate"
             ],
             properties: {

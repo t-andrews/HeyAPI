@@ -13,7 +13,6 @@ export class Rikishi extends BaseObjectType {
         return "rikishis";
     }
 
-    rankId!: number;
     heyaId!: number;
 
     @Field(() => GraphQLString)
@@ -25,8 +24,8 @@ export class Rikishi extends BaseObjectType {
     @Field(() => Heya)
     heya!: Heya;
 
-    @Field(() => Rank)
-    rank!: Rank;
+    @Field(() => [Rank])
+    ranks!: Rank[];
 
     @Field(() => [Bout])
     wins!: Bout[];
@@ -41,14 +40,12 @@ export class Rikishi extends BaseObjectType {
         return {
             type: "object",
             required: [
-                "rankId",
                 "heyaId",
                 "name",
                 "birthDate"
             ],
             properties: {
                 id: { type: "integer" },
-                rankId: { type: "integer" },
                 heyaId: { type: "integer" },
                 name: { type: "string" },
                 birthDate: { type: "string", "format": "date-time" },
@@ -58,12 +55,12 @@ export class Rikishi extends BaseObjectType {
 
     static get relationMappings() {
         return {
-            rank: {
-                relation: Model.HasOneRelation,
+            ranks: {
+                relation: Model.HasManyRelation,
                 modelClass: Rank,
                 join: {
-                    from: "rikishis.rankId",
-                    to: "ranks.id"
+                    from: "ranks.rikishiId",
+                    to: "rikishis.id"
                 }
             },
             heya: {

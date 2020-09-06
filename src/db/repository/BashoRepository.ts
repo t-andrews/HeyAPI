@@ -12,23 +12,23 @@ export class BashoRepository implements Repository<Basho> {
     constructor(private repositoryUtil: GenericCRUDRepositoryUtil) {}
 
     public async create(item: PartialModelObject<Basho>): Promise<number> {
-        return await this.repositoryUtil.create(item, Basho.query())
+        return this.repositoryUtil.create(item, Basho.query())
     }
 
     public async find(id: number): Promise<Basho> {
-        return await this.repositoryUtil.find(id, Basho.query())
+        return this.repositoryUtil.find(id, Basho.query())
     }
 
     public async update(item: PartialModelObject<Basho>): Promise<boolean> {
-        return await this.repositoryUtil.update(item, Basho.query())
+        return this.repositoryUtil.update(item, Basho.query())
     }
 
     public async delete(id: number): Promise<boolean> {
-        return await this.repositoryUtil.delete(id, Basho.query())
+        return this.repositoryUtil.delete(id, Basho.query())
     }
 
     public async findDetailled(id: number, fieldNodes: ReadonlyArray<FieldNode>): Promise<Basho> {
-        const queryBuilder: QueryBuilder<Basho> = Basho.query().where({ "bashos.id": id });
+        const queryBuilder: QueryBuilder<Basho, Basho> = Basho.query().findById(id);
 
         const relationsToFetch: string[] = [];
 
@@ -44,6 +44,6 @@ export class BashoRepository implements Repository<Basho> {
             queryBuilder.withGraphJoined(`[${relationsToFetch.join(",")}]`);
         }
 
-        return await queryBuilder.then(result => result[0]);
+        return queryBuilder;
     }
 }

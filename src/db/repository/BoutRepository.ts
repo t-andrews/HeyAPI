@@ -10,19 +10,19 @@ export class BoutRepository implements Repository<Bout> {
     constructor(private repositoryUtil: GenericCRUDRepositoryUtil) {}
 
     public async create(item: PartialModelObject<Bout>): Promise<number> {
-        return await this.repositoryUtil.create(item, Bout.query());
+        return this.repositoryUtil.create(item, Bout.query());
     }
 
     public async find(id: number): Promise<Bout> {
-        return await this.repositoryUtil.find(id, Bout.query());
+        return this.repositoryUtil.find(id, Bout.query());
     }
 
     public async update(item: Bout): Promise<boolean> {
-        return await this.repositoryUtil.update(item, Bout.query());
+        return this.repositoryUtil.update(item, Bout.query());
     }
 
     public async delete(id: number): Promise<boolean> {
-        return await this.repositoryUtil.delete(id, Bout.query());
+        return this.repositoryUtil.delete(id, Bout.query());
     }
 
     public async createMany(bouts: Bout[]): Promise<number[]> {
@@ -32,14 +32,13 @@ export class BoutRepository implements Repository<Bout> {
     }
 
     public async findByRikishiId(id: number): Promise<Bout[]> {
-        return await Bout.query()
-            .where({ "winnerId": id }).orWhere({ "loserId": id })
-            .then(result => result);
+        return Bout.query()
+            .where({ "winnerId": id })
+            .orWhere({ "loserId": id });
     }
 
     public async findByBashoId(id: number): Promise<Bout[]> {
-        return await Bout.query()
-            .where({ "basho_id": id })
-            .then(result => result);
+        return Bout.query()
+            .where({ "basho_id": id });
     }
 }

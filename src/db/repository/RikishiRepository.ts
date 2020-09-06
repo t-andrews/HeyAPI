@@ -1,22 +1,38 @@
 import { Service } from "typedi";
 import { FieldNode } from "graphql";
-import { GraphQLNodeUtil } from "../../util/GraphQLNodeUtil";
 import { Repository } from "./Repository";
+import { HeyaRepository } from "./HeyaRepository";
+import { QueryError } from "../../graphql/error/QueryError";
+import { GraphQLNodeUtil } from "../../util/GraphQLNodeUtil";
 import { PartialModelObject, QueryBuilder } from "objection";
 import { Rikishi } from "../../entity/object/rikishi/Rikishi";
-import { GenericCRUDRepositoryUtil } from "../../util/GenericCRUDRepositoryUtil";
 
 @Service()
 export class RikishiRepository implements Repository<Rikishi> {
 
-    constructor(private repositoryUtil: GenericCRUDRepositoryUtil) {}
+    constructor(
+        private heyaRepository: HeyaRepository
+    ) {}
 
     public async create(item: PartialModelObject<Rikishi>): Promise<number> {
-        await Rikishi.transaction(async trx => {
 
+        if (item.heyaId != undefined ) {
+            if (await this.heyaRepository.find(item.heyaId as number) == undefined) {
+                throw new QueryError(`No Heya with id "${item.heyaId}" was found`)
+            }
+        }
+
+        const newRikishi: Rikishi = await Rikishi.transaction(async trx => {
+            const createdRikishi: Rikishi = await Rikishi.query(trx).insert(item);
+
+            if(item.ranks != undefined) {
+                await createdRikishi.$relatedQuery("ranks", trx).insert(item.ranks);
+            }
+
+            return createdRikishi;
         });
 
-        return 0;
+        return newRikishi.id;
     }
 
     public async find(id: number): Promise<Rikishi> {
@@ -38,14 +54,14 @@ export class RikishiRepository implements Repository<Rikishi> {
     }
 
     public async findDetailled(id: number, fieldNodes: ReadonlyArray<FieldNode>): Promise<Rikishi> {
-        const queryBuilder: QueryBuilder<Rikishi> = Rikishi.query().where({ "rikishis.id": id });
+        const queryBuilder: QueryBuilder<Rikishi, Rikishi> = Rikishi.query().findById(id);
         const relationsToFetch: string[] = [];
         const createBouts: boolean = GraphQLNodeUtil.doesSelectionFieldExist(
             fieldNodes, "bouts"
         );
 
-        if(GraphQLNodeUtil.doesSelectionFieldExist(fieldNodes, "rank")) {
-            relationsToFetch.push("rank");
+        if(GraphQLNodeUtil.doesSelectionFieldExist(fieldNodes, "ranks")) {
+            relationsToFetch.push("ranks");
         }
 
         if(GraphQLNodeUtil.doesSelectionFieldExist(fieldNodes, "heya")) {
@@ -64,7 +80,7 @@ export class RikishiRepository implements Repository<Rikishi> {
             queryBuilder.withGraphJoined(`[${relationsToFetch.join(",")}]`);
         }
 
-        const rikishi: Rikishi = await queryBuilder.then(result => result[0]);
+        const rikishi: Rikishi = await queryBuilder;
 
         if (createBouts) {
             rikishi.bouts = [...rikishi.losses, ...rikishi.wins]
