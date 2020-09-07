@@ -1,21 +1,27 @@
 import { Service } from "typedi";
-import { AbstractRepository } from "./AbstractRepository";
-import { HeyaRowMapper } from "../mapper/row/HeyaRowMapper";
-import { Heya } from "../../graphql/entity/object/rikishi/Heya";
-import { HeyaModelMapper } from "../mapper/model/HeyaModelMapper";
+import { Repository } from "./Repository";
+import { PartialModelObject } from "objection";
+import { Heya } from "../../entity/object/rikishi/Heya";
+import { GenericCRUDRepositoryUtil } from "../../util/GenericCRUDRepositoryUtil";
 
 @Service()
-export class HeyaRepository extends AbstractRepository<Heya> {
+export class HeyaRepository implements Repository<Heya> {
 
-    constructor(
-        heyaModelMapper: HeyaModelMapper,
-        heyaRowMapper: HeyaRowMapper
-    ) {
-        super("heyas", heyaRowMapper, heyaModelMapper);
+    constructor(private repositoryUtil: GenericCRUDRepositoryUtil) {}
+
+    public async create(item: PartialModelObject<Heya>): Promise<Heya> {
+        return this.repositoryUtil.create(item, Heya.query());
     }
 
-    public async update(id: number, item: Heya): Promise<boolean> {
-        return undefined!;
+    public async find(id: number): Promise<Heya> {
+        return this.repositoryUtil.find(id, Heya.query());
     }
 
+    public async update(item: PartialModelObject<Heya>): Promise<boolean> {
+        return this.repositoryUtil.update(item, Heya.query());
+    }
+
+    public async delete(id: number): Promise<boolean> {
+        return this.repositoryUtil.delete(id, Heya.query());
+    }
 }
