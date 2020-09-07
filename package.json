@@ -6,7 +6,7 @@
   "scripts": {
     "knex:migrate:make": "knex migrate:make -x ts sumodb",
     "knex:seed:run": "knex seed:run",
-    "test:unit": "cross-env NODE_ENV=test mocha -r ts-node/register test/unit/**/*.test.ts --file test/setup.ts",
+    "test:unit": "cross-env NODE_ENV=test mocha -r ts-node/register \"test/unit/**/*.test.ts\" --file \"test/setup.ts\"",
     "coverage:sonar": "nyc --reporter=lcov npm run test:unit",
     "coverage": "nyc --reporter=text-summary --reporter=html npm run test:unit",
     "start:dev": "cross-env NODE_ENV=dev nodemon",
