@@ -46,7 +46,7 @@ describe("Bout Repository",  () => {
                     winnerId: 1,
                     loserId: 3,
                     bashoId: 1,
-                    date: "2020-01-04 01:10:25+01:00"
+                    date: "2020-01-04T01:10:25+01:00"
                 });
             }
 
@@ -72,7 +72,7 @@ describe("Bout Repository",  () => {
                     winnerId: 1,
                     loserId: 3,
                     bashoId: 1,
-                    date: "2020-01-04 01:10:25+01:00"
+                    date: "2020-01-04T01:10:25+01:00"
                 });
             }
 
@@ -99,7 +99,7 @@ describe("Bout Repository",  () => {
                     winningMethod: Kimarite.KIHONWAZA,
                     loserId: 3,
                     bashoId: 1,
-                    date: "2020-01-04 01:10:25+01:00"
+                    date: "2020-01-04T01:10:25+01:00"
                 });
             }
 
@@ -108,7 +108,7 @@ describe("Bout Repository",  () => {
                 query.response(bouts);
             });
 
-            const result: number[] = await repository.createMany(bouts);
+            const result: Bout[] = await repository.createMany(bouts);
 
             expect(result.length).to.be.equal(4);
         });
@@ -125,7 +125,7 @@ describe("Bout Repository",  () => {
                     duration: 55,
                     loserId: 3,
                     bashoId: 1,
-                    date: "2020-01-04 01:10:25+01:00"
+                    date: "2020-01-04T01:10:25+01:00"
             }]);
             } catch (e) {
                 expect(e instanceof ValidationError).to.be.true;

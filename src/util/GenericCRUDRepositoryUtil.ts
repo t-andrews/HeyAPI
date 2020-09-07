@@ -6,8 +6,8 @@ import { PartialModelObject, QueryBuilder, ValidationError } from "objection";
 @Service()
 export class GenericCRUDRepositoryUtil {
 
-    public async create<T extends BaseObjectType> (item: PartialModelObject<T>, queryBuilder: QueryBuilder<T>): Promise<number> {
-        return queryBuilder.insert(item).then(result => result.id);
+    public async create<T extends BaseObjectType> (item: PartialModelObject<T>, queryBuilder: QueryBuilder<T>): Promise<T> {
+        return queryBuilder.insert(item);
     }
 
     public async find<T extends BaseObjectType> (id: number, queryBuilder: QueryBuilder<T>): Promise<T> {

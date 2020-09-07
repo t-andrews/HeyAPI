@@ -9,7 +9,7 @@ export class BoutRepository implements Repository<Bout> {
 
     constructor(private repositoryUtil: GenericCRUDRepositoryUtil) {}
 
-    public async create(item: PartialModelObject<Bout>): Promise<number> {
+    public async create(item: PartialModelObject<Bout>): Promise<Bout> {
         return this.repositoryUtil.create(item, Bout.query());
     }
 
@@ -25,10 +25,8 @@ export class BoutRepository implements Repository<Bout> {
         return this.repositoryUtil.delete(id, Bout.query());
     }
 
-    public async createMany(bouts: Bout[]): Promise<number[]> {
-        const createdBouts: Bout[] = await Bout.query().insert(bouts);
-
-        return createdBouts.map(bout => bout.id);
+    public async createMany(bouts: Bout[]): Promise<Bout[]> {
+        return Bout.query().insert(bouts);
     }
 
     public async findByRikishiId(id: number): Promise<Bout[]> {

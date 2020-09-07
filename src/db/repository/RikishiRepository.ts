@@ -1,38 +1,40 @@
 import { Service } from "typedi";
 import { FieldNode } from "graphql";
 import { Repository } from "./Repository";
-import { HeyaRepository } from "./HeyaRepository";
+import { Heya } from "../../entity/object/rikishi/Heya";
 import { QueryError } from "../../graphql/error/QueryError";
 import { GraphQLNodeUtil } from "../../util/GraphQLNodeUtil";
 import { PartialModelObject, QueryBuilder } from "objection";
 import { Rikishi } from "../../entity/object/rikishi/Rikishi";
+import { GenericCRUDRepositoryUtil } from "../../util/GenericCRUDRepositoryUtil";
 
 @Service()
 export class RikishiRepository implements Repository<Rikishi> {
 
-    constructor(
-        private heyaRepository: HeyaRepository
-    ) {}
+    constructor(private repositoryUtil: GenericCRUDRepositoryUtil) {}
 
-    public async create(item: PartialModelObject<Rikishi>): Promise<number> {
-
-        if (item.heyaId != undefined ) {
-            if (await this.heyaRepository.find(item.heyaId as number) == undefined) {
-                throw new QueryError(`No Heya with id "${item.heyaId}" was found`)
-            }
-        }
-
-        const newRikishi: Rikishi = await Rikishi.transaction(async trx => {
-            const createdRikishi: Rikishi = await Rikishi.query(trx).insert(item);
-
-            if(item.ranks != undefined) {
-                await createdRikishi.$relatedQuery("ranks", trx).insert(item.ranks);
+    public async create(item: PartialModelObject<Rikishi>): Promise<Rikishi> {
+        return await Rikishi.transaction(async trx => {
+            let heya: Heya = undefined!;
+            if (item.heyaId != undefined ) {
+                heya = await this.repositoryUtil.find<Heya>(item.heyaId as number, Heya.query(trx));
+                if (heya == undefined) {
+                    throw new QueryError(`No Heya with id "${item.heyaId}" was found`)
+                }
             }
 
-            return createdRikishi;
+            const createdRikishi: Rikishi = await Rikishi.query(trx).insertGraph(item);
+            createdRikishi.heya = heya;
+
+            if (createdRikishi.bouts == undefined) {
+                createdRikishi.bouts = []
+            }
+            if (createdRikishi.ranks == undefined) {
+                createdRikishi.ranks = []
+            }
+
+            return createdRikishi
         });
-
-        return newRikishi.id;
     }
 
     public async find(id: number): Promise<Rikishi> {
@@ -83,7 +85,7 @@ export class RikishiRepository implements Repository<Rikishi> {
         const rikishi: Rikishi = await queryBuilder;
 
         if (createBouts) {
-            rikishi.bouts = [...rikishi.losses, ...rikishi.wins]
+            rikishi.bouts = [...rikishi.losses!, ...rikishi.wins!]
         }
 
         return rikishi;

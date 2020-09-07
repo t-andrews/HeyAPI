@@ -11,20 +11,20 @@ export class BashoRepository implements Repository<Basho> {
 
     constructor(private repositoryUtil: GenericCRUDRepositoryUtil) {}
 
-    public async create(item: PartialModelObject<Basho>): Promise<number> {
-        return this.repositoryUtil.create(item, Basho.query())
+    public async create(item: PartialModelObject<Basho>): Promise<Basho> {
+        return this.repositoryUtil.create(item, Basho.query());
     }
 
     public async find(id: number): Promise<Basho> {
-        return this.repositoryUtil.find(id, Basho.query())
+        return this.repositoryUtil.find(id, Basho.query());
     }
 
     public async update(item: PartialModelObject<Basho>): Promise<boolean> {
-        return this.repositoryUtil.update(item, Basho.query())
+        return this.repositoryUtil.update(item, Basho.query());
     }
 
     public async delete(id: number): Promise<boolean> {
-        return this.repositoryUtil.delete(id, Basho.query())
+        return this.repositoryUtil.delete(id, Basho.query());
     }
 
     public async findDetailled(id: number, fieldNodes: ReadonlyArray<FieldNode>): Promise<Basho> {

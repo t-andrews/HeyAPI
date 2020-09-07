@@ -44,7 +44,7 @@ describe("Rank Repository",  () => {
                     division: Division.JURYO,
                     region: Region.EAST,
                     position: 3,
-                    startDate: "2020-01-04 01:10:25+01:00"
+                    startDate: "2020-01-04T01:10:25+01:00"
                 });
             }
 
@@ -57,6 +57,29 @@ describe("Rank Repository",  () => {
 
             expect(result.length).to.be.equal(5);
         });
+
+        it("Should return created Ranks on successful creation", async () => {
+            const ranks: Rank[] = [];
+
+            for(let i = 0; i < 5; i++) {
+                ranks.push(<Rank> {
+                    division: Division.JURYO,
+                    region: Region.EAST,
+                    position: 3,
+                    startDate: "2020-01-04T01:10:25+01:00"
+                });
+            }
+
+            knexTracker.on('query', (query: QueryDetails) =>  {
+                expect(query.method).to.equal("insert");
+                query.response(ranks);
+            });
+
+            const result: Rank[] = await repository.createMany(123, ranks);
+
+            expect(result.length).to.be.equal(5);
+            expect(result[0].rikishiId).to.be.equal(123);
+        });
     });
 
     describe("Negative scenarios", async () => {
@@ -64,7 +87,8 @@ describe("Rank Repository",  () => {
 
             try {
                 await repository.create({
-                    startDate: "2020-01-04 01:10:25+01:00"
+                    region: Region.EAST,
+                    startDate: "2020-01-04T01:10:25+01:00"
                 });
             } catch (e) {
                 expect(e instanceof ValidationError).to.be.true;

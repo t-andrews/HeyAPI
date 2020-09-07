@@ -9,19 +9,19 @@ export class HeyaRepository implements Repository<Heya> {
 
     constructor(private repositoryUtil: GenericCRUDRepositoryUtil) {}
 
-    public async create(item: PartialModelObject<Heya>): Promise<number> {
-        return this.repositoryUtil.create(item, Heya.query())
+    public async create(item: PartialModelObject<Heya>): Promise<Heya> {
+        return this.repositoryUtil.create(item, Heya.query());
     }
 
     public async find(id: number): Promise<Heya> {
-        return this.repositoryUtil.find(id, Heya.query())
+        return this.repositoryUtil.find(id, Heya.query());
     }
 
     public async update(item: PartialModelObject<Heya>): Promise<boolean> {
-        return this.repositoryUtil.update(item, Heya.query())
+        return this.repositoryUtil.update(item, Heya.query());
     }
 
     public async delete(id: number): Promise<boolean> {
-        return this.repositoryUtil.delete(id, Heya.query())
+        return this.repositoryUtil.delete(id, Heya.query());
     }
 }

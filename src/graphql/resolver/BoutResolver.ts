@@ -7,7 +7,7 @@ import { RikishiResolver } from "./RikishiResolver";
 import { Rikishi } from "../../entity/object/rikishi/Rikishi";
 import { CreateBoutInput } from "../input/bout/CreateBoutInput";
 import { BoutRepository } from "../../db/repository/BoutRepository";
-import { IdMutationResponse } from "../response/mutation/IdMutationResponse";
+import { BoutCreationResponse } from "../response/mutation/BoutCreationResponse";
 import { Arg, FieldResolver, Info, Mutation, Query, Resolver, ResolverInterface, Root } from "type-graphql";
 
 @Service()
@@ -40,11 +40,11 @@ export class BoutResolver implements ResolverInterface<Bout> {
         return await this.boutRepository.findByRikishiId(id);
     }
 
-    @Mutation(() => IdMutationResponse)
-    public async createBout(@Arg("bout") bout: CreateBoutInput): Promise<IdMutationResponse> {
-        const response: IdMutationResponse = new IdMutationResponse();
+    @Mutation(() => BoutCreationResponse)
+    public async createBout(@Arg("bout") bout: CreateBoutInput): Promise<BoutCreationResponse> {
+        const response: BoutCreationResponse = new BoutCreationResponse();
         try {
-            response.id = await this.boutRepository.create(bout as Bout);
+            response.data = await this.boutRepository.create(bout as Bout);
         } catch (e) {
             response.error = (e as Error).message;
         }

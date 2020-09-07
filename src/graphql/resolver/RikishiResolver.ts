@@ -2,10 +2,9 @@ import { Service } from "typedi";
 import { GraphQLResolveInfo } from "graphql";
 import { Rikishi } from "../../entity/object/rikishi/Rikishi";
 import { Arg, Info, Mutation, Query, Resolver } from "type-graphql";
-import { CreateRikishiInput } from "../input/basho/CreateRikishiInput";
+import { CreateRikishiInput } from "../input/rikishi/CreateRikishiInput";
 import { RikishiRepository } from "../../db/repository/RikishiRepository";
-import { IdMutationResponse } from "../response/mutation/IdMutationResponse";
-import { Rank } from "../../entity/object/rikishi/Rank";
+import { RikishiCreationResponse } from "../response/mutation/RikishiCreationResponse";
 
 @Service()
 @Resolver(() => Rikishi)
@@ -18,11 +17,11 @@ export class RikishiResolver {
         return await this.rikishiRepository.findDetailled(id, info.fieldNodes);
     }
 
-    @Mutation(() => IdMutationResponse)
-    public async createRikishi(@Arg("rikishi") rikishi: CreateRikishiInput): Promise<IdMutationResponse> {
-        const response: IdMutationResponse = new IdMutationResponse();
+    @Mutation(() => RikishiCreationResponse)
+    public async createRikishi(@Arg("rikishi") rikishi: CreateRikishiInput): Promise<RikishiCreationResponse> {
+        const response: RikishiCreationResponse = new RikishiCreationResponse();
         try {
-            response.id = await this.rikishiRepository.create(rikishi);
+            response.data = await this.rikishiRepository.create(rikishi);
         } catch (e) {
             response.error = (e as Error).message;
         }

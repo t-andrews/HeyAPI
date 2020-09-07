@@ -44,9 +44,9 @@ describe("Generic CRUD Repository Util",  () => {
                 query.response([{ id: 1 }]);
             });
 
-            const result: number = await repository.create<Basho>(
+            const result: Basho = await repository.create<Basho>(
                 <Basho> {
-                    startDate: "2020-01-04 01:10:25+01:00",
+                    startDate: "2020-01-04T01:10:25+01:00",
                     winnerId: 123,
                     location: "location_test",
                     name: "Natsu"
@@ -54,7 +54,7 @@ describe("Generic CRUD Repository Util",  () => {
                 Basho.query()
             );
 
-            expect(result).to.equal(1);
+            expect(result.id).to.equal(1);
         });
 
         it("Should return a Heya on successful find", async () => {
@@ -62,7 +62,7 @@ describe("Generic CRUD Repository Util",  () => {
             repository = new GenericCRUDRepositoryUtil();
 
             const heya: Partial<Heya> = {
-                creationDate: "2020-01-04 01:10:25+01:00",
+                creationDate: "2020-01-04T01:10:25+01:00",
                 ichimon: "ichimon_test",
                 location: "location_test",
                 name: "name_test"
@@ -97,7 +97,7 @@ describe("Generic CRUD Repository Util",  () => {
 
             const rank: Partial<Rank> = {
                 id: 123,
-                startDate: "2020-01-04 01:10:25+01:00",
+                startDate: "2020-01-04T01:10:25+01:00",
             }
 
             const result: boolean = await repository.update<Rank>(rank, Rank.query());

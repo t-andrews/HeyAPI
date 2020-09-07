@@ -6,8 +6,8 @@ import { CreateBashoInput } from "../input/basho/CreateBashoInput";
 import { UpdateBashoInput } from "../input/basho/UpdateBashoInput";
 import { Arg, Info, Mutation, Query, Resolver } from "type-graphql";
 import { BashoRepository } from "../../db/repository/BashoRepository";
-import { IdMutationResponse } from "../response/mutation/IdMutationResponse";
 import { BooleanMutationResponse } from "../response/mutation/BooleanMutationResponse";
+import { BashoCreationResponse } from "../response/mutation/BashoCreationResponse";
 
 @Service()
 @Resolver(() => Basho)
@@ -23,11 +23,11 @@ export class BashoResolver {
         return await this.bashoRepository.findDetailled(id, info.fieldNodes);
     }
 
-    @Mutation(() => IdMutationResponse)
-    public async createBasho(@Arg("basho") basho: CreateBashoInput): Promise<IdMutationResponse> {
-        const response: IdMutationResponse = new IdMutationResponse();
+    @Mutation(() => BashoCreationResponse)
+    public async createBasho(@Arg("basho") basho: CreateBashoInput): Promise<BashoCreationResponse> {
+        const response: BashoCreationResponse = new BashoCreationResponse();
         try {
-            response.id = await this.bashoRepository.create(basho);
+            response.data = await this.bashoRepository.create(basho);
         } catch (e) {
             response.error = (e as Error).message;
         }

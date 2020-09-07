@@ -24,17 +24,17 @@ export class Rikishi extends BaseObjectType {
     @Field(() => Heya)
     heya!: Heya;
 
-    @Field(() => [Rank])
-    ranks!: Rank[];
+    @Field(() => [Rank], { nullable: true })
+    ranks?: Rank[];
 
-    @Field(() => [Bout])
-    wins!: Bout[];
+    @Field(() => [Bout], { nullable: true })
+    wins?: Bout[];
 
-    @Field(() => [Bout])
-    losses!: Bout[];
+    @Field(() => [Bout], { nullable: true })
+    losses?: Bout[];
 
-    @Field(() => [Bout])
-    bouts!: Bout[];
+    @Field(() => [Bout], { nullable: true })
+    bouts?: Bout[];
 
     static get jsonSchema(): JSONSchema {
         return {
