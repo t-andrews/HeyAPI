@@ -1,5 +1,9 @@
 version: 2.1
 
+orbs:
+  sonarcloud: sonarsource/sonarcloud@1.0.1
+  heroku: circleci/heroku@0.0.10
+
 jobs:
   build:
     docker:
@@ -14,11 +18,14 @@ jobs:
           command: npm run coverage:sonar
       - sonarcloud/scan
 
-orbs:
-  sonarcloud: sonarsource/sonarcloud@1.0.1
-
 workflows:
-  main:
+  heroku_deploy:
     jobs:
       - build:
           context: SonarCloud
+      - heroku/deploy-via-git:
+          requires:
+            - build
+          filters:
+            branches:
+              only: sequential-branch-filter
