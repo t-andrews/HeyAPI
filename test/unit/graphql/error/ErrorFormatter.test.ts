@@ -1,9 +1,9 @@
 import sinonChai from "sinon-chai";
 import chai, { expect } from "chai";
 import { GraphQLError } from "graphql";
-import { InputValidationError } from "../../../../src/graphql/error/InputValidationError";
-import { ErrorFormatter } from "../../../../src/graphql/error/ErrorFormatter";
 import { QueryError } from "../../../../src/graphql/error/QueryError";
+import { ErrorFormatter } from "../../../../src/graphql/error/ErrorFormatter";
+import { InputValidationError } from "../../../../src/graphql/error/InputValidationError";
 
 chai.use(sinonChai);
 

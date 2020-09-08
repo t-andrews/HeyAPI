@@ -158,7 +158,6 @@ describe("Rikishi Repository",  () => {
             expect(result).to.deep.equal(foundRikishi);
         });
     });
-    });
 
     describe("Negative scenarios", async () => {
         it("Should throw a QueryError when the heyaId is invalid", async () => {
@@ -189,18 +188,5 @@ describe("Rikishi Repository",  () => {
                 expect(err.message).to.be.equal(`Query Error: No Heya with id "${insertedRikishi.heyaId}" was found`);
             });
         });
-
-        // it("Should throw an error on creation with a missing field", async () => {
-        //
-        //     try {
-        //         await repository.create({
-        //             region: Region.EAST,
-        //             startDate: "2020-01-04T01:10:25+01:00"
-        //         });
-        //     } catch (e) {
-        //         expect(e instanceof ValidationError).to.be.true;
-        //         expect((e as ValidationError).message).to.equal("division: is a required property")
-        //     }
-        // });
-    // });
+    });
 });
