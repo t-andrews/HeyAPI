@@ -3,7 +3,7 @@ import { Bout } from "../../../entity/object/Bout";
 import { CreationResponse } from "./CreationResponse";
 
 @ObjectType()
-export class BoutCreationResponse extends CreationResponse {
+export class BoutMutationResponse extends CreationResponse {
     @Field(() => Bout, { nullable: true })
     data?: Bout
 }

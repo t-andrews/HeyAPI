@@ -1,10 +1,10 @@
 import { Service } from "typedi";
 import { GraphQLResolveInfo } from "graphql";
 import { Rikishi } from "../../entity/object/rikishi/Rikishi";
-import { Arg, Info, Mutation, Query, Resolver } from "type-graphql";
+import { Arg, Info, Int, Mutation, Query, Resolver } from "type-graphql";
 import { CreateRikishiInput } from "../input/rikishi/CreateRikishiInput";
 import { RikishiRepository } from "../../db/repository/RikishiRepository";
-import { RikishiCreationResponse } from "../response/mutation/RikishiCreationResponse";
+import { RikishiMutationResponse } from "../response/mutation/RikishiMutationResponse";
 
 @Service()
 @Resolver(() => Rikishi)
@@ -13,13 +13,13 @@ export class RikishiResolver {
     constructor(private rikishiRepository: RikishiRepository) {}
 
     @Query(() => Rikishi)
-    public async rikishi(@Arg("id") id: number, @Info() info: GraphQLResolveInfo): Promise<Rikishi> {
+    public async rikishi(@Arg("id", () => Int) id: number, @Info() info: GraphQLResolveInfo): Promise<Rikishi> {
         return await this.rikishiRepository.findDetailled(id, info.fieldNodes);
     }
 
-    @Mutation(() => RikishiCreationResponse)
-    public async createRikishi(@Arg("rikishi") rikishi: CreateRikishiInput): Promise<RikishiCreationResponse> {
-        const response: RikishiCreationResponse = new RikishiCreationResponse();
+    @Mutation(() => RikishiMutationResponse)
+    public async createRikishi(@Arg("rikishi") rikishi: CreateRikishiInput): Promise<RikishiMutationResponse> {
+        const response: RikishiMutationResponse = new RikishiMutationResponse();
         try {
             response.data = await this.rikishiRepository.create(rikishi);
         } catch (e) {

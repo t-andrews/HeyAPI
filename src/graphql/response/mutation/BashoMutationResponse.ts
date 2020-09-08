@@ -3,7 +3,7 @@ import { Basho } from "../../../entity/object/Basho";
 import { CreationResponse } from "./CreationResponse";
 
 @ObjectType()
-export class BashoCreationResponse extends CreationResponse {
+export class BashoMutationResponse extends CreationResponse {
     @Field(() => Basho, { nullable: true })
     data?: Basho
 }

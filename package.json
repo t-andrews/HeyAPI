@@ -5,19 +5,21 @@
   "main": "./src/server.ts",
   "scripts": {
     "knex:migrate:make": "knex migrate:make -x ts sumodb",
-    "knex:seed:run": "knex seed:run",
+    "knex:migrate:latest": "cross-env NODE_ENV=dev knex migrate:latest",
+    "knex:seed:run": "cross-env NODE_ENV=dev knex seed:run",
     "test:unit": "cross-env NODE_ENV=test mocha -r ts-node/register \"test/unit/**/*.test.ts\" --file \"test/setup.ts\"",
     "coverage:sonar": "nyc --reporter=lcov npm run test:unit",
     "coverage": "nyc --reporter=text-summary --reporter=html npm run test:unit",
     "start:dev": "cross-env NODE_ENV=dev nodemon",
-    "start": "NODE_ENV=prod ts-node ./src/server.ts"
+    "start": "ts-node ./src/server.ts"
   },
   "keywords": [
     "sumo",
     "graphql",
     "api",
     "apollo",
-    "typescript"
+    "typescript",
+    "objectionjs"
   ],
   "author": "Tommy Andrews",
   "license": "ISC",

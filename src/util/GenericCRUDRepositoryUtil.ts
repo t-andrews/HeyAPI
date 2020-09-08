@@ -14,7 +14,7 @@ export class GenericCRUDRepositoryUtil {
         return queryBuilder.findById(id);
     }
 
-    public async update<T extends BaseObjectType> (item: PartialModelObject<T>, queryBuilder: QueryBuilder<T>): Promise<boolean> {
+    public async update<T extends BaseObjectType> (item: PartialModelObject<T>, queryBuilder: QueryBuilder<T>): Promise<T> {
         const validItem: boolean = ModelFieldValidator.validateUpdateItem(item, queryBuilder.modelClass().jsonSchema);
 
         if (!validItem) {
@@ -23,9 +23,7 @@ export class GenericCRUDRepositoryUtil {
 
         const id: number = (<Partial<BaseObjectType>>item).id!;
 
-        return queryBuilder
-            .patchAndFetchById(id , item)
-            .then(result => result.id != undefined && result.id === id);
+        return queryBuilder.patchAndFetchById(id , item);
     }
 
     public async delete<T extends BaseObjectType> (id: number, queryBuilder: QueryBuilder<T>): Promise<boolean> {

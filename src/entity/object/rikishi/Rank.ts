@@ -19,7 +19,7 @@ export class Rank extends BaseObjectType {
     @Field(() => GraphQLString)
     division!: Division;
 
-    @Field(() => Int)
+    @Field(() => Int, { nullable: true })
     position?: number;
 
     @Field(() => GraphQLString, { nullable: true })
