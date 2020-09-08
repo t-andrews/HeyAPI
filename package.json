@@ -10,7 +10,7 @@
     "coverage:sonar": "nyc --reporter=lcov npm run test:unit",
     "coverage": "nyc --reporter=text-summary --reporter=html npm run test:unit",
     "start:dev": "cross-env NODE_ENV=dev nodemon",
-    "start": "NODE_ENV=prod ts-node"
+    "start": "NODE_ENV=prod ts-node ./src/server.ts"
   },
   "keywords": [
     "sumo",
