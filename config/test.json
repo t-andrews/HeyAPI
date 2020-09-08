@@ -1,6 +1,0 @@
-{
-    "knex": {
-        "client": "postgres",
-        "debug": true
-    }
-}
