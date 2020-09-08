@@ -8,7 +8,7 @@ import { RikishiResolver } from "../../../../src/graphql/resolver/RikishiResolve
 import { RikishiRepository } from "../../../../src/db/repository/RikishiRepository";
 import { GenericCRUDRepositoryUtil } from "../../../../src/util/GenericCRUDRepositoryUtil";
 import { CreateRikishiInput } from "../../../../src/graphql/input/rikishi/CreateRikishiInput";
-import { RikishiCreationResponse } from "../../../../src/graphql/response/mutation/RikishiCreationResponse";
+import { RikishiMutationResponse } from "../../../../src/graphql/response/mutation/RikishiMutationResponse";
 
 let sandbox: sinon.SinonSandbox;
 
@@ -53,13 +53,13 @@ describe("Rikishi Resolver",  () => {
             sandbox = sinon.createSandbox();
         });
 
-        it("Should return a RikishiCreationResponse on successful creation", async () => {
+        it("Should return a RikishiMutationResponse on successful creation", async () => {
 
             sandbox.stub(rikishiRepository, "create").resolves(returnedRikishi);
 
             const resolver: RikishiResolver = new RikishiResolver(rikishiRepository);
 
-            const result: RikishiCreationResponse = await resolver.createRikishi(insertedRikishi);
+            const result: RikishiMutationResponse = await resolver.createRikishi(insertedRikishi);
 
             expect(result.data).to.deep.equal(returnedRikishi);
         });
@@ -77,7 +77,7 @@ describe("Rikishi Resolver",  () => {
     });
 
     describe("Negative scenarios", async () => {
-        it("Should return a RikishiCreationResponse on failed creation", async () => {
+        it("Should return a RikishiMutationResponse on failed creation", async () => {
             const insertedRikishi = <CreateRikishiInput> {
                 name: "rikishi_name",
                 birthDate: "2020-01-04T01:10:25+01:00",
@@ -90,7 +90,7 @@ describe("Rikishi Resolver",  () => {
 
             const resolver: RikishiResolver = new RikishiResolver(rikishiRepository);
 
-            const result: RikishiCreationResponse = await resolver.createRikishi(insertedRikishi);
+            const result: RikishiMutationResponse = await resolver.createRikishi(insertedRikishi);
 
             expect(result.error).to.deep.equal(error.message);
         });

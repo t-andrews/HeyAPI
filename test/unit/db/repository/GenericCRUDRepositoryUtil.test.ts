@@ -78,7 +78,7 @@ describe("Generic CRUD Repository Util",  () => {
             expect(result).to.deep.equal(heya);
         });
 
-        it("Should return true on successful update", async () => {
+        it("Should return the updated item on successful update", async () => {
 
             repository = new GenericCRUDRepositoryUtil();
 
@@ -100,9 +100,9 @@ describe("Generic CRUD Repository Util",  () => {
                 startDate: "2020-01-04T01:10:25+01:00",
             }
 
-            const result: boolean = await repository.update<Rank>(rank, Rank.query());
+            const result: Rank = await repository.update<Rank>(rank, Rank.query());
 
-            expect(result).to.equal(true);
+            expect(result).to.deep.equal(rank);
         });
 
         it("Should return true on successful delete", async () => {

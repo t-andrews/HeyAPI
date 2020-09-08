@@ -19,7 +19,7 @@ export class BashoRepository implements Repository<Basho> {
         return this.repositoryUtil.find(id, Basho.query());
     }
 
-    public async update(item: PartialModelObject<Basho>): Promise<boolean> {
+    public async update(item: PartialModelObject<Basho>): Promise<Basho> {
         return this.repositoryUtil.update(item, Basho.query());
     }
 

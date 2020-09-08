@@ -4,7 +4,7 @@
 ##Summary
 This project is a way to explore interesting technologies like [Apollo Server](https://www.apollographql.com/docs/) and [TypeGraphQL](https://typegraphql.com/) 
 as well as CI/CD tools like [CircleCI](https://circleci.com/) and [Heroku](https://dashboard.heroku.com/) with a subject I personally enjoy (Sumo). 
-The end goal is to create an API that can be used to store and retrieve the data from the main sumo association (the Japan Sumo Association).
+The end goal is to create an API that can be extended so that it can be used to store and retrieve the data from the main sumo association (the Japan Sumo Association).
 
 ##Installation
 To install the needed dependencies, run the following command in the repository's root:

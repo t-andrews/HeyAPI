@@ -86,7 +86,7 @@ describe("Bout Repository",  () => {
             expect(result.length).to.be.equal(3);
         });
 
-        it("Should return the ids on successful creation of many bouts", async () => {
+        it("Should return created bouts on successful creation of many bouts", async () => {
             const bouts: Bout[] = [];
 
             for(let i = 0; i < 4; i++) {

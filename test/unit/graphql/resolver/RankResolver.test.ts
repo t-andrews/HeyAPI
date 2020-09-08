@@ -10,7 +10,7 @@ import { RankRepository } from "../../../../src/db/repository/RankRepository";
 import { AddRankInput } from "../../../../src/graphql/input/rank/AddRankInput";
 import { CreateRankInput } from "../../../../src/graphql/input/rank/CreateRankInput";
 import { GenericCRUDRepositoryUtil } from "../../../../src/util/GenericCRUDRepositoryUtil";
-import { RanksCreationResponse } from "../../../../src/graphql/response/mutation/RanksCreationResponse";
+import { RanksMutationResponse } from "../../../../src/graphql/response/mutation/RanksMutationResponse";
 
 let sandbox: sinon.SinonSandbox;
 
@@ -38,7 +38,7 @@ describe("Rank Resolver",  () => {
             sandbox = sinon.createSandbox();
         });
 
-        it("Should return a RanksCreationResponse on successful creation of many ranks", async () => {
+        it("Should return a RanksMutationResponse on successful creation of many ranks", async () => {
 
             const ranks: CreateRankInput[] = [];
 
@@ -65,7 +65,7 @@ describe("Rank Resolver",  () => {
 
             const resolver: RankResolver = new RankResolver(rankRepository);
 
-            const result: RanksCreationResponse = await resolver.addRanks(insertedRanks);
+            const result: RanksMutationResponse = await resolver.addRanks(insertedRanks);
 
             expect(result.data?.length).to.be.equal(ranks.length);
             expect(result.data).to.deep.equal(returnedRanks);
@@ -73,7 +73,7 @@ describe("Rank Resolver",  () => {
     });
 
     describe("Negative scenarios", async () => {
-        it("Should return a RanksCreationResponse on failed creation", async () => {
+        it("Should return a RanksMutationResponse on failed creation", async () => {
             const insertedRanks: AddRankInput = {
                 rikishiId: 123,
                 ranks: []
@@ -85,7 +85,7 @@ describe("Rank Resolver",  () => {
 
             const resolver: RankResolver = new RankResolver(rankRepository);
 
-            const result: RanksCreationResponse = await resolver.addRanks(insertedRanks);
+            const result: RanksMutationResponse = await resolver.addRanks(insertedRanks);
 
             expect(result.error).to.deep.equal(error.message);
         });

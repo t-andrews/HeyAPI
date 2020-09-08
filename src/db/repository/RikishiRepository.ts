@@ -38,12 +38,10 @@ export class RikishiRepository implements Repository<Rikishi> {
     }
 
     public async find(id: number): Promise<Rikishi> {
-        return await Rikishi.query()
-            .findById(id)
-            .then(result => result);
+        return this.repositoryUtil.find<Rikishi>(id, Rikishi.query());
     }
 
-    public update(item: PartialModelObject<Rikishi>): Promise<boolean> {
+    public update(item: PartialModelObject<Rikishi>): Promise<Rikishi> {
         return undefined!;
     }
 
