@@ -18,8 +18,14 @@ async function bootstrap() {
     const app = express();
     server.applyMiddleware({ app });
 
-    app.listen(4000, () => {
-        if (process.env.NODE_ENV !== "prod") {
+    app.get('/', (req, res) => {
+        res.redirect('/graphql');
+    });
+
+    const port = process.env.PORT || 4000;
+
+    app.listen(port, () => {
+        if (process.env.NODE_ENV != "prod") {
             console.log(`Server is running, GraphQL Playground available on http://localhost:4000/graphql`);
         }
     });
