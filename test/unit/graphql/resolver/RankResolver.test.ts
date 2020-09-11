@@ -4,7 +4,7 @@ import { cloneDeep } from "lodash";
 import chai, { expect } from "chai";
 import { Region } from "../../../../src/constant/Region";
 import { Division } from "../../../../src/constant/Division";
-import { Rank } from "../../../../src/entity/object/rikishi/Rank";
+import { Rank } from "../../../../src/model/rikishi/Rank";
 import { RankResolver } from "../../../../src/graphql/resolver/RankResolver";
 import { RankRepository } from "../../../../src/db/repository/RankRepository";
 import { AddRankInput } from "../../../../src/graphql/input/rank/AddRankInput";

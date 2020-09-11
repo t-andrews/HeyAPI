@@ -2,12 +2,12 @@ import * as sinon from "sinon";
 import sinonChai from "sinon-chai";
 import chai, { expect } from "chai";
 import { ValidationError } from "objection";
-import { Bout } from "../../../../src/entity/object/Bout";
-import { Basho } from "../../../../src/entity/object/Basho";
+import { Bout } from "../../../src/model/Bout";
+import { Basho } from "../../../src/model/Basho";
 import { Tracker, getTracker, QueryDetails } from "mock-knex";
-import { Heya } from "../../../../src/entity/object/rikishi/Heya";
-import { Rank } from "../../../../src/entity/object/rikishi/Rank";
-import { GenericCRUDRepositoryUtil } from "../../../../src/util/GenericCRUDRepositoryUtil";
+import { Heya } from "../../../src/model/rikishi/Heya";
+import { Rank } from "../../../src/model/rikishi/Rank";
+import { GenericCRUDRepositoryUtil } from "../../../src/util/GenericCRUDRepositoryUtil";
 
 
 let sandbox: sinon.SinonSandbox;

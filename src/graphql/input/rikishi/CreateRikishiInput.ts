@@ -2,8 +2,8 @@ import { GraphQLString } from "graphql";
 import { Field, InputType, Int } from "type-graphql";
 import { CreateRankInput } from "../rank/CreateRankInput";
 import { IsDateString, MaxLength } from "class-validator";
-import { Rank } from "../../../entity/object/rikishi/Rank";
-import { Rikishi } from "../../../entity/object/rikishi/Rikishi";
+import { Rank } from "../../../model/rikishi/Rank";
+import { Rikishi } from "../../../model/rikishi/Rikishi";
 
 @InputType()
 export class CreateRikishiInput implements Partial<Rikishi> {

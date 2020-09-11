@@ -1,5 +1,5 @@
 import { GraphQLString } from "graphql";
-import { Basho } from "../../../entity/object/Basho";
+import { Basho } from "../../../model/Basho";
 import { Field, InputType, Int } from "type-graphql";
 import { HonBasho } from "../../../constant/HonBasho";
 import { IsDateString, IsIn, MaxLength, Min } from "class-validator";
@@ -11,7 +11,7 @@ export class UpdateBashoInput implements Partial<Basho> {
     id!: number;
 
     @IsIn(Object.values(HonBasho))
-    @Field(() => GraphQLString, { nullable: true })
+    @Field(() => HonBasho, { nullable: true })
     name?: HonBasho;
 
     @MaxLength(255)

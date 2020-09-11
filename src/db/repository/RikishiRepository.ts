@@ -1,11 +1,11 @@
 import { Service } from "typedi";
 import { FieldNode } from "graphql";
 import { Repository } from "./Repository";
-import { Heya } from "../../entity/object/rikishi/Heya";
+import { Heya } from "../../model/rikishi/Heya";
 import { QueryError } from "../../graphql/error/QueryError";
 import { GraphQLNodeUtil } from "../../util/GraphQLNodeUtil";
 import { PartialModelObject, QueryBuilder } from "objection";
-import { Rikishi } from "../../entity/object/rikishi/Rikishi";
+import { Rikishi } from "../../model/rikishi/Rikishi";
 import { GenericCRUDRepositoryUtil } from "../../util/GenericCRUDRepositoryUtil";
 
 @Service()

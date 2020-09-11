@@ -1,3 +1,6 @@
+/**
+ * Basho names.
+ */
 export enum HonBasho {
     HATSU = "Hatsu",
     HARU = "Haru",

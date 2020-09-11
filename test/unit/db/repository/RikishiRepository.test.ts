@@ -5,10 +5,10 @@ import { cloneDeep } from "lodash";
 import { Region } from "../../../../src/constant/Region";
 import { Division } from "../../../../src/constant/Division";
 import { getTracker, QueryDetails, Tracker } from "mock-knex";
-import { Heya } from "../../../../src/entity/object/rikishi/Heya";
+import { Heya } from "../../../../src/model/rikishi/Heya";
 import { QueryError } from "../../../../src/graphql/error/QueryError";
 import { GraphQLNodeUtil } from "../../../../src/util/GraphQLNodeUtil";
-import { Rikishi } from "../../../../src/entity/object/rikishi/Rikishi";
+import { Rikishi } from "../../../../src/model/rikishi/Rikishi";
 import { RikishiRepository } from "../../../../src/db/repository/RikishiRepository";
 import { GenericCRUDRepositoryUtil } from "../../../../src/util/GenericCRUDRepositoryUtil";
 

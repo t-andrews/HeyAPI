@@ -1,13 +1,13 @@
 import { Heya } from "./Heya";
 import { Rank } from "./Rank";
 import { Bout } from "../Bout";
-import { JSONSchema, Model } from "objection";
-import { BaseObjectType } from "../BaseObjectType";
-import { Field, GraphQLISODateTime, ObjectType } from "type-graphql";
 import { GraphQLString } from "graphql";
+import { BaseModel } from "../BaseModel";
+import { JSONSchema, Model } from "objection";
+import { Field, GraphQLISODateTime, ObjectType } from "type-graphql";
 
 @ObjectType({ description: "The Rikishi model" })
-export class Rikishi extends BaseObjectType {
+export class Rikishi extends BaseModel {
 
     static get tableName() {
         return "rikishis";

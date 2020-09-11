@@ -2,14 +2,14 @@ import { GraphQLString } from "graphql";
 import { Region } from "../../../constant/Region";
 import { Field, InputType, Int } from "type-graphql";
 import { Division } from "../../../constant/Division";
-import { Rank } from "../../../entity/object/rikishi/Rank";
+import { Rank } from "../../../model/rikishi/Rank";
 import { MakuuchiRank } from "../../../constant/MakuuchiRank";
 import { IsDateString, IsIn, Max, Min } from "class-validator";
 
 @InputType()
 export class CreateRankInput implements Partial<Rank> {
     @IsIn(Object.values(Division))
-    @Field(() => GraphQLString)
+    @Field(() => Division)
     division!: Division;
 
     @Min(1)
@@ -18,11 +18,11 @@ export class CreateRankInput implements Partial<Rank> {
     position?: number;
 
     @IsIn(Object.values(MakuuchiRank))
-    @Field(() => GraphQLString, { nullable: true })
+    @Field(() => MakuuchiRank, { nullable: true })
     makuuchiRank?: MakuuchiRank;
 
     @IsIn(Object.values(Region))
-    @Field(() => GraphQLString)
+    @Field(() => Region)
     region!: Region;
 
     @IsDateString()

@@ -2,7 +2,7 @@ import * as sinon from "sinon";
 import sinonChai from "sinon-chai";
 import { cloneDeep } from "lodash";
 import chai, { expect } from "chai";
-import { Basho } from "../../../../src/entity/object/Basho";
+import { Basho } from "../../../../src/model/Basho";
 import { HonBasho } from "../../../../src/constant/HonBasho";
 import { BashoResolver } from "../../../../src/graphql/resolver/BashoResolver";
 import { BashoRepository } from "../../../../src/db/repository/BashoRepository";

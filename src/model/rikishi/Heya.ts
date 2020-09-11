@@ -1,10 +1,10 @@
-import { BaseObjectType } from "../BaseObjectType";
-import { Field, ObjectType, GraphQLISODateTime } from "type-graphql";
-import { GraphQLString } from "graphql";
 import { JSONSchema } from "objection";
+import { GraphQLString } from "graphql";
+import { BaseModel } from "../BaseModel";
+import { Field, ObjectType, GraphQLISODateTime } from "type-graphql";
 
 @ObjectType({ description: "The Heya model" })
-export class Heya extends BaseObjectType {
+export class Heya extends BaseModel {
 
     static get tableName() {
         return "heyas";

@@ -1,10 +1,10 @@
 import { Service } from "typedi";
 import { GraphQLResolveInfo } from "graphql";
-import { Bout } from "../../entity/object/Bout";
+import { Bout } from "../../model/Bout";
 import { BashoResolver } from "./BashoResolver";
-import { Basho } from "../../entity/object/Basho";
+import { Basho } from "../../model/Basho";
 import { RikishiResolver } from "./RikishiResolver";
-import { Rikishi } from "../../entity/object/rikishi/Rikishi";
+import { Rikishi } from "../../model/rikishi/Rikishi";
 import { CreateBoutInput } from "../input/bout/CreateBoutInput";
 import { BoutRepository } from "../../db/repository/BoutRepository";
 import { BoutMutationResponse } from "../response/mutation/BoutMutationResponse";

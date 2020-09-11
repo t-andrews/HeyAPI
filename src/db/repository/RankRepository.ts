@@ -1,7 +1,7 @@
 import { Service } from "typedi";
 import { Repository } from "./Repository";
 import { PartialModelObject } from "objection";
-import { Rank } from "../../entity/object/rikishi/Rank";
+import { Rank } from "../../model/rikishi/Rank";
 import { GenericCRUDRepositoryUtil } from "../../util/GenericCRUDRepositoryUtil";
 
 @Service()

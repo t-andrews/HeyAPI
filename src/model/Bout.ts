@@ -1,13 +1,12 @@
 import { Basho } from "./Basho";
-import { JSONSchema, Model } from "objection";
+import { BaseModel } from "./BaseModel";
 import { Rikishi } from "./rikishi/Rikishi";
-import { BaseObjectType } from "./BaseObjectType";
-import { Kimarite } from "../../constant/Kimarite";
+import { JSONSchema, Model } from "objection";
+import { Kimarite } from "../constant/kimarite/Kimarite";
 import { Field, ObjectType, Int, GraphQLISODateTime } from "type-graphql";
-import { GraphQLString } from "graphql";
 
 @ObjectType({ description: "The Bout model" })
-export class Bout extends BaseObjectType {
+export class Bout extends BaseModel {
 
     static get tableName() {
         return "bouts";
@@ -35,7 +34,7 @@ export class Bout extends BaseObjectType {
     @Field(() => Rikishi)
     loser!: Rikishi;
 
-    @Field(() => GraphQLString)
+    @Field(() => Kimarite)
     winningMethod!: Kimarite;
 
     @Field(() => Int)

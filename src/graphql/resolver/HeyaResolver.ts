@@ -1,5 +1,5 @@
 import { Service } from "typedi";
-import { Heya } from "../../entity/object/rikishi/Heya";
+import { Heya } from "../../model/rikishi/Heya";
 import { Arg, Int, Query, Resolver } from "type-graphql";
 import { HeyaRepository } from "../../db/repository/HeyaRepository";
 

@@ -1,6 +1,9 @@
 {
     "all": true,
     "include": ["**/src/**/*"],
-    "exclude": ["**/src/entity/**/*"],
+    "exclude": [
+        "**/src/entity/**/*",
+        "**/src/constant/**/*"
+    ],
     "extension": [".ts"]
 }

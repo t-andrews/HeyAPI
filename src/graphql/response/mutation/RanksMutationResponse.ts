@@ -1,6 +1,6 @@
 import { Field, ObjectType } from "type-graphql";
 import { CreationResponse } from "./CreationResponse";
-import { Rank } from "../../../entity/object/rikishi/Rank";
+import { Rank } from "../../../model/rikishi/Rank";
 
 @ObjectType()
 export class RanksMutationResponse extends CreationResponse {

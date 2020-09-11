@@ -2,8 +2,8 @@ import * as sinon from "sinon";
 import sinonChai from "sinon-chai";
 import { cloneDeep } from "lodash";
 import chai, { expect } from "chai";
-import { Bout } from "../../../../src/entity/object/Bout";
-import { Kimarite } from "../../../../src/constant/Kimarite";
+import { Bout } from "../../../../src/model/Bout";
+import { Kimarite } from "../../../../src/constant/kimarite/Kimarite";
 import { BoutResolver } from "../../../../src/graphql/resolver/BoutResolver";
 import { BoutRepository } from "../../../../src/db/repository/BoutRepository";
 import { CreateBoutInput } from "../../../../src/graphql/input/bout/CreateBoutInput";
@@ -18,12 +18,12 @@ let boutRepository: BoutRepository;
 
 describe("Bout Resolver",  () => {
 
-    const boutInput: CreateBoutInput = {
+    const boutInput: CreateBoutInput = <any> {
         bashoDay: 5,
         order: 1,
         duration: 55,
         winnerId: 1,
-        winningMethod: Kimarite.KIHONWAZA,
+        winningMethod: Kimarite.WATASHIKOMI,
         loserId: 3,
         bashoId: 1,
         date: "2020-01-04T01:10:25+01:00"
