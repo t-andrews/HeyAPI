@@ -1,13 +1,13 @@
 import { Bout } from "./Bout";
-import { JSONSchema, Model } from "objection";
-import { Rikishi } from "./rikishi/Rikishi";
-import { BaseObjectType } from "./BaseObjectType";
-import { HonBasho } from "../../constant/HonBasho";
-import { Field, GraphQLISODateTime, ObjectType } from "type-graphql";
+import { BaseModel } from "./BaseModel";
 import { GraphQLString } from "graphql";
+import { Rikishi } from "./rikishi/Rikishi";
+import { JSONSchema, Model } from "objection";
+import { HonBasho } from "../constant/HonBasho";
+import { Field, GraphQLISODateTime, ObjectType } from "type-graphql";
 
 @ObjectType({ description: "The Basho model" })
-export class Basho extends BaseObjectType {
+export class Basho extends BaseModel {
 
     static get tableName() {
         return "bashos";
@@ -15,7 +15,7 @@ export class Basho extends BaseObjectType {
 
     winnerId!: number;
 
-    @Field(() => GraphQLString)
+    @Field(() => HonBasho)
     name!: HonBasho;
 
     @Field(() => GraphQLString)

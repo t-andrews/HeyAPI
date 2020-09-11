@@ -1,14 +1,14 @@
 import { Rikishi } from "./Rikishi";
 import { GraphQLString } from "graphql";
-import { Region } from "../../../constant/Region";
-import { BaseObjectType } from "../BaseObjectType";
-import { Division } from "../../../constant/Division";
-import { MakuuchiRank } from "../../../constant/MakuuchiRank";
-import { Field, GraphQLISODateTime, Int, ObjectType } from "type-graphql";
+import { BaseModel } from "../BaseModel";
 import { JSONSchema, Model } from "objection";
+import { Region } from "../../constant/Region";
+import { Division } from "../../constant/Division";
+import { MakuuchiRank } from "../../constant/MakuuchiRank";
+import { Field, GraphQLISODateTime, Int, ObjectType } from "type-graphql";
 
 @ObjectType({ description: "The Rank model" })
-export class Rank extends BaseObjectType {
+export class Rank extends BaseModel {
 
     static get tableName() {
         return "ranks";
@@ -16,16 +16,16 @@ export class Rank extends BaseObjectType {
 
     rikishiId!: number;
 
-    @Field(() => GraphQLString)
+    @Field(() => Division)
     division!: Division;
 
     @Field(() => Int, { nullable: true })
     position?: number;
 
-    @Field(() => GraphQLString, { nullable: true })
+    @Field(() => MakuuchiRank, { nullable: true })
     makuuchiRank?: MakuuchiRank;
 
-    @Field(() => GraphQLString, { nullable: true })
+    @Field(() => Region, { nullable: true })
     region?: Region;
 
     @Field(() => GraphQLISODateTime)

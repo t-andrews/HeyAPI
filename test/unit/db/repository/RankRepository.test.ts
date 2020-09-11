@@ -5,7 +5,7 @@ import { ValidationError } from "objection";
 import { Region } from "../../../../src/constant/Region";
 import { Division } from "../../../../src/constant/Division";
 import { getTracker, QueryDetails, Tracker } from "mock-knex";
-import { Rank } from "../../../../src/entity/object/rikishi/Rank";
+import { Rank } from "../../../../src/model/rikishi/Rank";
 import { RankRepository } from "../../../../src/db/repository/RankRepository";
 import { GenericCRUDRepositoryUtil } from "../../../../src/util/GenericCRUDRepositoryUtil";
 

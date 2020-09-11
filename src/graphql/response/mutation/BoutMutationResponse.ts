@@ -1,5 +1,5 @@
 import { Field, ObjectType } from "type-graphql";
-import { Bout } from "../../../entity/object/Bout";
+import { Bout } from "../../../model/Bout";
 import { CreationResponse } from "./CreationResponse";
 
 @ObjectType()

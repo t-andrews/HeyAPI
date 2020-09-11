@@ -1,6 +1,6 @@
 import { Service } from "typedi";
 import { GraphQLResolveInfo } from "graphql";
-import { Basho } from "../../entity/object/Basho";
+import { Basho } from "../../model/Basho";
 import { RikishiResolver } from "./RikishiResolver";
 import { CreateBashoInput } from "../input/basho/CreateBashoInput";
 import { UpdateBashoInput } from "../input/basho/UpdateBashoInput";

@@ -1,7 +1,7 @@
 import * as sinon from "sinon";
 import sinonChai from "sinon-chai";
 import chai, { expect } from "chai";
-import { Heya } from "../../../../src/entity/object/rikishi/Heya";
+import { Heya } from "../../../../src/model/rikishi/Heya";
 import { HeyaResolver } from "../../../../src/graphql/resolver/HeyaResolver";
 import { HeyaRepository } from "../../../../src/db/repository/HeyaRepository";
 import { GenericCRUDRepositoryUtil } from "../../../../src/util/GenericCRUDRepositoryUtil";

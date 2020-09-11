@@ -1,6 +1,6 @@
 import { Service } from "typedi";
 import { Args, Mutation, Resolver } from "type-graphql";
-import { Rank } from "../../entity/object/rikishi/Rank";
+import { Rank } from "../../model/rikishi/Rank";
 import { AddRankInput } from "../input/rank/AddRankInput";
 import { RankRepository } from "../../db/repository/RankRepository";
 import { RanksMutationResponse } from "../response/mutation/RanksMutationResponse";

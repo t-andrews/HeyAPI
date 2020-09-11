@@ -1,7 +1,7 @@
 import { Service } from "typedi";
 import { FieldNode } from "graphql";
 import { Repository } from "./Repository";
-import { Basho } from "../../entity/object/Basho";
+import { Basho } from "../../model/Basho";
 import { GraphQLNodeUtil } from "../../util/GraphQLNodeUtil";
 import { PartialModelObject, QueryBuilder } from "objection";
 import { GenericCRUDRepositoryUtil } from "../../util/GenericCRUDRepositoryUtil";
