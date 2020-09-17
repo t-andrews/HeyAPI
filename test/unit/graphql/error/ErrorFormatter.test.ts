@@ -28,9 +28,9 @@ describe("Error Fromatter",  () => {
             };
 
             const inputError: GraphQLError = new GraphQLError(
-                "Argument Validation Error",
+                InputValidationError.baseMessage,
                 undefined, undefined, undefined, undefined,
-                new Error("Argument Validation Error"),
+                new Error(InputValidationError.baseMessage),
                 extension
             );
 
