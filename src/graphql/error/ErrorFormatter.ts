@@ -17,7 +17,7 @@ export class ErrorFormatter {
 
         let newError: Error = err;
 
-        if (err.originalError!.message == "Argument Validation Error") {
+        if (err.originalError!.message == InputValidationError.baseMessage) {
             const constraints: string[] = err.extensions!.exception.validationErrors.map(
                 (e: ValidationError) => Object.values(e.constraints!)[0]
             );

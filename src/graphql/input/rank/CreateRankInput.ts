@@ -1,8 +1,8 @@
 import { GraphQLString } from "graphql";
 import { Region } from "../../../constant/Region";
+import { Rank } from "../../../model/rikishi/Rank";
 import { Field, InputType, Int } from "type-graphql";
 import { Division } from "../../../constant/Division";
-import { Rank } from "../../../model/rikishi/Rank";
 import { MakuuchiRank } from "../../../constant/MakuuchiRank";
 import { IsDateString, IsIn, Max, Min } from "class-validator";
 

@@ -36,6 +36,9 @@ export class Rikishi extends BaseModel {
     @Field(() => [Bout], { nullable: true })
     bouts?: Bout[];
 
+    @Field(() => String, { nullable: true })
+    pictureUrl?: string;
+
     static get jsonSchema(): JSONSchema {
         return {
             type: "object",
@@ -48,6 +51,7 @@ export class Rikishi extends BaseModel {
                 id: { type: "integer" },
                 heyaId: { type: "integer" },
                 name: { type: "string" },
+                pictureUrl: { type: "string" },
                 birthDate: { type: "string", "format": "date-time" },
             }
         };

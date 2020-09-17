@@ -1,6 +1,9 @@
 import { GraphQLError } from "graphql";
 
 export class InputValidationError extends GraphQLError {
+
+    public static readonly baseMessage = "Argument Validation Error"
+
     private readonly _constraints: string[]
 
     public get constraints(): string[] {
@@ -9,7 +12,7 @@ export class InputValidationError extends GraphQLError {
 
     constructor(constraints: string[]) {
         super(
-            "Argument Validation Error",
+            InputValidationError.baseMessage,
             undefined, undefined, undefined, undefined, undefined,
             constraints
         );

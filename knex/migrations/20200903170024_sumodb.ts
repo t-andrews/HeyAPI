@@ -7,6 +7,7 @@ export async function up(knex: Knex): Promise<void> {
             table.string("name", 255).notNullable();
             table.timestamp("birth_date", { useTz: false }).notNullable();
             table.integer("heya_id").nullable();
+            table.string("picture_uri").nullable();
         })
         .createTable("ranks", table => {
             table.increments("id").primary();
