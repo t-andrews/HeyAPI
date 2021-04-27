@@ -15,7 +15,7 @@ export class CreateRankInput implements Partial<Rank> {
     @Min(1)
     @Max(16)
     @Field(() => Int, { nullable: true })
-    position?: number;
+    position!: number;
 
     @IsIn(Object.values(MakuuchiRank))
     @Field(() => MakuuchiRank, { nullable: true })
@@ -24,12 +24,4 @@ export class CreateRankInput implements Partial<Rank> {
     @IsIn(Object.values(Region))
     @Field(() => Region)
     region!: Region;
-
-    @IsDateString()
-    @Field(() => GraphQLString)
-    startDate!: string;
-
-    @IsDateString()
-    @Field(() => GraphQLString, { nullable: true })
-    endDate?: string;
 }

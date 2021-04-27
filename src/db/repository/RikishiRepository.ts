@@ -29,11 +29,11 @@ export class RikishiRepository implements Repository<Rikishi> {
             if (createdRikishi.bouts == undefined) {
                 createdRikishi.bouts = []
             }
-            if (createdRikishi.ranks == undefined) {
-                createdRikishi.ranks = []
+            if (createdRikishi.banzukes == undefined) {
+                createdRikishi.banzukes = []
             }
 
-            return createdRikishi
+            return createdRikishi;
         });
     }
 
@@ -60,21 +60,23 @@ export class RikishiRepository implements Repository<Rikishi> {
             fieldNodes, "bouts"
         );
 
-        if(GraphQLNodeUtil.doesSelectionFieldExist(fieldNodes, "ranks")) {
-            relationsToFetch.push("ranks");
+        if (GraphQLNodeUtil.doesSelectionFieldExist(fieldNodes, "banzukes")) {
+            relationsToFetch.push("banzukes");
         }
 
-        if(GraphQLNodeUtil.doesSelectionFieldExist(fieldNodes, "heya")) {
+        if (GraphQLNodeUtil.doesSelectionFieldExist(fieldNodes, "heya")) {
             relationsToFetch.push("heya");
         }
 
-        if(GraphQLNodeUtil.doesSelectionFieldExist(fieldNodes, "wins") || createBouts) {
+        if (createBouts || GraphQLNodeUtil.doesSelectionFieldExist(fieldNodes, "wins")) {
             relationsToFetch.push("wins");
         }
 
-        if(GraphQLNodeUtil.doesSelectionFieldExist(fieldNodes, "losses") || createBouts) {
+        if (createBouts || GraphQLNodeUtil.doesSelectionFieldExist(fieldNodes, "losses")) {
             relationsToFetch.push("losses");
         }
+
+        console.log("JOINED: ", `[${relationsToFetch.join(",")}]`)
 
         if (relationsToFetch.length > 0) {
             queryBuilder.withGraphJoined(`[${relationsToFetch.join(",")}]`);

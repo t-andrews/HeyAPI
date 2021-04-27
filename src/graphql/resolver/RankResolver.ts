@@ -1,5 +1,5 @@
 import { Service } from "typedi";
-import { Args, Mutation, Resolver } from "type-graphql";
+import { Arg, Args, Int, Mutation, Query, Resolver } from "type-graphql";
 import { Rank } from "../../model/rikishi/Rank";
 import { AddRankInput } from "../input/rank/AddRankInput";
 import { RankRepository } from "../../db/repository/RankRepository";
@@ -10,6 +10,11 @@ import { RanksMutationResponse } from "../response/mutation/RanksMutationRespons
 export class RankResolver {
 
     constructor(private rankRepository: RankRepository) {}
+
+    @Query(() => Rank)
+    public async rank(@Arg("id", () => Int) id: number): Promise<Rank> {
+        return await this.rankRepository.find(id);
+    }
 
     @Mutation(() => RanksMutationResponse)
     public async addRanks(@Args() addRankInput: AddRankInput): Promise<RanksMutationResponse> {

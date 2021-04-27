@@ -4,11 +4,13 @@ import { RankResolver } from "./RankResolver";
 import { BashoResolver } from "./BashoResolver";
 import { RikishiResolver } from "./RikishiResolver";
 import { NonEmptyArray } from "type-graphql/dist/interfaces/NonEmptyArray";
+import { BanzukeResolver } from "./BanzukeResolver";
 
 export const Resolvers: NonEmptyArray<Function> = [
     RikishiResolver,
     BoutResolver,
     BashoResolver,
     HeyaResolver,
-    RankResolver
+    RankResolver,
+    BanzukeResolver
 ];

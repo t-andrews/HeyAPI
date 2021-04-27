@@ -2,12 +2,20 @@ import Knex from "knex";
 
 export async function up(knex: Knex): Promise<void> {
     return knex.schema
+            .createTable("heyas", table => {
+            table.increments("id").primary();
+            table.string("name", 32).notNullable();
+            table.timestamp("creation_date", { useTz: false }).notNullable();
+            table.string("location", 255).notNullable();
+            table.string("ichimon", 32).notNullable();
+        })
         .createTable("rikishis", table => {
             table.increments("id").primary();
             table.string("name", 255).notNullable();
+            table.string("shusshin", 255).notNullable();
             table.timestamp("birth_date", { useTz: false }).notNullable();
-            table.integer("heya_id").nullable();
-            table.string("picture_uri").nullable();
+            table.integer("heya_id").nullable().references("id").inTable("heyas").onDelete("cascade");
+            table.string("picture_url").nullable();
         })
         .createTable("ranks", table => {
             table.increments("id").primary();
@@ -15,16 +23,15 @@ export async function up(knex: Knex): Promise<void> {
             table.string("makuuchi_rank", 32).nullable();
             table.string("region", 8).notNullable();
             table.integer("position").nullable();
-            table.timestamp("start_date", { useTz: false }).notNullable();
-            table.timestamp("end_date", { useTz: false }).nullable();
-            table.integer("rikishi_id").notNullable();
+            table.integer("rikishi_id").notNullable().references("id").inTable("rikishis").onDelete("cascade");
         })
-            .createTable("heyas", table => {
+        .createTable("bashos", table => {
             table.increments("id").primary();
             table.string("name", 32).notNullable();
-            table.timestamp("creation_date", { useTz: false }).notNullable();
             table.string("location", 255).notNullable();
-            table.string("ichimon", 32).notNullable();
+            table.integer("winner_id").nullable().references("id").inTable("rikishis").onDelete("cascade");
+            table.timestamp("start_date", { useTz: false }).notNullable();
+            table.timestamp("end_date", { useTz: false }).nullable();
         })
         .createTable("bouts", table => {
             table.increments("id").primary();
@@ -33,25 +40,26 @@ export async function up(knex: Knex): Promise<void> {
             table.integer("basho_day").notNullable();
             table.integer("duration").notNullable();
             table.string("winning_method", 32).notNullable();
-            table.integer("winner_id").notNullable();
-            table.integer("loser_id").notNullable();
-            table.integer("basho_id").notNullable();
+            table.integer("winner_id").notNullable().references("id").inTable("rikishis").onDelete("cascade");
+            table.integer("loser_id").notNullable().references("id").inTable("rikishis").onDelete("cascade");
+            table.integer("basho_id").notNullable().references("id").inTable("bashos").onDelete("cascade");
         })
-        .createTable("bashos", table => {
+        .createTable("banzuke", table => {
             table.increments("id").primary();
-            table.string("name", 32).notNullable();
-            table.string("location", 255).notNullable();
-            table.integer("winner_id").nullable();
-            table.timestamp("start_date", { useTz: false }).notNullable();
-            table.timestamp("end_date", { useTz: false }).nullable();
+            table.integer("rikishi_id").notNullable().references("id").inTable("rikishis").onDelete("cascade");
+            table.integer("basho_id").notNullable().references("id").inTable("bashos").onDelete("cascade");
+            table.integer("rank_id").notNullable().references("id").inTable("ranks").onDelete("cascade");
+            table.integer("weight").notNullable();
+            table.integer("height").notNullable();
         });
 }
 
 export async function down(knex: Knex): Promise<void> {
     return knex.schema
-        .dropTable("rikishis")
+        .dropTable("banzuke")
         .dropTable("ranks")
-        .dropTable("heyas")
         .dropTable("bouts")
-        .dropTable("bashos");
+        .dropTable("bashos")
+        .dropTable("rikishis")
+        .dropTable("heyas");
 }
