@@ -17,14 +17,6 @@ export async function up(knex: Knex): Promise<void> {
             table.integer("heya_id").nullable().references("id").inTable("heyas").onDelete("cascade");
             table.string("picture_url").nullable();
         })
-        .createTable("ranks", table => {
-            table.increments("id").primary();
-            table.string("division", 32).notNullable();
-            table.string("makuuchi_rank", 32).nullable();
-            table.string("region", 8).notNullable();
-            table.integer("position").nullable();
-            table.integer("rikishi_id").notNullable().references("id").inTable("rikishis").onDelete("cascade");
-        })
         .createTable("bashos", table => {
             table.increments("id").primary();
             table.string("name", 32).notNullable();
@@ -44,11 +36,14 @@ export async function up(knex: Knex): Promise<void> {
             table.integer("loser_id").notNullable().references("id").inTable("rikishis").onDelete("cascade");
             table.integer("basho_id").notNullable().references("id").inTable("bashos").onDelete("cascade");
         })
+        .createTable("ranks", table => {
+            table.string("rank", 8).primary();
+        })
         .createTable("banzuke", table => {
             table.increments("id").primary();
             table.integer("rikishi_id").notNullable().references("id").inTable("rikishis").onDelete("cascade");
             table.integer("basho_id").notNullable().references("id").inTable("bashos").onDelete("cascade");
-            table.integer("rank_id").notNullable().references("id").inTable("ranks").onDelete("cascade");
+            table.string("rank", 8).notNullable().references("rank").inTable("ranks");
             table.integer("weight").notNullable();
             table.integer("height").notNullable();
         });

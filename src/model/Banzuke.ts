@@ -3,7 +3,7 @@ import { BaseModel } from "./BaseModel";
 import { Rikishi } from "./rikishi/Rikishi";
 import { JSONSchema, Model } from "objection";
 import { Field, ObjectType, Int } from "type-graphql";
-import { Rank } from "./rikishi/Rank";
+import { Rank } from "./Rank";
 
 @ObjectType({ description: "The Banzuke model" })
 export class Banzuke extends BaseModel {
@@ -14,16 +14,13 @@ export class Banzuke extends BaseModel {
 
     rikishiId!: number;
     bashoId!: number;
-    rankId!: number;
+    rank!: string;
 
     @Field(() => Basho)
     basho!: Basho;
 
     @Field(() => Rikishi)
     rikishi!: Rikishi;
-
-    @Field(() => Rank)
-    rank!: Rank;
 
     @Field(() => Int)
     weight!: number;
@@ -37,7 +34,7 @@ export class Banzuke extends BaseModel {
             required: [
                 "rikishiId",
                 "bashoId",
-                "rankId",
+                "rank",
                 "weight",
                 "height"
             ],
@@ -45,7 +42,7 @@ export class Banzuke extends BaseModel {
                 id: { type: "integer" },
                 rikishiId: { type: "integer" },
                 bashoId: { type: "integer" },
-                rankId: { type: "integer" },
+                rank: { type: "string" },
                 weight: { type: "integer" },
                 height: { type: "integer" }
             }
@@ -62,14 +59,6 @@ export class Banzuke extends BaseModel {
                     to: "rikishis.id"
                 }
             },
-            rank: {
-                relation: Model.HasOneRelation,
-                modelClass: Rank,
-                join: {
-                    from: "banzuke.rankId",
-                    to: "ranks.id"
-                }
-            },
             basho: {
                 relation: Model.HasOneRelation,
                 modelClass: Basho,
@@ -77,7 +66,15 @@ export class Banzuke extends BaseModel {
                     from: "banzuke.bashoId",
                     to: "bashos.id"
                 }
-            }
+            },
+            rank: {
+                relation: Model.HasOneRelation,
+                modelClass: Rank,
+                join: {
+                    from: "banzuke.rank",
+                    to: "ranks.rank"
+                }
+            },
         };
     }
 }
