@@ -14,7 +14,7 @@ export class RikishiRepository implements Repository<Rikishi> {
     constructor(private repositoryUtil: GenericCRUDRepositoryUtil) {}
 
     public async create(item: PartialModelObject<Rikishi>): Promise<Rikishi> {
-        return await Rikishi.transaction(async trx => {
+        return Rikishi.transaction(async trx => {
             let heya: Heya = undefined!;
             if (item.heyaId != undefined ) {
                 heya = await this.repositoryUtil.find<Heya>(item.heyaId as number, Heya.query(trx));
