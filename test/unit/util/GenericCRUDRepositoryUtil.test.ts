@@ -6,8 +6,8 @@ import { Bout } from "../../../src/model/Bout";
 import { Basho } from "../../../src/model/Basho";
 import { Tracker, getTracker, QueryDetails } from "mock-knex";
 import { Heya } from "../../../src/model/rikishi/Heya";
-import { Rank } from "../../../src/model/rikishi/Rank";
 import { GenericCRUDRepositoryUtil } from "../../../src/util/GenericCRUDRepositoryUtil";
+import { Banzuke } from "../../../src/model/Banzuke";
 
 
 let sandbox: sinon.SinonSandbox;
@@ -95,12 +95,12 @@ describe("Generic CRUD Repository Util",  () => {
                 ][step - 1]();
             });
 
-            const rank: Partial<Rank> = {
+            const rank: Partial<Banzuke> = {
                 id: 123,
-                startDate: "2020-01-04T01:10:25+01:00",
+                rank: "Y1e"
             }
 
-            const result: Rank = await repository.update<Rank>(rank, Rank.query());
+            const result: Banzuke = await repository.update<Banzuke>(rank, Banzuke.query());
 
             expect(result).to.deep.equal(rank);
         });

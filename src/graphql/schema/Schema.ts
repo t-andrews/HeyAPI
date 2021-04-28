@@ -6,7 +6,6 @@ import { Resolvers } from "../resolver/Resolvers";
 import { Kimarite } from "../../constant/kimarite/Kimarite";
 import { HonBasho } from "../../constant/HonBasho";
 import { Division } from "../../constant/Division";
-import { MakuuchiRank } from "../../constant/MakuuchiRank";
 import { Region } from "../../constant/Region";
 
 registerEnumType(
@@ -28,13 +27,6 @@ registerEnumType(
     {
         name: "Division",
         description: "The rikishi divisions"
-    });
-
-registerEnumType(
-    MakuuchiRank,
-    {
-        name: "MakuuchiRank",
-        description: "The makuuchi division ranks"
     });
 
 registerEnumType(

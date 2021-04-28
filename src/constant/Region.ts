@@ -1,4 +1,4 @@
 export enum Region {
-    EAST = "East",
-    WEST = "West"
+    EAST = "e",
+    WEST = "w"
 }

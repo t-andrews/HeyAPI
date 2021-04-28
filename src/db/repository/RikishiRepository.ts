@@ -14,11 +14,11 @@ export class RikishiRepository implements Repository<Rikishi> {
     constructor(private repositoryUtil: GenericCRUDRepositoryUtil) {}
 
     public async create(item: PartialModelObject<Rikishi>): Promise<Rikishi> {
-        return await Rikishi.transaction(async trx => {
+        return Rikishi.transaction(async trx => {
             let heya: Heya = undefined!;
             if (item.heyaId != undefined ) {
                 heya = await this.repositoryUtil.find<Heya>(item.heyaId as number, Heya.query(trx));
-                if (heya == undefined) {
+                if (!heya) {
                     throw new QueryError(`No Heya with id "${item.heyaId}" was found`)
                 }
             }
@@ -26,14 +26,14 @@ export class RikishiRepository implements Repository<Rikishi> {
             const createdRikishi: Rikishi = await Rikishi.query(trx).insertGraph(item);
             createdRikishi.heya = heya;
 
-            if (createdRikishi.bouts == undefined) {
+            if (!createdRikishi.bouts) {
                 createdRikishi.bouts = []
             }
-            if (createdRikishi.ranks == undefined) {
-                createdRikishi.ranks = []
+            if (!createdRikishi.banzukes) {
+                createdRikishi.banzukes = []
             }
 
-            return createdRikishi
+            return createdRikishi;
         });
     }
 
@@ -46,7 +46,7 @@ export class RikishiRepository implements Repository<Rikishi> {
     }
 
     public async delete(id: number): Promise<boolean> {
-        return await Rikishi.query()
+        return Rikishi.query()
             .deleteById(id)
             .then(result => {
                 return result > 0;
@@ -60,21 +60,23 @@ export class RikishiRepository implements Repository<Rikishi> {
             fieldNodes, "bouts"
         );
 
-        if(GraphQLNodeUtil.doesSelectionFieldExist(fieldNodes, "ranks")) {
-            relationsToFetch.push("ranks");
+        if (GraphQLNodeUtil.doesSelectionFieldExist(fieldNodes, "banzukes")) {
+            relationsToFetch.push("banzukes");
         }
 
-        if(GraphQLNodeUtil.doesSelectionFieldExist(fieldNodes, "heya")) {
+        if (GraphQLNodeUtil.doesSelectionFieldExist(fieldNodes, "heya")) {
             relationsToFetch.push("heya");
         }
 
-        if(GraphQLNodeUtil.doesSelectionFieldExist(fieldNodes, "wins") || createBouts) {
+        if (createBouts || GraphQLNodeUtil.doesSelectionFieldExist(fieldNodes, "wins")) {
             relationsToFetch.push("wins");
         }
 
-        if(GraphQLNodeUtil.doesSelectionFieldExist(fieldNodes, "losses") || createBouts) {
+        if (createBouts || GraphQLNodeUtil.doesSelectionFieldExist(fieldNodes, "losses")) {
             relationsToFetch.push("losses");
         }
+
+        console.log("JOINED: ", `[${relationsToFetch.join(",")}]`)
 
         if (relationsToFetch.length > 0) {
             queryBuilder.withGraphJoined(`[${relationsToFetch.join(",")}]`);

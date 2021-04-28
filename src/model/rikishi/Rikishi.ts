@@ -1,10 +1,10 @@
 import { Heya } from "./Heya";
-import { Rank } from "./Rank";
 import { Bout } from "../Bout";
 import { GraphQLString } from "graphql";
 import { BaseModel } from "../BaseModel";
 import { JSONSchema, Model } from "objection";
 import { Field, GraphQLISODateTime, ObjectType } from "type-graphql";
+import { Banzuke } from "../Banzuke";
 
 @ObjectType({ description: "The Rikishi model" })
 export class Rikishi extends BaseModel {
@@ -18,14 +18,17 @@ export class Rikishi extends BaseModel {
     @Field(() => GraphQLString)
     name!: string;
 
+    @Field(() => GraphQLString)
+    shusshin?: string;
+
     @Field(() => GraphQLISODateTime)
     birthDate!: string;
 
     @Field(() => Heya)
     heya!: Heya;
 
-    @Field(() => [Rank], { nullable: true })
-    ranks?: Rank[];
+    @Field(() => [Banzuke], { nullable: true })
+    banzukes?: Banzuke[];
 
     @Field(() => [Bout], { nullable: true })
     wins?: Bout[];
@@ -36,7 +39,7 @@ export class Rikishi extends BaseModel {
     @Field(() => [Bout], { nullable: true })
     bouts?: Bout[];
 
-    @Field(() => String, { nullable: true })
+    @Field(() => GraphQLString, { nullable: true })
     pictureUrl?: string;
 
     static get jsonSchema(): JSONSchema {
@@ -45,12 +48,14 @@ export class Rikishi extends BaseModel {
             required: [
                 "heyaId",
                 "name",
+                "shusshin",
                 "birthDate"
             ],
             properties: {
                 id: { type: "integer" },
                 heyaId: { type: "integer" },
                 name: { type: "string" },
+                shusshin: { type: "string" },
                 pictureUrl: { type: "string" },
                 birthDate: { type: "string", "format": "date-time" },
             }
@@ -59,12 +64,12 @@ export class Rikishi extends BaseModel {
 
     static get relationMappings() {
         return {
-            ranks: {
+            banzukes: {
                 relation: Model.HasManyRelation,
-                modelClass: Rank,
+                modelClass: Banzuke,
                 join: {
-                    from: "ranks.rikishiId",
-                    to: "rikishis.id"
+                    from: "rikishis.id",
+                    to: "banzuke.rikishiId"
                 }
             },
             heya: {

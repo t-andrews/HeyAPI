@@ -3,5 +3,5 @@ export enum Division {
     SANDANME = "Sandanme",
     MAKUSHITA = "Makushita",
     JURYO = "Juryo",
-    Makuuchi = "Makuuchi"
+    MAKUUCHI = "Makuuchi"
 }
