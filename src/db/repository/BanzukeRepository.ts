@@ -10,11 +10,11 @@ export class BanzukeRepository implements Repository<Banzuke> {
     constructor(private repositoryUtil: GenericCRUDRepositoryUtil) {}
 
     public async create(item: PartialModelObject<Banzuke>): Promise<Banzuke> {
-        return await this.repositoryUtil.create(item, Banzuke.query());
+        return this.repositoryUtil.create(item, Banzuke.query());
     }
 
     public async find(id: number): Promise<Banzuke> {
-        return await this.repositoryUtil.find(id, Banzuke.query());
+        return this.repositoryUtil.find(id, Banzuke.query());
     }
 
     public async update(item: Banzuke): Promise<Banzuke> {

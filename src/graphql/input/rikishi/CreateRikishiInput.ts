@@ -13,6 +13,10 @@ export class CreateRikishiInput implements Partial<Rikishi> {
     @Field(() => GraphQLString)
     birthDate!: string;
 
+    @MaxLength(32)
+    @Field(() => GraphQLString)
+    shusshin!: string;
+
     @Field(() => Int, { nullable: true })
     heyaId?: number;
 

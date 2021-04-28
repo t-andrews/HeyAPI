@@ -1,5 +1,5 @@
 import { BaseModel } from "./BaseModel";
-import { JSONSchema, Model } from "objection";
+import { JSONSchema } from "objection";
 import { Field, ObjectType } from "type-graphql";
 import { GraphQLString } from "graphql";
 

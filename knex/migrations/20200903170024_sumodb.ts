@@ -12,7 +12,7 @@ export async function up(knex: Knex): Promise<void> {
         .createTable("rikishis", table => {
             table.increments("id").primary();
             table.string("name", 255).notNullable();
-            table.string("shusshin", 255).notNullable();
+            table.string("shusshin", 32).notNullable();
             table.timestamp("birth_date", { useTz: false }).notNullable();
             table.integer("heya_id").nullable().references("id").inTable("heyas").onDelete("cascade");
             table.string("picture_url").nullable();

@@ -46,7 +46,7 @@ export class RikishiRepository implements Repository<Rikishi> {
     }
 
     public async delete(id: number): Promise<boolean> {
-        return await Rikishi.query()
+        return Rikishi.query()
             .deleteById(id)
             .then(result => {
                 return result > 0;

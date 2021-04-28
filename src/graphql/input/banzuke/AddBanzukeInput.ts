@@ -1,5 +1,6 @@
 import { ArgsType, Field, InputType, Int } from "type-graphql";
 import { Banzuke } from "../../../model/Banzuke";
+import { GraphQLString } from "graphql";
 
 @ArgsType()
 @InputType()
@@ -10,7 +11,7 @@ export class AddBanzukeInput implements Partial<Banzuke> {
     @Field(() => Int)
     bashoId!: number;
 
-    @Field(() => Int)
+    @Field(() => GraphQLString)
     rank!: string;
 
     @Field(() => Int)

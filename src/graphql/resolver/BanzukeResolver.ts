@@ -23,12 +23,12 @@ export class BanzukeResolver {
 
     @FieldResolver()
     public async basho(@Root() source: Banzuke, @Info() info: GraphQLResolveInfo): Promise<Basho> {
-        return await this.bashoResolver.basho(source.bashoId, info);
+        return this.bashoResolver.basho(source.bashoId, info);
     }
 
     @FieldResolver()
     public async rikishi(@Root() source: Banzuke, @Info() info: GraphQLResolveInfo): Promise<Rikishi> {
-        return await this.rikishiResolver.rikishi(source.rikishiId, info);
+        return this.rikishiResolver.rikishi(source.rikishiId, info);
     }
 
     @Mutation(() => BanzukeMutationResponse)
