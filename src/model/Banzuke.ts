@@ -3,7 +3,6 @@ import { BaseModel } from "./BaseModel";
 import { Rikishi } from "./rikishi/Rikishi";
 import { JSONSchema, Model } from "objection";
 import { Field, ObjectType, Int } from "type-graphql";
-import { Rank } from "./Rank";
 
 @ObjectType({ description: "The Banzuke model" })
 export class Banzuke extends BaseModel {
@@ -66,15 +65,7 @@ export class Banzuke extends BaseModel {
                     from: "banzuke.bashoId",
                     to: "bashos.id"
                 }
-            },
-            rank: {
-                relation: Model.HasOneRelation,
-                modelClass: Rank,
-                join: {
-                    from: "banzuke.rank",
-                    to: "ranks.rank"
-                }
-            },
+            }
         };
     }
 }

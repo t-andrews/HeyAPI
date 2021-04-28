@@ -18,7 +18,7 @@ export class RikishiRepository implements Repository<Rikishi> {
             let heya: Heya = undefined!;
             if (item.heyaId != undefined ) {
                 heya = await this.repositoryUtil.find<Heya>(item.heyaId as number, Heya.query(trx));
-                if (heya == undefined) {
+                if (!heya) {
                     throw new QueryError(`No Heya with id "${item.heyaId}" was found`)
                 }
             }
@@ -26,10 +26,10 @@ export class RikishiRepository implements Repository<Rikishi> {
             const createdRikishi: Rikishi = await Rikishi.query(trx).insertGraph(item);
             createdRikishi.heya = heya;
 
-            if (createdRikishi.bouts == undefined) {
+            if (!createdRikishi.bouts) {
                 createdRikishi.bouts = []
             }
-            if (createdRikishi.banzukes == undefined) {
+            if (!createdRikishi.banzukes) {
                 createdRikishi.banzukes = []
             }
 

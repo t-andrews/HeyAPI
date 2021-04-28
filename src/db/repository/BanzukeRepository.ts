@@ -25,12 +25,11 @@ export class BanzukeRepository implements Repository<Banzuke> {
         return this.repositoryUtil.delete(id, Banzuke.query());
     }
 
-    public async createMany(rikishiId: number, banzukes: PartialModelObject<Banzuke>[]): Promise<Banzuke[]> {
-        return Banzuke.query().insert(banzukes.map(b => ({...b, rikishiId: rikishiId})));
+    public async createMany(banzukes: PartialModelObject<Banzuke>[]): Promise<Banzuke[]> {
+        return Banzuke.query().insert(banzukes);
     }
 
     public async findByRikishiId(id: number): Promise<Banzuke[]> {
-        return Banzuke.query()
-            .where({ "rikishiId": id });
+        return Banzuke.query().where({ "rikishiId": id });
     }
 }

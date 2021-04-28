@@ -46,6 +46,7 @@ export async function up(knex: Knex): Promise<void> {
             table.string("rank", 8).notNullable().references("rank").inTable("ranks");
             table.integer("weight").notNullable();
             table.integer("height").notNullable();
+            table.unique(["rikishi_id", "basho_id"])
         });
 }
 

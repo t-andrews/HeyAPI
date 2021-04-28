@@ -2,21 +2,19 @@ import * as sinon from "sinon";
 import sinonChai from "sinon-chai";
 import chai, { expect } from "chai";
 import { ValidationError } from "objection";
-import { Region } from "../../../../src/constant/Region";
-import { Division } from "../../../../src/constant/Division";
 import { getTracker, QueryDetails, Tracker } from "mock-knex";
-import { Rank } from "../../../../src/model/rikishi/Rank";
-import { RankRepository } from "../../../../src/db/repository/RankRepository";
+import { Banzuke } from "../../../../src/model/Banzuke";
 import { GenericCRUDRepositoryUtil } from "../../../../src/util/GenericCRUDRepositoryUtil";
+import { BanzukeRepository } from "../../../../src/db/repository/BanzukeRepository";
 
 let sandbox: sinon.SinonSandbox;
 let knexTracker: Tracker;
 
 chai.use(sinonChai);
 
-let repository: RankRepository;
+let repository: BanzukeRepository;
 
-describe("Rank Repository",  () => {
+describe("Banzuke Repository",  () => {
 
     before(() => {
         knexTracker = getTracker();
@@ -24,7 +22,7 @@ describe("Rank Repository",  () => {
     });
 
     beforeEach(() => {
-        repository = new RankRepository(new GenericCRUDRepositoryUtil());
+        repository = new BanzukeRepository(new GenericCRUDRepositoryUtil());
         knexTracker.install();
     });
 
@@ -35,50 +33,52 @@ describe("Rank Repository",  () => {
 
     describe("Positive scenarios",  () => {
 
-        it("Should return ranks on successful find by rikishi id", async () => {
-            const ranks: Rank[] = [];
+        it("Should return banzukes on successful find by rikishi id", async () => {
+            const banzukes: Banzuke[] = [];
 
             for(let i = 0; i < 5; i++) {
-                ranks.push(<Rank> {
+                banzukes.push(<Banzuke> {
                     id: i,
-                    division: Division.JURYO,
-                    region: Region.EAST,
-                    position: 3,
-                    startDate: "2020-01-04T01:10:25+01:00"
+                    rikishiId: i,
+                    bashoId: i,
+                    weight: i,
+                    height: i
                 });
             }
 
             knexTracker.on('query', (query: QueryDetails) =>  {
                 expect(query.method).to.equal("select");
-                query.response(ranks);
+                query.response(banzukes);
             });
 
-            const result: Rank[] = await repository.findByRikishiId(123);
+            const result: Banzuke[] = await repository.findByRikishiId(5);
 
             expect(result.length).to.be.equal(5);
         });
 
-        it("Should return created Ranks on successful creation", async () => {
-            const ranks: Rank[] = [];
+        it("Should return created Banzukes on successful creation", async () => {
+            const banzukes: Banzuke[] = [];
 
             for(let i = 0; i < 5; i++) {
-                ranks.push(<Rank> {
-                    division: Division.JURYO,
-                    region: Region.EAST,
-                    position: 3,
-                    startDate: "2020-01-04T01:10:25+01:00"
+                banzukes.push(<Banzuke> {
+                    id: i,
+                    rikishiId: i,
+                    bashoId: i,
+                    weight: i,
+                    height: i,
+                    rank: `Me${i}`
                 });
             }
 
             knexTracker.on('query', (query: QueryDetails) =>  {
                 expect(query.method).to.equal("insert");
-                query.response(ranks);
+                query.response(banzukes);
             });
 
-            const result: Rank[] = await repository.createMany(123, ranks);
+            const result: Banzuke[] = await repository.createMany(banzukes);
 
             expect(result.length).to.be.equal(5);
-            expect(result[0].rikishiId).to.be.equal(123);
+            expect(result[0].rikishiId).to.be.equal(0);
         });
     });
 
@@ -86,13 +86,17 @@ describe("Rank Repository",  () => {
         it("Should throw an error on creation with a missing field", async () => {
 
             try {
+                // Missing rank field
                 await repository.create({
-                    region: Region.EAST,
-                    startDate: "2020-01-04T01:10:25+01:00"
+                    id: 12,
+                    rikishiId: 34,
+                    bashoId: 56,
+                    weight: 78,
+                    height: 91
                 });
             } catch (e) {
                 expect(e instanceof ValidationError).to.be.true;
-                expect((e as ValidationError).message).to.equal("division: is a required property")
+                expect((e as ValidationError).message).to.equal("rank: is a required property")
             }
         });
     });

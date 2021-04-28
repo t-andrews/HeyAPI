@@ -41,6 +41,7 @@ describe("Rikishi Repository",  () => {
         it("Should return rikishi on successful creation with heya", async () => {
             const insertedRikishi = <Rikishi> {
                 name: "rikishi_name",
+                shusshin: "Kyoto",
                 birthDate: "2020-01-04T01:10:25+01:00",
                 heyaId: 123
             };
@@ -54,7 +55,7 @@ describe("Rikishi Repository",  () => {
                 name: "heya_name"
             };
             returnedRikishi.bouts = [];
-            returnedRikishi.ranks = [];
+            returnedRikishi.banzukes = [];
 
             knexTracker.on('query', (query: QueryDetails, step: number) => {
                 [
@@ -67,6 +68,7 @@ describe("Rikishi Repository",  () => {
                         query.response(returnedRikishi.heya);
                     },
                     () => {
+                        console.log('QUERY: ', query);
                         expect(query.method).to.equal("insert");
                         query.response(returnedRikishi);
                     },
@@ -93,13 +95,13 @@ describe("Rikishi Repository",  () => {
                     location: "location_test",
                     name: "heya_name"
                 },
-                ranks: [
+                banzukes: [
                     {
-                        id: 9,
-                        division: Division.JURYO,
-                        region: Region.EAST,
-                        position: 3,
-                        startDate: "2020-01-04T01:10:25+01:00"
+                        id: 222,
+                        rikishiId: 123,
+                        bashoId: 456,
+                        weight: 155,
+                        height: 179
                     }
                 ],
                 losses: [

@@ -7,3 +7,9 @@ export class BanzukeMutationResponse extends CreationResponse {
     @Field(() => Banzuke, { nullable: true })
     data?: Banzuke
 }
+
+@ObjectType()
+export class BanzukesMutationResponse extends CreationResponse {
+    @Field(() => [Banzuke], { nullable: true })
+    data?: Banzuke[]
+}

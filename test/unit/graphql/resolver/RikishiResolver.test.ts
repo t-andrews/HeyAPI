@@ -49,7 +49,7 @@ describe("Rikishi Resolver",  () => {
                 name: "heya_name",
             };
             returnedRikishi.bouts = [];
-            returnedRikishi.ranks = [];
+            returnedRikishi.banzukes = [];
             sandbox = sinon.createSandbox();
         });
 
