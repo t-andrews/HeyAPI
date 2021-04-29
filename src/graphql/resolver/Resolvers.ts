@@ -1,4 +1,3 @@
-import { HeyaResolver } from "./HeyaResolver";
 import { BoutResolver } from "./BoutResolver";
 import { BashoResolver } from "./BashoResolver";
 import { RikishiResolver } from "./RikishiResolver";
@@ -9,6 +8,5 @@ export const Resolvers: NonEmptyArray<Function> = [
     RikishiResolver,
     BoutResolver,
     BashoResolver,
-    HeyaResolver,
     BanzukeResolver
 ];

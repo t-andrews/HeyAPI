@@ -1,4 +1,5 @@
 import { Bout } from "../../../model/Bout";
+import { Max, Min } from "class-validator";
 import { Kimarite } from "../../../constant/kimarite/Kimarite";
 import { Field, GraphQLISODateTime, InputType, Int } from "type-graphql";
 
@@ -10,6 +11,8 @@ export class CreateBoutInput implements Partial<Bout> {
     @Field(() => Int)
     bashoId!: number;
 
+    @Min(1)
+    @Max(16)
     @Field(() => Int)
     bashoDay!: number;
 

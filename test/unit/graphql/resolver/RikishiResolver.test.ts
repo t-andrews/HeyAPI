@@ -2,8 +2,7 @@ import * as sinon from "sinon";
 import sinonChai from "sinon-chai";
 import { cloneDeep } from "lodash";
 import chai, { expect } from "chai";
-import { Heya } from "../../../../src/model/rikishi/Heya";
-import { Rikishi } from "../../../../src/model/rikishi/Rikishi";
+import { Rikishi } from "../../../../src/model/Rikishi";
 import { RikishiResolver } from "../../../../src/graphql/resolver/RikishiResolver";
 import { RikishiRepository } from "../../../../src/db/repository/RikishiRepository";
 import { GenericCRUDRepositoryUtil } from "../../../../src/util/GenericCRUDRepositoryUtil";
@@ -34,20 +33,12 @@ describe("Rikishi Resolver",  () => {
 
         const insertedRikishi = <CreateRikishiInput> {
             name: "rikishi_name",
-            birthDate: "2020-01-04T01:10:25+01:00",
-            heyaId: 123
+            birthDate: "2020-01-04T01:10:25+01:00"
         };
 
         const returnedRikishi: Rikishi = <Rikishi> cloneDeep(insertedRikishi)!;
 
         before(() => {
-            returnedRikishi.heya = <Heya> {
-                id: insertedRikishi.heyaId,
-                creationDate: "1950-01-04T01:10:25+01:00",
-                ichimon: "ichimon_test",
-                location: "location_test",
-                name: "heya_name",
-            };
             returnedRikishi.bouts = [];
             returnedRikishi.banzukes = [];
             sandbox = sinon.createSandbox();
@@ -80,8 +71,7 @@ describe("Rikishi Resolver",  () => {
         it("Should return a RikishiMutationResponse on failed creation", async () => {
             const insertedRikishi = <CreateRikishiInput> {
                 name: "rikishi_name",
-                birthDate: "2020-01-04T01:10:25+01:00",
-                heyaId: 123
+                birthDate: "2020-01-04T01:10:25+01:00"
             };
 
             const error: Error = new Error("Some repository error");

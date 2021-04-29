@@ -1,6 +1,6 @@
 import { Basho } from "./Basho";
+import { Rikishi } from "./Rikishi";
 import { BaseModel } from "./BaseModel";
-import { Rikishi } from "./rikishi/Rikishi";
 import { JSONSchema, Model } from "objection";
 import { Kimarite } from "../constant/kimarite/Kimarite";
 import { Field, ObjectType, Int, GraphQLISODateTime } from "type-graphql";

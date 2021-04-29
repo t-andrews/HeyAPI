@@ -1,18 +1,18 @@
 import { GraphQLString } from "graphql";
 import { Basho } from "../../../model/Basho";
 import { Field, InputType, Int } from "type-graphql";
-import { HonBasho } from "../../../constant/HonBasho";
-import { IsDateString, IsIn, MaxLength, Min } from "class-validator";
+import { Matches, MaxLength, Min } from "class-validator";
 
 @InputType()
 export class UpdateBashoInput implements Partial<Basho> {
+
     @Min(1)
     @Field(() => Int)
     id!: number;
 
-    @IsIn(Object.values(HonBasho))
-    @Field(() => HonBasho, { nullable: true })
-    name?: HonBasho;
+    @Matches(/^\d{4}\.(0[1-9]|1[012])$/)
+    @Field(() => GraphQLString)
+    basho!: string;
 
     @MaxLength(255)
     @Field(() => GraphQLString, { nullable: true })
@@ -21,12 +21,4 @@ export class UpdateBashoInput implements Partial<Basho> {
     @Min(1)
     @Field(() => Int, { nullable: true })
     winnerId?: number;
-
-    @IsDateString()
-    @Field(() => GraphQLString, { nullable: true })
-    startDate?: string;
-
-    @IsDateString()
-    @Field(() => GraphQLString, { nullable: true })
-    endDate?: string;
 }

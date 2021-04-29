@@ -4,11 +4,9 @@ import chai, { expect } from "chai";
 import { ValidationError } from "objection";
 import { Bout } from "../../../src/model/Bout";
 import { Basho } from "../../../src/model/Basho";
-import { Tracker, getTracker, QueryDetails } from "mock-knex";
-import { Heya } from "../../../src/model/rikishi/Heya";
-import { GenericCRUDRepositoryUtil } from "../../../src/util/GenericCRUDRepositoryUtil";
 import { Banzuke } from "../../../src/model/Banzuke";
-
+import { Tracker, getTracker, QueryDetails } from "mock-knex";
+import { GenericCRUDRepositoryUtil } from "../../../src/util/GenericCRUDRepositoryUtil";
 
 let sandbox: sinon.SinonSandbox;
 let knexTracker: Tracker;
@@ -46,10 +44,9 @@ describe("Generic CRUD Repository Util",  () => {
 
             const result: Basho = await repository.create<Basho>(
                 <Basho> {
-                    startDate: "2020-01-04T01:10:25+01:00",
                     winnerId: 123,
                     location: "location_test",
-                    name: "Natsu"
+                    basho: "2021.07"
                 },
                 Basho.query()
             );
@@ -57,15 +54,13 @@ describe("Generic CRUD Repository Util",  () => {
             expect(result.id).to.equal(1);
         });
 
-        it("Should return a Heya on successful find", async () => {
+        it("Should return a Banzuke on successful find", async () => {
 
             repository = new GenericCRUDRepositoryUtil();
 
-            const heya: Partial<Heya> = {
-                creationDate: "2020-01-04T01:10:25+01:00",
-                ichimon: "ichimon_test",
-                location: "location_test",
-                name: "name_test"
+            const heya: Partial<Banzuke> = {
+                id: 123,
+                rank: "Y1e"
             }
 
             knexTracker.on('query', (query: QueryDetails) =>  {
@@ -73,7 +68,7 @@ describe("Generic CRUD Repository Util",  () => {
                 query.response([heya]);
             });
 
-            const result: Heya = await repository.find<Heya>(123, Heya.query());
+            const result: Banzuke = await repository.find<Banzuke>(123, Banzuke.query());
 
             expect(result).to.deep.equal(heya);
         });
@@ -127,17 +122,20 @@ describe("Generic CRUD Repository Util",  () => {
             repository = new GenericCRUDRepositoryUtil();
 
             try {
-                await repository.create<Heya>(
-                    <Heya> {
-                        ichimon: "ichimon_test",
-                        location: "location_test",
-                        name: "name_test"
+                await repository.create<Banzuke>(
+                    <Banzuke> {
+                        id: 12,
+                        bashoId: 34,
+                        weight: 100,
+                        height: 179,
+                        rank: "Y1e",
+                        heya: "Some_heya"
                     },
-                    Heya.query()
+                    Banzuke.query()
                 );
             } catch (e) {
                 expect(e instanceof ValidationError).to.be.true;
-                expect((e as ValidationError).message).to.equal("creationDate: is a required property")
+                expect((e as ValidationError).message).to.equal("rikishiId: is a required property")
             }
         });
 
@@ -149,26 +147,6 @@ describe("Generic CRUD Repository Util",  () => {
             } catch (e) {
                 expect(e instanceof ValidationError).to.be.true;
                 expect((e as ValidationError).message).to.equal("No valid field was supplied for the update")
-            }
-        });
-
-        it("Should throw an error on creation with an invalid date format", async () => {
-
-            repository = new GenericCRUDRepositoryUtil();
-
-            try {
-                await repository.create<Heya>(
-                    <Heya> {
-                        creationDate: "2020-01-04 01:10:25",
-                        ichimon: "ichimon_test",
-                        location: "location_test",
-                        name: "name_test"
-                    },
-                    Heya.query()
-                );
-            } catch (e) {
-                expect(e instanceof ValidationError).to.be.true;
-                expect((e as ValidationError).message).to.equal("creationDate: should match format \"date-time\"")
             }
         });
     });

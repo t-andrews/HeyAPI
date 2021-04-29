@@ -42,7 +42,8 @@ describe("Banzuke Repository",  () => {
                     rikishiId: i,
                     bashoId: i,
                     weight: i,
-                    height: i
+                    height: i,
+                    heya: `Heya${i}`
                 });
             }
 
@@ -66,7 +67,8 @@ describe("Banzuke Repository",  () => {
                     bashoId: i,
                     weight: i,
                     height: i,
-                    rank: `Me${i}`
+                    rank: `Me${i}`,
+                    heya: `Heya${i}`
                 });
             }
 
@@ -92,7 +94,8 @@ describe("Banzuke Repository",  () => {
                     rikishiId: 34,
                     bashoId: 56,
                     weight: 78,
-                    height: 91
+                    height: 91,
+                    heya: `Some_heya`
                 });
             } catch (e) {
                 expect(e instanceof ValidationError).to.be.true;

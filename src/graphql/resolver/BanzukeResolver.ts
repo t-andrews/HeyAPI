@@ -1,15 +1,15 @@
 import { Service } from "typedi";
-import { Args, FieldResolver, Info, Mutation, Resolver, Root } from "type-graphql";
-import { AddBanzukeInput } from "../input/banzuke/AddBanzukeInput";
-import { BanzukeMutationResponse, BanzukesMutationResponse } from "../response/mutation/BanzukeMutationResponse";
-import { BanzukeRepository } from "../../db/repository/BanzukeRepository";
-import { Banzuke } from "../../model/Banzuke";
-import { GraphQLResolveInfo } from "graphql";
 import { Basho } from "../../model/Basho";
+import { GraphQLResolveInfo } from "graphql";
+import { Banzuke } from "../../model/Banzuke";
+import { Rikishi } from "../../model/Rikishi";
 import { BashoResolver } from "./BashoResolver";
 import { RikishiResolver } from "./RikishiResolver";
-import { Rikishi } from "../../model/rikishi/Rikishi";
+import { AddBanzukeInput } from "../input/banzuke/AddBanzukeInput";
 import { AddBanzukesInput } from "../input/banzuke/AddBanzukesInput";
+import { BanzukeRepository } from "../../db/repository/BanzukeRepository";
+import { Args, FieldResolver, Info, Mutation, Resolver, Root } from "type-graphql";
+import { BanzukeMutationResponse, BanzukesMutationResponse } from "../response/mutation/BanzukeMutationResponse";
 
 @Service()
 @Resolver(() => Banzuke)

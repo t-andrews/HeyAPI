@@ -1,6 +1,6 @@
 import { Basho } from "./Basho";
+import { Rikishi } from "./Rikishi";
 import { BaseModel } from "./BaseModel";
-import { Rikishi } from "./rikishi/Rikishi";
 import { JSONSchema, Model } from "objection";
 import { Field, ObjectType, Int } from "type-graphql";
 import { GraphQLString } from "graphql";
@@ -14,6 +14,9 @@ export class Banzuke extends BaseModel {
 
     rikishiId!: number;
     bashoId!: number;
+
+    @Field(() => GraphQLString)
+    heya!: string;
 
     @Field(() => GraphQLString)
     rank!: string;
@@ -36,6 +39,7 @@ export class Banzuke extends BaseModel {
             required: [
                 "rikishiId",
                 "bashoId",
+                "heya",
                 "rank",
                 "weight",
                 "height"
@@ -44,6 +48,7 @@ export class Banzuke extends BaseModel {
                 id: { type: "integer" },
                 rikishiId: { type: "integer" },
                 bashoId: { type: "integer" },
+                heya: { type: "string" },
                 rank: { type: "string" },
                 weight: { type: "integer" },
                 height: { type: "integer" }
