@@ -2,8 +2,8 @@ import { Basho } from "./Basho";
 import { Rikishi } from "./Rikishi";
 import { BaseModel } from "./BaseModel";
 import { JSONSchema, Model } from "objection";
+import { Field, ObjectType, Int } from "type-graphql";
 import { Kimarite } from "../constant/kimarite/Kimarite";
-import { Field, ObjectType, Int, GraphQLISODateTime } from "type-graphql";
 
 @ObjectType({ description: "The Bout model" })
 export class Bout extends BaseModel {

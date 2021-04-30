@@ -1,6 +1,6 @@
 import { GraphQLString } from "graphql";
 import { Basho } from "../../../model/Basho";
-import { Matches, MaxLength, Min } from "class-validator";
+import { Matches, Min } from "class-validator";
 import { Field, InputType, Int } from "type-graphql";
 
 @InputType()
