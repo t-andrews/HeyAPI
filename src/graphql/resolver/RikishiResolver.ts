@@ -1,6 +1,6 @@
 import { Service } from "typedi";
 import { GraphQLResolveInfo } from "graphql";
-import { Rikishi } from "../../model/rikishi/Rikishi";
+import { Rikishi } from "../../model/Rikishi";
 import { Arg, Info, Int, Mutation, Query, Resolver } from "type-graphql";
 import { CreateRikishiInput } from "../input/rikishi/CreateRikishiInput";
 import { RikishiRepository } from "../../db/repository/RikishiRepository";
@@ -14,7 +14,7 @@ export class RikishiResolver {
 
     @Query(() => Rikishi)
     public async rikishi(@Arg("id", () => Int) id: number, @Info() info: GraphQLResolveInfo): Promise<Rikishi> {
-        return await this.rikishiRepository.findDetailled(id, info.fieldNodes);
+        return this.rikishiRepository.findDetailled(id, info.fieldNodes);
     }
 
     @Mutation(() => RikishiMutationResponse)

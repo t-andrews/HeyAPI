@@ -37,10 +37,8 @@ describe("Basho Repository",  () => {
         it("Should return Basho on successful detailled find by id without joins", async () => {
             const basho = <Basho> {
                 id: 123,
-                startDate: "2020-01-04 01:10:25+01:00",
                 winnerId: 123,
-                location: "location_test",
-                name: "Natsu"
+                basho: "2020.01"
             };
 
             sandbox.stub(GraphQLNodeUtil, "doesSelectionFieldExist").returns(false);
@@ -55,13 +53,11 @@ describe("Basho Repository",  () => {
             expect(result).to.deep.equal(basho);
         });
 
-        it("Should return Basho on successful detailled find by id with joins", async () => {
+        it("Should return Basho on successful detailed find by id with joins", async () => {
             const basho = <Basho> {
                 id: 456,
-                startDate: "2020-01-04 01:10:25+01:00",
                 winnerId: 123,
-                location: "location_test",
-                name: "Natsu",
+                basho: "2020.03",
                 bouts: [{}],
                 winner: {}
             };

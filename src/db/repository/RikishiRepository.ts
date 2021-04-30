@@ -1,9 +1,7 @@
 import { Service } from "typedi";
 import { FieldNode } from "graphql";
 import { Repository } from "./Repository";
-import { Heya } from "../../model/rikishi/Heya";
-import { Rikishi } from "../../model/rikishi/Rikishi";
-import { QueryError } from "../../graphql/error/QueryError";
+import { Rikishi } from "../../model/Rikishi";
 import { GraphQLNodeUtil } from "../../util/GraphQLNodeUtil";
 import { PartialModelObject, QueryBuilder } from "objection";
 import { GenericCRUDRepositoryUtil } from "../../util/GenericCRUDRepositoryUtil";
@@ -15,17 +13,11 @@ export class RikishiRepository implements Repository<Rikishi> {
 
     public async create(item: PartialModelObject<Rikishi>): Promise<Rikishi> {
         return Rikishi.transaction(async trx => {
-            let heya: Heya = undefined!;
-            if (item.heyaId != undefined ) {
-                heya = await this.repositoryUtil.find<Heya>(item.heyaId as number, Heya.query(trx));
-                if (!heya) {
-                    throw new QueryError(`No Heya with id "${item.heyaId}" was found`)
-                }
-            }
-
             const createdRikishi: Rikishi = await Rikishi.query(trx).insertGraph(item);
-            createdRikishi.heya = heya;
 
+            if (!createdRikishi.shikonas) {
+                createdRikishi.shikonas = []
+            }
             if (!createdRikishi.bouts) {
                 createdRikishi.bouts = []
             }
@@ -60,12 +52,12 @@ export class RikishiRepository implements Repository<Rikishi> {
             fieldNodes, "bouts"
         );
 
-        if (GraphQLNodeUtil.doesSelectionFieldExist(fieldNodes, "banzukes")) {
-            relationsToFetch.push("banzukes");
+        if (GraphQLNodeUtil.doesSelectionFieldExist(fieldNodes, "shikonas")) {
+            relationsToFetch.push("shikonas");
         }
 
-        if (GraphQLNodeUtil.doesSelectionFieldExist(fieldNodes, "heya")) {
-            relationsToFetch.push("heya");
+        if (GraphQLNodeUtil.doesSelectionFieldExist(fieldNodes, "banzukes")) {
+            relationsToFetch.push("banzukes");
         }
 
         if (createBouts || GraphQLNodeUtil.doesSelectionFieldExist(fieldNodes, "wins")) {
@@ -75,8 +67,6 @@ export class RikishiRepository implements Repository<Rikishi> {
         if (createBouts || GraphQLNodeUtil.doesSelectionFieldExist(fieldNodes, "losses")) {
             relationsToFetch.push("losses");
         }
-
-        console.log("JOINED: ", `[${relationsToFetch.join(",")}]`)
 
         if (relationsToFetch.length > 0) {
             queryBuilder.withGraphJoined(`[${relationsToFetch.join(",")}]`);

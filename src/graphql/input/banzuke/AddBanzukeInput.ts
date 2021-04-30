@@ -12,6 +12,9 @@ export class AddBanzukeInput implements Partial<Banzuke> {
     bashoId!: number;
 
     @Field(() => GraphQLString)
+    heya!: string;
+
+    @Field(() => GraphQLString)
     rank!: string;
 
     @Field(() => Int)

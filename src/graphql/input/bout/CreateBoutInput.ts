@@ -1,20 +1,18 @@
 import { Bout } from "../../../model/Bout";
+import { Max, Min } from "class-validator";
+import { Field, InputType, Int } from "type-graphql";
 import { Kimarite } from "../../../constant/kimarite/Kimarite";
-import { Field, GraphQLISODateTime, InputType, Int } from "type-graphql";
 
 @InputType()
 export class CreateBoutInput implements Partial<Bout> {
-    @Field(() => GraphQLISODateTime)
-    date!: string;
 
     @Field(() => Int)
     bashoId!: number;
 
+    @Min(1)
+    @Max(16)
     @Field(() => Int)
-    bashoDay!: number;
-
-    @Field(() => Int)
-    order!: number;
+    day!: number;
 
     @Field(() => Int)
     winnerId!: number;
@@ -24,7 +22,4 @@ export class CreateBoutInput implements Partial<Bout> {
 
     @Field(() => Kimarite)
     winningMethod!: Kimarite;
-
-    @Field(() => Int)
-    duration!: number;
 }

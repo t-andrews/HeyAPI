@@ -1,6 +1,6 @@
+import { Rikishi } from "../../../model/Rikishi";
 import { Field, ObjectType } from "type-graphql";
 import { CreationResponse } from "./CreationResponse";
-import { Rikishi } from "../../../model/rikishi/Rikishi";
 
 @ObjectType()
 export class RikishiMutationResponse extends CreationResponse {

@@ -1,14 +1,10 @@
 import * as sinon from "sinon";
+import { cloneDeep } from "lodash";
 import sinonChai from "sinon-chai";
 import chai, { expect } from "chai";
-import { cloneDeep } from "lodash";
-import { Region } from "../../../../src/constant/Region";
-import { Division } from "../../../../src/constant/Division";
+import { Rikishi } from "../../../../src/model/Rikishi";
 import { getTracker, QueryDetails, Tracker } from "mock-knex";
-import { Heya } from "../../../../src/model/rikishi/Heya";
-import { QueryError } from "../../../../src/graphql/error/QueryError";
 import { GraphQLNodeUtil } from "../../../../src/util/GraphQLNodeUtil";
-import { Rikishi } from "../../../../src/model/rikishi/Rikishi";
 import { RikishiRepository } from "../../../../src/db/repository/RikishiRepository";
 import { GenericCRUDRepositoryUtil } from "../../../../src/util/GenericCRUDRepositoryUtil";
 
@@ -40,20 +36,13 @@ describe("Rikishi Repository",  () => {
 
         it("Should return rikishi on successful creation with heya", async () => {
             const insertedRikishi = <Rikishi> {
-                name: "rikishi_name",
+                id: 123,
                 shusshin: "Kyoto",
-                birthDate: "2020-01-04T01:10:25+01:00",
-                heyaId: 123
+                birthDate: "2020-01-04"
             };
 
             const returnedRikishi = cloneDeep(insertedRikishi);
-            returnedRikishi.heya = <Heya> {
-                id: insertedRikishi.heyaId,
-                creationDate: "1950-01-04T01:10:25+01:00",
-                ichimon: "ichimon_test",
-                location: "location_test",
-                name: "heya_name"
-            };
+            returnedRikishi.shikonas = [];
             returnedRikishi.bouts = [];
             returnedRikishi.banzukes = [];
 
@@ -62,10 +51,6 @@ describe("Rikishi Repository",  () => {
                     () => {
                         expect(query.sql).to.equal("BEGIN;");
                         query.response({});
-                    },
-                    () => {
-                        expect(query.method).to.equal("select");
-                        query.response(returnedRikishi.heya);
                     },
                     () => {
                         console.log('QUERY: ', query);
@@ -86,15 +71,10 @@ describe("Rikishi Repository",  () => {
 
         it("Should return Rikishi on successful detailled find by id with joins", async () => {
             const foundRikishi = <Rikishi> {
-                name: "rikishi_name",
-                birthDate: "2020-01-04T01:10:25+01:00",
-                heya: {
-                    id: 123,
-                    creationDate: "1950-01-04T01:10:25+01:00",
-                    ichimon: "ichimon_test",
-                    location: "location_test",
-                    name: "heya_name"
-                },
+                birthDate: "2020-01-04",
+                id: 123,
+                shusshin: "Kyoto",
+                shikonas: [{}],
                 banzukes: [
                     {
                         id: 222,
@@ -107,25 +87,19 @@ describe("Rikishi Repository",  () => {
                 losses: [
                     {
                         id: 111,
-                        bashoDay: 5,
-                        order: 1,
-                        duration: 55,
+                        day: 5,
                         winnerId: 1,
                         loserId: 3,
-                        bashoId: 1,
-                        date: "2020-01-04T01:10:25+01:00"
+                        bashoId: 1
                     }
                 ],
                 wins: [
                     {
                         id: 222,
-                        bashoDay: 5,
-                        order: 1,
-                        duration: 55,
+                        day: 5,
                         winnerId: 1,
                         loserId: 3,
-                        bashoId: 1,
-                        date: "2020-01-04T01:10:25+01:00"
+                        bashoId: 1
                     }
                 ]
             };
@@ -145,7 +119,10 @@ describe("Rikishi Repository",  () => {
             knexTracker.on('query', (query: QueryDetails, step: number) => {
                 [
                     () => columnNameQuery(query),
-                    () => columnNameQuery(query),
+                    () => {
+                        expect(query.method).to.equal("columnInfo");
+                        query.response({});
+                    },
                     () => {
                         expect(query.method).to.equal("select");
                         query.response(foundRikishi);
@@ -162,33 +139,33 @@ describe("Rikishi Repository",  () => {
     });
 
     describe("Negative scenarios", async () => {
-        it("Should throw a QueryError when the heyaId is invalid", async () => {
-            const insertedRikishi = <Rikishi> {
-                name: "rikishi_name",
-                birthDate: "2020-01-04T01:10:25+01:00",
-                heyaId: 123
-            };
-
-            knexTracker.on('query', (query: QueryDetails, step: number) => {
-                [
-                    () => {
-                        expect(query.sql).to.equal("BEGIN;");
-                        query.response({});
-                    },
-                    () => {
-                        expect(query.method).to.equal("select");
-                        query.response(undefined);
-                    },
-                    () => {
-                        expect(query.sql).to.equal("ROLLBACK");
-                        query.response({});
-                    }
-                ][step - 1]();
-            });
-
-            await repository.create(insertedRikishi).catch((err: QueryError) => {
-                expect(err.message).to.be.equal(`Query Error: No Heya with id "${insertedRikishi.heyaId}" was found`);
-            });
-        });
+        // it("Should throw a QueryError when the heyaId is invalid", async () => {
+        //     const insertedRikishi = <Rikishi> {
+        //         name: "rikishi_name",
+        //         birthDate: "2020-01-04T01:10:25+01:00",
+        //         heya: "Some_heya"
+        //     };
+        //
+        //     knexTracker.on('query', (query: QueryDetails, step: number) => {
+        //         [
+        //             () => {
+        //                 expect(query.sql).to.equal("BEGIN;");
+        //                 query.response({});
+        //             },
+        //             () => {
+        //                 expect(query.method).to.equal("select");
+        //                 query.response(undefined);
+        //             },
+        //             () => {
+        //                 expect(query.sql).to.equal("ROLLBACK");
+        //                 query.response({});
+        //             }
+        //         ][step - 1]();
+        //     });
+        //
+        //     await repository.create(insertedRikishi).catch((err: QueryError) => {
+        //         expect(err.message).to.be.equal(`Query Error: No Heya with id "${insertedRikishi.heyaId}" was found`);
+        //     });
+        // });
     });
 });

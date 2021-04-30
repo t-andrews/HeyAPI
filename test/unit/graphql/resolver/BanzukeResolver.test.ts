@@ -26,6 +26,7 @@ const validBanzukeInput: AddBanzukeInput = {
     bashoId: 56,
     weight: 78,
     height: 91,
+    heya: `Some_heya`,
     rank: `M${1}e`
 };
 
@@ -75,6 +76,7 @@ describe("Rank Resolver",  () => {
                     bashoId: i,
                     weight: i,
                     height: i,
+                    heya: `Some_heya`,
                     rank: `Me${i}`
                 });
             }
@@ -115,6 +117,7 @@ describe("Rank Resolver",  () => {
                     bashoId: i,
                     weight: i,
                     height: i,
+                    heya: `Some_heya`,
                     rank: `Me${i}`
                 });
             }

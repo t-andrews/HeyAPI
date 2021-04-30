@@ -1,10 +1,9 @@
 import { Bout } from "./Bout";
+import { Rikishi } from "./Rikishi";
 import { BaseModel } from "./BaseModel";
 import { GraphQLString } from "graphql";
-import { Rikishi } from "./rikishi/Rikishi";
 import { JSONSchema, Model } from "objection";
-import { HonBasho } from "../constant/HonBasho";
-import { Field, GraphQLISODateTime, ObjectType } from "type-graphql";
+import { Field, ObjectType } from "type-graphql";
 
 @ObjectType({ description: "The Basho model" })
 export class Basho extends BaseModel {
@@ -15,11 +14,8 @@ export class Basho extends BaseModel {
 
     winnerId!: number;
 
-    @Field(() => HonBasho)
-    name!: HonBasho;
-
     @Field(() => GraphQLString)
-    location!: string;
+    basho!: string;
 
     @Field(() => [Bout])
     bouts!: Bout[];
@@ -27,30 +23,16 @@ export class Basho extends BaseModel {
     @Field(() => Rikishi, { nullable: true })
     winner?: Rikishi;
 
-    @Field(() => GraphQLISODateTime)
-    startDate!: string;
-
-    @Field(() => GraphQLISODateTime, { nullable: true })
-    endDate?: string;
-
     static get jsonSchema(): JSONSchema {
         return {
             type: "object",
             required: [
-                "name",
-                "location",
-                "startDate",
+                "basho",
                 "winnerId"
             ],
             properties: {
                 id: { type: "integer" },
-                name: {
-                    type: "string",
-                    enum: Object.values(HonBasho)
-                },
-                location: { type: "string" },
-                startDate: { type: "string", "format": "date-time" },
-                endDate: { type: "string", "format": "date-time" },
+                basho: { type: "string" },
                 winnerId: { type: "integer" },
             }
         };

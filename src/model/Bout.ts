@@ -1,9 +1,9 @@
 import { Basho } from "./Basho";
+import { Rikishi } from "./Rikishi";
 import { BaseModel } from "./BaseModel";
-import { Rikishi } from "./rikishi/Rikishi";
 import { JSONSchema, Model } from "objection";
+import { Field, ObjectType, Int } from "type-graphql";
 import { Kimarite } from "../constant/kimarite/Kimarite";
-import { Field, ObjectType, Int, GraphQLISODateTime } from "type-graphql";
 
 @ObjectType({ description: "The Bout model" })
 export class Bout extends BaseModel {
@@ -16,14 +16,8 @@ export class Bout extends BaseModel {
     loserId!: number;
     bashoId!: number;
 
-    @Field(() => GraphQLISODateTime)
-    date!: string;
-
     @Field(() => Int)
-    bashoDay!: number;
-
-    @Field(() => Int)
-    order!: number;
+    day!: number;
 
     @Field(() => Basho)
     basho!: Basho;
@@ -37,41 +31,26 @@ export class Bout extends BaseModel {
     @Field(() => Kimarite)
     winningMethod!: Kimarite;
 
-    @Field(() => Int)
-    duration!: number;
-
     static get jsonSchema(): JSONSchema {
         return {
             type: "object",
             required: [
-                "date",
-                "bashoDay",
-                "order",
+                "day",
                 "winningMethod",
-                "duration",
                 "winnerId",
                 "loserId",
                 "bashoId"
             ],
             properties: {
                 id: { type: "integer" },
-                date: { type: "string", "format": "date-time" },
-                bashoDay: {
+                day: {
                     type: "integer",
                     minimum: 1,
                     maximum: 15
                 },
-                order: {
-                    type: "integer",
-                    minimum: 1
-                },
                 winningMethod: {
                     type: "string",
                     enum: Object.values(Kimarite)
-                },
-                duration: {
-                    type: "integer",
-                    minimum: 1
                 },
                 winnerId: { type: "integer" },
                 loserId: { type: "integer" },

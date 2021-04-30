@@ -40,13 +40,10 @@ describe("Bout Repository",  () => {
             for(let i = 0; i < 7; i++) {
                 bouts.push(<Bout> {
                     id: i,
-                    bashoDay: 5,
-                    order: 1,
-                    duration: 55,
+                    day: 5,
                     winnerId: 1,
                     loserId: 3,
-                    bashoId: 1,
-                    date: "2020-01-04T01:10:25+01:00"
+                    bashoId: 1
                 });
             }
 
@@ -66,13 +63,10 @@ describe("Bout Repository",  () => {
             for(let i = 0; i < 3; i++) {
                 bouts.push(<Bout> {
                     id: i,
-                    bashoDay: 5,
-                    order: 1,
-                    duration: 55,
+                    day: 5,
                     winnerId: 1,
                     loserId: 3,
-                    bashoId: 1,
-                    date: "2020-01-04T01:10:25+01:00"
+                    bashoId: 1
                 });
             }
 
@@ -92,14 +86,11 @@ describe("Bout Repository",  () => {
             for(let i = 0; i < 4; i++) {
                 bouts.push(<any> {
                     id: i,
-                    bashoDay: 5,
-                    order: 1,
-                    duration: 55,
+                    day: 5,
                     winnerId: 1,
                     winningMethod: Kimarite.HIKIOTOSHI,
                     loserId: 3,
-                    bashoId: 1,
-                    date: "2020-01-04T01:10:25+01:00"
+                    bashoId: 1
                 });
             }
 
@@ -120,12 +111,9 @@ describe("Bout Repository",  () => {
 
             try {
                 await repository.createMany([<Bout> {
-                    bashoDay: 5,
-                    order: 1,
-                    duration: 55,
+                    day: 5,
                     loserId: 3,
-                    bashoId: 1,
-                    date: "2020-01-04T01:10:25+01:00"
+                    bashoId: 1
             }]);
             } catch (e) {
                 expect(e instanceof ValidationError).to.be.true;

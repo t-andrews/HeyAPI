@@ -6,10 +6,10 @@ import { Basho } from "../../../../src/model/Basho";
 import { HonBasho } from "../../../../src/constant/HonBasho";
 import { BashoResolver } from "../../../../src/graphql/resolver/BashoResolver";
 import { BashoRepository } from "../../../../src/db/repository/BashoRepository";
+import { UpdateBashoInput } from "../../../../src/graphql/input/basho/UpdateBashoInput";
 import { CreateBashoInput } from "../../../../src/graphql/input/basho/CreateBashoInput";
 import { GenericCRUDRepositoryUtil } from "../../../../src/util/GenericCRUDRepositoryUtil";
 import { BashoMutationResponse } from "../../../../src/graphql/response/mutation/BashoMutationResponse";
-import { UpdateBashoInput } from "../../../../src/graphql/input/basho/UpdateBashoInput";
 
 let sandbox: sinon.SinonSandbox;
 
@@ -20,10 +20,8 @@ let bashoRepository: BashoRepository;
 describe("Basho Resolver",  () => {
 
     const bashoInput: CreateBashoInput = {
-        startDate: "2020-01-04T01:10:25+01:00",
         winnerId: 123,
-        location: "location_test",
-        name: HonBasho.HATSU
+        basho: "1990.05"
     };
 
     const updateBashoInput = <UpdateBashoInput> cloneDeep(bashoInput);
