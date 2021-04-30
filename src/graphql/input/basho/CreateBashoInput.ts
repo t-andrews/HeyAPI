@@ -10,10 +10,6 @@ export class CreateBashoInput implements Partial<Basho> {
     @Field(() => GraphQLString)
     basho!: string;
 
-    @MaxLength(255)
-    @Field(() => GraphQLString)
-    location!: string;
-
     @Min(1)
     @Field(() => Int, { nullable: true })
     winnerId?: number;

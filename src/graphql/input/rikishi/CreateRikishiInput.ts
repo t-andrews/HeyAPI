@@ -5,12 +5,9 @@ import { IsDateString, IsUrl, MaxLength } from "class-validator";
 
 @InputType()
 export class CreateRikishiInput implements Partial<Rikishi> {
-    @MaxLength(255)
-    @Field(() => GraphQLString)
-    name!: string;
 
     @IsDateString()
-    @Field(() => GraphQLString)
+    @Field()
     birthDate!: string;
 
     @MaxLength(32)

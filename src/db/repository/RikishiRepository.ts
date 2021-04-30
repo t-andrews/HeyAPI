@@ -15,6 +15,9 @@ export class RikishiRepository implements Repository<Rikishi> {
         return Rikishi.transaction(async trx => {
             const createdRikishi: Rikishi = await Rikishi.query(trx).insertGraph(item);
 
+            if (!createdRikishi.shikonas) {
+                createdRikishi.shikonas = []
+            }
             if (!createdRikishi.bouts) {
                 createdRikishi.bouts = []
             }
@@ -48,6 +51,10 @@ export class RikishiRepository implements Repository<Rikishi> {
         const createBouts: boolean = GraphQLNodeUtil.doesSelectionFieldExist(
             fieldNodes, "bouts"
         );
+
+        if (GraphQLNodeUtil.doesSelectionFieldExist(fieldNodes, "shikonas")) {
+            relationsToFetch.push("shikonas");
+        }
 
         if (GraphQLNodeUtil.doesSelectionFieldExist(fieldNodes, "banzukes")) {
             relationsToFetch.push("banzukes");

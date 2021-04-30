@@ -32,8 +32,8 @@ describe("Rikishi Resolver",  () => {
     describe("Positive scenarios",  () => {
 
         const insertedRikishi = <CreateRikishiInput> {
-            name: "rikishi_name",
-            birthDate: "2020-01-04T01:10:25+01:00"
+            shusshin: "Tokyo",
+            birthDate: "2020-01-04"
         };
 
         const returnedRikishi: Rikishi = <Rikishi> cloneDeep(insertedRikishi)!;
@@ -70,8 +70,8 @@ describe("Rikishi Resolver",  () => {
     describe("Negative scenarios", async () => {
         it("Should return a RikishiMutationResponse on failed creation", async () => {
             const insertedRikishi = <CreateRikishiInput> {
-                name: "rikishi_name",
-                birthDate: "2020-01-04T01:10:25+01:00"
+                shusshin: "Tokyo",
+                birthDate: "2020-01-04"
             };
 
             const error: Error = new Error("Some repository error");

@@ -14,7 +14,7 @@ export class RikishiResolver {
 
     @Query(() => Rikishi)
     public async rikishi(@Arg("id", () => Int) id: number, @Info() info: GraphQLResolveInfo): Promise<Rikishi> {
-        return await this.rikishiRepository.findDetailled(id, info.fieldNodes);
+        return this.rikishiRepository.findDetailled(id, info.fieldNodes);
     }
 
     @Mutation(() => RikishiMutationResponse)

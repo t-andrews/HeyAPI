@@ -17,9 +17,6 @@ export class Basho extends BaseModel {
     @Field(() => GraphQLString)
     basho!: string;
 
-    @Field(() => GraphQLString)
-    location!: string;
-
     @Field(() => [Bout])
     bouts!: Bout[];
 
@@ -31,13 +28,11 @@ export class Basho extends BaseModel {
             type: "object",
             required: [
                 "basho",
-                "location",
                 "winnerId"
             ],
             properties: {
                 id: { type: "integer" },
                 basho: { type: "string" },
-                location: { type: "string" },
                 winnerId: { type: "integer" },
             }
         };

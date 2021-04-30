@@ -36,12 +36,13 @@ describe("Rikishi Repository",  () => {
 
         it("Should return rikishi on successful creation with heya", async () => {
             const insertedRikishi = <Rikishi> {
-                name: "rikishi_name",
+                id: 123,
                 shusshin: "Kyoto",
-                birthDate: "2020-01-04T01:10:25+01:00"
+                birthDate: "2020-01-04"
             };
 
             const returnedRikishi = cloneDeep(insertedRikishi);
+            returnedRikishi.shikonas = [];
             returnedRikishi.bouts = [];
             returnedRikishi.banzukes = [];
 
@@ -70,8 +71,10 @@ describe("Rikishi Repository",  () => {
 
         it("Should return Rikishi on successful detailled find by id with joins", async () => {
             const foundRikishi = <Rikishi> {
-                name: "rikishi_name",
-                birthDate: "2020-01-04T01:10:25+01:00",
+                birthDate: "2020-01-04",
+                id: 123,
+                shusshin: "Kyoto",
+                shikonas: [{}],
                 banzukes: [
                     {
                         id: 222,
@@ -84,25 +87,19 @@ describe("Rikishi Repository",  () => {
                 losses: [
                     {
                         id: 111,
-                        bashoDay: 5,
-                        order: 1,
-                        duration: 55,
+                        day: 5,
                         winnerId: 1,
                         loserId: 3,
-                        bashoId: 1,
-                        date: "2020-01-04T01:10:25+01:00"
+                        bashoId: 1
                     }
                 ],
                 wins: [
                     {
                         id: 222,
-                        bashoDay: 5,
-                        order: 1,
-                        duration: 55,
+                        day: 5,
                         winnerId: 1,
                         loserId: 3,
-                        bashoId: 1,
-                        date: "2020-01-04T01:10:25+01:00"
+                        bashoId: 1
                     }
                 ]
             };
@@ -116,11 +113,16 @@ describe("Rikishi Repository",  () => {
                 .onCall(0).returns(true)
                 .onCall(1).returns(true)
                 .onCall(2).returns(true)
-                .onCall(3).returns(false);
+                .onCall(3).returns(false)
+                .onCall(4).returns(false);
 
             knexTracker.on('query', (query: QueryDetails, step: number) => {
                 [
                     () => columnNameQuery(query),
+                    () => {
+                        expect(query.method).to.equal("columnInfo");
+                        query.response({});
+                    },
                     () => {
                         expect(query.method).to.equal("select");
                         query.response(foundRikishi);

@@ -4,25 +4,23 @@ export async function up(knex: Knex): Promise<void> {
     return knex.schema
         .createTable("rikishis", table => {
             table.increments("id").primary();
-            table.string("name", 255).notNullable();
             table.string("shusshin", 32).notNullable();
-            table.date("birth_date").notNullable();
+            table.date("birth_date").nullable();
             table.string("picture_url").nullable();
+        })
+        .createTable("shikonas", table => {
+            table.integer("rikishi_id").references("id").inTable("rikishis").onDelete("cascade");
+            table.string("shikona").nullable();
+            table.primary(["rikishi_id", "shikona"])
         })
         .createTable("bashos", table => {
             table.increments("id").primary();
-            table.string("name", 32).notNullable();
-            table.string("location", 255).notNullable();
+            table.string("basho", 32).notNullable();
             table.integer("winner_id").nullable().references("id").inTable("rikishis").onDelete("cascade");
-            table.date("start_date").notNullable();
-            table.date("end_date").nullable();
         })
         .createTable("bouts", table => {
             table.increments("id").primary();
-            table.date("date").notNullable();
-            table.integer("order").notNullable();
-            table.integer("basho_day").notNullable();
-            table.integer("duration").notNullable();
+            table.integer("day").notNullable();
             table.string("winning_method", 32).notNullable();
             table.integer("winner_id").notNullable().references("id").inTable("rikishis").onDelete("cascade");
             table.integer("loser_id").notNullable().references("id").inTable("rikishis").onDelete("cascade");
@@ -37,8 +35,8 @@ export async function up(knex: Knex): Promise<void> {
             table.integer("basho_id").notNullable().references("id").inTable("bashos").onDelete("cascade");
             table.string("heya", 32).notNullable();
             table.string("rank", 8).notNullable().references("rank").inTable("ranks");
-            table.integer("weight").notNullable();
-            table.integer("height").notNullable();
+            table.integer("weight").nullable();
+            table.integer("height").nullable();
             table.unique(["rikishi_id", "basho_id"])
         });
 }

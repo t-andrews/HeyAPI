@@ -19,14 +19,11 @@ let boutRepository: BoutRepository;
 describe("Bout Resolver",  () => {
 
     const boutInput: CreateBoutInput = <any> {
-        bashoDay: 5,
-        order: 1,
-        duration: 55,
+        day: 5,
         winnerId: 1,
         winningMethod: Kimarite.WATASHIKOMI,
         loserId: 3,
-        bashoId: 1,
-        date: "2020-01-04T01:10:25+01:00"
+        bashoId: 1
     };
 
     before(() => {

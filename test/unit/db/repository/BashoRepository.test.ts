@@ -38,7 +38,6 @@ describe("Basho Repository",  () => {
             const basho = <Basho> {
                 id: 123,
                 winnerId: 123,
-                location: "location_test",
                 basho: "2020.01"
             };
 
@@ -54,11 +53,10 @@ describe("Basho Repository",  () => {
             expect(result).to.deep.equal(basho);
         });
 
-        it("Should return Basho on successful detailled find by id with joins", async () => {
+        it("Should return Basho on successful detailed find by id with joins", async () => {
             const basho = <Basho> {
                 id: 456,
                 winnerId: 123,
-                location: "location_test",
                 basho: "2020.03",
                 bouts: [{}],
                 winner: {}

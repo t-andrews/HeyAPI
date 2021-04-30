@@ -45,7 +45,6 @@ describe("Generic CRUD Repository Util",  () => {
             const result: Basho = await repository.create<Basho>(
                 <Basho> {
                     winnerId: 123,
-                    location: "location_test",
                     basho: "2021.07"
                 },
                 Basho.query()

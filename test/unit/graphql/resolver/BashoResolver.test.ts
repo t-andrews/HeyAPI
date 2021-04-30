@@ -21,7 +21,6 @@ describe("Basho Resolver",  () => {
 
     const bashoInput: CreateBashoInput = {
         winnerId: 123,
-        location: "location_test",
         basho: "1990.05"
     };
 
