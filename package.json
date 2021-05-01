@@ -11,8 +11,7 @@
     "coverage:sonar": "nyc --reporter=lcov npm run test:unit",
     "coverage": "nyc --reporter=text-summary --reporter=html npm run test:unit",
     "start:dev": "cross-env NODE_ENV=dev nodemon",
-    "start": "ts-node ./src/server.ts",
-    "heroku-postbuild": "npm run knex:migrate:latest && npm run knex:seed:run"
+    "start": "ts-node ./src/server.ts"
   },
   "keywords": [
     "sumo",
