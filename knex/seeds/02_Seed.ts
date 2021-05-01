@@ -68,5 +68,8 @@ export async function seed(knex: Knex): Promise<void> {
         
         DROP TABLE banzuke_staging;
         DROP TABLE results_staging;
-    `);
+        `
+    ).catch(err => {
+        console.error("Seeding failed: ", err);
+    });
 }
