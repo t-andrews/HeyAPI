@@ -36,6 +36,9 @@ export async function seed(knex: Knex): Promise<void> {
         COPY banzuke_staging FROM '${process.cwd()}\\knex\\seeds\\banzuke.csv' with delimiter ',' CSV HEADER;
         COPY results_staging FROM '${process.cwd()}\\knex\\seeds\\results.csv' with delimiter ',' CSV HEADER;
         
+        INSERT INTO ranks(rank)
+        SELECT DISTINCT rank FROM banzuke_staging;
+        
         INSERT INTO rikishis(id,shusshin,birth_date)
         SELECT DISTINCT ON (id) id,shusshin,birth_date FROM banzuke_staging;
         
@@ -46,12 +49,13 @@ export async function seed(knex: Knex): Promise<void> {
         SELECT DISTINCT basho FROM banzuke_staging;
         
         INSERT INTO bouts(basho_id,day,winning_method,winner_id,loser_id)
-        SELECT 
+        SELECT
+            DISTINCT ON (bashos.id,results_staging.day,winner_id, loser_id)
             bashos.id,
             results_staging.day,
             INITCAP(results_staging.kimarite),
-            CASE WHEN results_staging.rikishi1_win = 1 THEN results_staging.rikishi1_id ELSE results_staging.rikishi2_id END,
-            CASE WHEN results_staging.rikishi1_win = 1 THEN results_staging.rikishi2_id ELSE results_staging.rikishi1_id END
+            CASE WHEN results_staging.rikishi1_win = 1 THEN results.rikishi1_id ELSE results_staging.rikishi2_id END as winner_id,
+            CASE WHEN results_staging.rikishi1_win = 1 THEN results_staging.rikishi2_id ELSE results_staging.rikishi1_id END as loser_id
         FROM results_staging
         INNER JOIN bashos ON (results_staging.basho = bashos.basho);
         
