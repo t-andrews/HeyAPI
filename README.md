@@ -1,5 +1,5 @@
 # HeyAPI
-[![CircleCI](https://circleci.com/gh/bakou912/HeyAPI.svg?style=svg)](https://circleci.com/gh/bakou912/HeyAPI)
+[![CircleCI](https://circleci.com/gh/t-andrews/HeyAPI.svg?style=svg)](https://circleci.com/gh/t-andrews/HeyAPI)
 
 ## Summary
 This project is a way to explore interesting technologies like [Apollo Server](https://www.apollographql.com/docs/) and [TypeGraphQL](https://typegraphql.com/) 
