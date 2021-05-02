@@ -132,7 +132,7 @@ describe("Rikishi Repository",  () => {
 
             foundRikishi.bouts = [...foundRikishi.losses!,...foundRikishi.wins!]
 
-            const result: Rikishi = await repository.findDetailled(456, undefined!);
+            const result: Rikishi = await repository.findDetailed(456, undefined!);
 
             expect(result).to.deep.equal(foundRikishi);
         });

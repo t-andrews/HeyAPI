@@ -6,7 +6,7 @@ import { Basho } from "../../../../src/model/Basho";
 import { HonBasho } from "../../../../src/constant/HonBasho";
 import { BashoResolver } from "../../../../src/graphql/resolver/BashoResolver";
 import { BashoRepository } from "../../../../src/db/repository/BashoRepository";
-import { UpdateBashoInput } from "../../../../src/graphql/input/basho/UpdateBashoInput";
+import { AddBashoWinnerInput } from "../../../../src/graphql/input/basho/AddBashoWinnerInput";
 import { CreateBashoInput } from "../../../../src/graphql/input/basho/CreateBashoInput";
 import { GenericCRUDRepositoryUtil } from "../../../../src/util/GenericCRUDRepositoryUtil";
 import { BashoMutationResponse } from "../../../../src/graphql/response/mutation/BashoMutationResponse";
@@ -24,7 +24,7 @@ describe("Basho Resolver",  () => {
         basho: "1990.05"
     };
 
-    const updateBashoInput = <UpdateBashoInput> cloneDeep(bashoInput);
+    const updateBashoInput = <AddBashoWinnerInput> cloneDeep(bashoInput);
 
     before(() => {
         updateBashoInput.id = 12345;
@@ -65,7 +65,7 @@ describe("Basho Resolver",  () => {
 
             const resolver: BashoResolver = new BashoResolver(undefined!, bashoRepository);
 
-            const result: BashoMutationResponse = await resolver.updateBasho(updateBashoInput);
+            const result: BashoMutationResponse = await resolver.addBashoWinner(updateBashoInput);
 
             expect(result.data).to.deep.equal(returnedBasho);
         });
@@ -105,7 +105,7 @@ describe("Basho Resolver",  () => {
 
             const resolver: BashoResolver = new BashoResolver(undefined!, bashoRepository);
 
-            const result: BashoMutationResponse = await resolver.updateBasho(updateBashoInput);
+            const result: BashoMutationResponse = await resolver.addBashoWinner(updateBashoInput);
 
             expect(result.error).to.deep.equal(error.message);
         });

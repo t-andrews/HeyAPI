@@ -5,15 +5,20 @@ import { Rikishi } from "../../model/Rikishi";
 import { GraphQLNodeUtil } from "../../util/GraphQLNodeUtil";
 import { PartialModelObject, QueryBuilder } from "objection";
 import { GenericCRUDRepositoryUtil } from "../../util/GenericCRUDRepositoryUtil";
+import { Shikona } from "../../model/Shikona";
 
 @Service()
 export class RikishiRepository implements Repository<Rikishi> {
 
     constructor(private repositoryUtil: GenericCRUDRepositoryUtil) {}
 
-    public async create(item: PartialModelObject<Rikishi>): Promise<Rikishi> {
+    public async create(item: PartialModelObject<Rikishi>, shikona: string = ""): Promise<Rikishi> {
         return Rikishi.transaction(async trx => {
-            const createdRikishi: Rikishi = await Rikishi.query(trx).insertGraph(item);
+            const createdRikishi: Rikishi = await Rikishi.query(trx).insert({ birthDate: item.birthDate, shusshin: item.shusshin }).returning("*").then(r => r).catch(err => {
+                console.log(err);
+                return null!;
+            });
+            const createdShikona: Shikona = await Shikona.query(trx).insert({ rikishiId: createdRikishi.id, shikona: shikona }).returning("*");
 
             if (!createdRikishi.shikonas) {
                 createdRikishi.shikonas = []
@@ -24,6 +29,8 @@ export class RikishiRepository implements Repository<Rikishi> {
             if (!createdRikishi.banzukes) {
                 createdRikishi.banzukes = []
             }
+
+            createdRikishi.shikonas.push(createdShikona);
 
             return createdRikishi;
         });
@@ -45,7 +52,7 @@ export class RikishiRepository implements Repository<Rikishi> {
             });
     }
 
-    public async findDetailled(id: number, fieldNodes: ReadonlyArray<FieldNode>): Promise<Rikishi> {
+    public async findDetailed(id: number, fieldNodes: ReadonlyArray<FieldNode>): Promise<Rikishi> {
         const queryBuilder: QueryBuilder<Rikishi, Rikishi> = Rikishi.query().findById(id);
         const relationsToFetch: string[] = [];
         const createBouts: boolean = GraphQLNodeUtil.doesSelectionFieldExist(

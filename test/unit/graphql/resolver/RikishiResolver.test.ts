@@ -57,7 +57,7 @@ describe("Rikishi Resolver",  () => {
 
         it("Should return a Rikishi on successful find", async () => {
 
-            sandbox.stub(rikishiRepository, "findDetailled").resolves(returnedRikishi);
+            sandbox.stub(rikishiRepository, "findDetailed").resolves(returnedRikishi);
 
             const resolver: RikishiResolver = new RikishiResolver(rikishiRepository);
 

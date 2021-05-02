@@ -54,7 +54,7 @@ export async function seed(knex: Knex): Promise<void> {
             bashos.id,
             results_staging.day,
             INITCAP(results_staging.kimarite),
-            CASE WHEN results_staging.rikishi1_win = 1 THEN results.rikishi1_id ELSE results_staging.rikishi2_id END as winner_id,
+            CASE WHEN results_staging.rikishi1_win = 1 THEN results_staging.rikishi1_id ELSE results_staging.rikishi2_id END as winner_id,
             CASE WHEN results_staging.rikishi1_win = 1 THEN results_staging.rikishi2_id ELSE results_staging.rikishi1_id END as loser_id
         FROM results_staging
         INNER JOIN bashos ON (results_staging.basho = bashos.basho);
@@ -69,6 +69,11 @@ export async function seed(knex: Knex): Promise<void> {
             banzuke_staging.height
         FROM banzuke_staging
         INNER JOIN bashos ON (banzuke_staging.basho = bashos.basho);
+        
+        -- Adjusting sequences to start from the last value inserted after seeding
+        SELECT setval('banzuke_id_seq', (SELECT MAX(id) FROM banzuke), true),
+        setval('bashos_id_seq', (SELECT MAX(id) FROM bashos), true),
+        setval('rikishis_id_seq', (SELECT MAX(id) FROM rikishis), true);
         
         DROP TABLE banzuke_staging;
         DROP TABLE results_staging;
