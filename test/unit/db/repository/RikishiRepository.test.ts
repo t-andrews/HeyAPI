@@ -110,6 +110,39 @@ describe("Rikishi Repository",  () => {
             expect(result).to.deep.equal(returnedRikishi);
         });
 
+        it("Should return Rikishi on successful detailed find by id without joins", async () => {
+            const foundRikishi = <Rikishi><unknown>{
+                birthDate: "2020-01-04",
+                id: 123,
+                shusshin: "Kyoto",
+                shikonas: [],
+                banzukes: [],
+                losses: [],
+                wins: [],
+                bouts: []
+            };
+
+            sandbox.stub(GraphQLNodeUtil, "doesSelectionFieldExist")
+                .onCall(0).returns(false)
+                .onCall(1).returns(false)
+                .onCall(2).returns(false)
+                .onCall(3).returns(false)
+                .onCall(4).returns(false);
+
+            knexTracker.on('query', (query: QueryDetails, step: number) => {
+                [
+                    () => {
+                        expect(query.method).to.equal("select");
+                        query.response(foundRikishi);
+                    }
+                ][step - 1]();
+            });
+
+            const result: Rikishi = await repository.findDetailed(456, undefined!);
+
+            expect(result).to.deep.equal(foundRikishi);
+        });
+
         it("Should return Rikishi on successful detailed find by id with joins", async () => {
             const foundRikishi = <Rikishi> {
                 birthDate: "2020-01-04",
