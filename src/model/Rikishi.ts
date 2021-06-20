@@ -16,7 +16,7 @@ export class Rikishi extends BaseModel {
     @Field(() => GraphQLString)
     shusshin!: string;
 
-    @Field()
+    @Field(() => GraphQLString)
     birthDate!: string;
 
     @Field(() => [Shikona], { nullable: true })
@@ -47,8 +47,8 @@ export class Rikishi extends BaseModel {
             properties: {
                 id: { type: "integer" },
                 shusshin: { type: "string" },
-                pictureUrl: { type: "string" },
                 birthDate: { type: "string", "format": "date" },
+                pictureUrl: { type: "string" }
             }
         };
     }

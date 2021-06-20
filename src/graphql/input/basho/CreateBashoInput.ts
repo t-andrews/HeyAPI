@@ -2,11 +2,12 @@ import { GraphQLString } from "graphql";
 import { Basho } from "../../../model/Basho";
 import { Matches, Min } from "class-validator";
 import { Field, InputType, Int } from "type-graphql";
+import { ValidationPattern } from "../../../constant/validation/ValidationPattern";
 
 @InputType()
 export class CreateBashoInput implements Partial<Basho> {
 
-    @Matches(/^\d{4}\.(0[1-9]|1[012])$/)
+    @Matches(ValidationPattern.BASHO)
     @Field(() => GraphQLString)
     basho!: string;
 

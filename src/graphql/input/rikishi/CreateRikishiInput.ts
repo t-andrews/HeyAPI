@@ -1,18 +1,23 @@
 import { GraphQLString } from "graphql";
+import { IsDate } from "../validation/IsDate";
 import { Field, InputType } from "type-graphql";
 import { Rikishi } from "../../../model/Rikishi";
-import { IsDateString, IsUrl, MaxLength } from "class-validator";
+import { IsNotEmpty, IsUrl, MaxLength } from "class-validator";
 
 @InputType()
 export class CreateRikishiInput implements Partial<Rikishi> {
 
-    @IsDateString()
-    @Field()
+    @IsDate()
+    @Field(() => GraphQLString)
     birthDate!: string;
 
     @MaxLength(32)
     @Field(() => GraphQLString)
     shusshin!: string;
+
+    @IsNotEmpty()
+    @Field(() => GraphQLString)
+    shikona!: string;
 
     @IsUrl()
     @Field(() => String, { nullable: true })

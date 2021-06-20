@@ -9,9 +9,10 @@ export async function up(knex: Knex): Promise<void> {
             table.string("picture_url").nullable();
         })
         .createTable("shikonas", table => {
+            table.increments("id").primary();
             table.integer("rikishi_id").references("id").inTable("rikishis").onDelete("cascade");
             table.string("shikona").nullable();
-            table.primary(["rikishi_id", "shikona"])
+            table.unique(["rikishi_id", "shikona"])
         })
         .createTable("bashos", table => {
             table.increments("id").primary();

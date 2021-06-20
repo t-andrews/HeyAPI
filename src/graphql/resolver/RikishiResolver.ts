@@ -14,14 +14,14 @@ export class RikishiResolver {
 
     @Query(() => Rikishi)
     public async rikishi(@Arg("id", () => Int) id: number, @Info() info: GraphQLResolveInfo): Promise<Rikishi> {
-        return this.rikishiRepository.findDetailled(id, info.fieldNodes);
+        return this.rikishiRepository.findDetailed(id, info.fieldNodes);
     }
 
     @Mutation(() => RikishiMutationResponse)
     public async createRikishi(@Arg("rikishi") rikishi: CreateRikishiInput): Promise<RikishiMutationResponse> {
         const response: RikishiMutationResponse = new RikishiMutationResponse();
         try {
-            response.data = await this.rikishiRepository.create(rikishi);
+            response.data = await this.rikishiRepository.create(rikishi, rikishi.shikona);
         } catch (e) {
             response.error = (e as Error).message;
         }

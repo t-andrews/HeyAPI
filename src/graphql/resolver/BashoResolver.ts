@@ -3,7 +3,7 @@ import { GraphQLResolveInfo } from "graphql";
 import { Basho } from "../../model/Basho";
 import { RikishiResolver } from "./RikishiResolver";
 import { CreateBashoInput } from "../input/basho/CreateBashoInput";
-import { UpdateBashoInput } from "../input/basho/UpdateBashoInput";
+import { AddBashoWinnerInput } from "../input/basho/AddBashoWinnerInput";
 import { BashoRepository } from "../../db/repository/BashoRepository";
 import { Arg, Info, Int, Mutation, Query, Resolver } from "type-graphql";
 import { BashoMutationResponse } from "../response/mutation/BashoMutationResponse";
@@ -34,7 +34,7 @@ export class BashoResolver {
     }
 
     @Mutation(() => BashoMutationResponse)
-    public async updateBasho(@Arg("basho") basho: UpdateBashoInput): Promise<BashoMutationResponse> {
+    public async addBashoWinner(@Arg("basho") basho: AddBashoWinnerInput): Promise<BashoMutationResponse> {
         const response: BashoMutationResponse = new BashoMutationResponse();
         try {
             response.data = await this.bashoRepository.update(basho);
