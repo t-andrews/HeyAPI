@@ -7,6 +7,7 @@ import { getTracker, QueryDetails, Tracker } from "mock-knex";
 import { GraphQLNodeUtil } from "../../../../src/util/GraphQLNodeUtil";
 import { RikishiRepository } from "../../../../src/db/repository/RikishiRepository";
 import { GenericCRUDRepositoryUtil } from "../../../../src/util/GenericCRUDRepositoryUtil";
+import { Shikona } from "../../../../src/model/Shikona";
 
 let sandbox: sinon.SinonSandbox;
 let knexTracker: Tracker;
@@ -34,7 +35,7 @@ describe("Rikishi Repository",  () => {
 
     describe("Positive scenarios",  () => {
 
-        it("Should return rikishi on successful creation with heya", async () => {
+        it("Should return rikishi on successful creation", async () => {
             const insertedRikishi = <Rikishi> {
                 id: 123,
                 shusshin: "Kyoto",
@@ -53,13 +54,12 @@ describe("Rikishi Repository",  () => {
                         query.response({});
                     },
                     () => {
-                        console.log('QUERY: ', query);
                         expect(query.method).to.equal("insert");
-                        query.response(returnedRikishi);
+                        query.response([returnedRikishi]);
                     },
                     () => {
                         expect(query.sql).to.equal("COMMIT;");
-                        query.response(returnedRikishi);
+                        query.response({});
                     }
                 ][step - 1]();
             });
@@ -69,7 +69,48 @@ describe("Rikishi Repository",  () => {
             expect(result).to.deep.equal(returnedRikishi);
         });
 
-        it("Should return Rikishi on successful detailled find by id with joins", async () => {
+        it("Should return rikishi on successful creation with shikona", async () => {
+            const insertedRikishi = <Rikishi> {
+                id: 123,
+                shusshin: "Kyoto",
+                birthDate: "2020-01-04"
+            };
+
+            const returnedShikona = <Shikona>{id: 1, rikishiId: 123, shikona: "some_shikona"};
+
+            const returnedRikishi = cloneDeep(insertedRikishi);
+            returnedRikishi.shikonas = [returnedShikona];
+            returnedRikishi.bouts = [];
+            returnedRikishi.banzukes = [];
+
+
+            knexTracker.on('query', (query: QueryDetails, step: number) => {
+                [
+                    () => {
+                        expect(query.sql).to.equal("BEGIN;");
+                        query.response({});
+                    },
+                    () => {
+                        expect(query.method).to.equal("insert");
+                        query.response([returnedRikishi]);
+                    },
+                    () => {
+                        expect(query.method).to.equal("insert");
+                        query.response([returnedShikona]);
+                    },
+                    () => {
+                        expect(query.sql).to.equal("COMMIT;");
+                        query.response({});
+                    }
+                ][step - 1]();
+            });
+
+            const result: Rikishi = await repository.create(insertedRikishi, returnedShikona.shikona);
+
+            expect(result).to.deep.equal(returnedRikishi);
+        });
+
+        it("Should return Rikishi on successful detailed find by id with joins", async () => {
             const foundRikishi = <Rikishi> {
                 birthDate: "2020-01-04",
                 id: 123,

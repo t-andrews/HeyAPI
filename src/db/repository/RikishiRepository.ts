@@ -14,11 +14,10 @@ export class RikishiRepository implements Repository<Rikishi> {
 
     public async create(item: PartialModelObject<Rikishi>, shikona: string = ""): Promise<Rikishi> {
         return Rikishi.transaction(async trx => {
-            const createdRikishi: Rikishi = await Rikishi.query(trx).insert({ birthDate: item.birthDate, shusshin: item.shusshin }).returning("*").then(r => r).catch(err => {
+            const createdRikishi: Rikishi = await Rikishi.query(trx).insert({ birthDate: item.birthDate, shusshin: item.shusshin }).returning("*").catch(err => {
                 console.log(err);
                 return null!;
             });
-            const createdShikona: Shikona = await Shikona.query(trx).insert({ rikishiId: createdRikishi.id, shikona: shikona }).returning("*");
 
             if (!createdRikishi.shikonas) {
                 createdRikishi.shikonas = []
@@ -30,7 +29,10 @@ export class RikishiRepository implements Repository<Rikishi> {
                 createdRikishi.banzukes = []
             }
 
-            createdRikishi.shikonas.push(createdShikona);
+            if (shikona != "") {
+                const createdShikona: Shikona = await Shikona.query(trx).insert({ rikishiId: createdRikishi.id, shikona: shikona }).returning("*");
+                createdRikishi.shikonas.push(createdShikona);
+            }
 
             return createdRikishi;
         });

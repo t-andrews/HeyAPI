@@ -36,7 +36,7 @@ describe("Rikishi Resolver",  () => {
             birthDate: "2020-01-04"
         };
 
-        const returnedRikishi: Rikishi = <Rikishi> cloneDeep(insertedRikishi)!;
+        const returnedRikishi: Rikishi = <Rikishi><unknown>cloneDeep(insertedRikishi)!;
 
         before(() => {
             returnedRikishi.bouts = [];

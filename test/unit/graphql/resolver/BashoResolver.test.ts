@@ -24,7 +24,7 @@ describe("Basho Resolver",  () => {
         basho: "1990.05"
     };
 
-    const updateBashoInput = <AddBashoWinnerInput> cloneDeep(bashoInput);
+    const updateBashoInput = <AddBashoWinnerInput><unknown>cloneDeep(bashoInput);
 
     before(() => {
         updateBashoInput.id = 12345;
