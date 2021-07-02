@@ -2,43 +2,20 @@
   "name": "HeyAPI",
   "version": "1.0.0",
   "description": "GraphQL API for a sumo database.",
-  "main": "./src/server.ts",
-  "scripts": {
-    "knex:migrate:make": "knex migrate:make -x ts sumodb",
-    "knex:migrate:latest": "cross-env NODE_ENV=dev knex migrate:latest",
-    "knex:seed:run": "cross-env NODE_ENV=dev knex seed:run",
-    "test:unit": "cross-env NODE_ENV=test mocha -r ts-node/register \"test/unit/**/*.test.ts\" --file \"test/setup.ts\"",
-    "coverage:sonar": "nyc --reporter=lcov npm run test:unit",
-    "coverage": "nyc --reporter=text-summary --reporter=html npm run test:unit",
-    "start:dev": "cross-env NODE_ENV=dev nodemon",
-    "start": "ts-node ./src/server.ts"
-  },
-  "keywords": [
-    "sumo",
-    "graphql",
-    "api",
-    "apollo",
-    "typescript",
-    "objectionjs"
-  ],
   "author": "Tommy Andrews",
-  "license": "ISC",
-  "devDependencies": {
-    "@types/chai": "^4.2.14",
-    "@types/mocha": "^8.2.0",
-    "@types/sinon-chai": "^3.2.5",
-    "chai": "^4.2.0",
-    "cross-env": "^7.0.3",
-    "mocha": "^8.2.1",
-    "mock-knex": "^0.4.9",
-    "nodemon": "^2.0.6",
-    "sinon": "^9.2.2",
-    "sinon-chai": "^3.5.0",
-    "supertest": "^4.0.2",
-    "ts-node": "^9.1.1",
-    "typescript": "^3.9.7"
+  "scripts": {
+    "test:unit": "cross-env NODE_ENV=test mocha -r ts-node/register \"test/unit/**/*.test.ts\" --file \"test/setup.ts\"",
+    "coverage": "nyc --reporter=text-summary --reporter=html npm run test:unit",
+    "coverage:sonar": "nyc --reporter=lcov npm run test:unit",
+    "knex:migrate:latest": "cross-env NODE_ENV=dev knex migrate:latest",
+    "knex:migrate:make": "knex migrate:make -x ts sumodb",
+    "knex:seed:run": "cross-env NODE_ENV=dev knex seed:run",
+    "start": "ts-node ./src/server.ts",
+    "start:dev": "cross-env NODE_ENV=dev nodemon"
   },
+  "main": "./src/server.ts",
   "dependencies": {
+    "@mdi/font": "5.9.55",
     "@types/config": "0.0.36",
     "@types/lodash": "^4.14.165",
     "@types/mock-knex": "^0.4.3",
@@ -57,9 +34,38 @@
     "objection": "^2.2.3",
     "pg": "^8.5.1",
     "reflect-metadata": "^0.1.13",
+    "roboto-fontface": "*",
     "ts-postgres": "^1.1.3",
     "ts-transformer-keys": "^0.4.3",
     "type-graphql": "^1.1.1",
-    "typedi": "^0.8.0"
-  }
+    "typedi": "^0.8.0",
+    "vuetify": "^3.0.0-alpha.0"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.2.14",
+    "@types/mocha": "^8.2.0",
+    "@types/sinon-chai": "^3.2.5",
+    "chai": "^4.2.0",
+    "cross-env": "^7.0.3",
+    "mocha": "^8.2.1",
+    "mock-knex": "^0.4.9",
+    "nodemon": "^2.0.6",
+    "sass": "~1.32.0",
+    "sass-loader": "^10.0.0",
+    "sinon": "^9.2.2",
+    "sinon-chai": "^3.5.0",
+    "supertest": "^4.0.2",
+    "ts-node": "^9.1.1",
+    "typescript": "^3.9.7",
+    "vue-cli-plugin-vuetify": "~2.4.1"
+  },
+  "keywords": [
+    "sumo",
+    "graphql",
+    "api",
+    "apollo",
+    "typescript",
+    "objectionjs"
+  ],
+  "license": "ISC"
 }
