@@ -27,11 +27,11 @@ export class Banzuke extends BaseModel {
     @Field(() => Rikishi)
     rikishi!: Rikishi;
 
-    @Field(() => Int)
-    weight!: number;
+    @Field(() => Int, { nullable: true })
+    weight?: number;
 
-    @Field(() => Int)
-    height!: number;
+    @Field(() => Int, { nullable: true })
+    height?: number;
 
     static get jsonSchema(): JSONSchema {
         return {
@@ -40,9 +40,7 @@ export class Banzuke extends BaseModel {
                 "rikishiId",
                 "bashoId",
                 "heya",
-                "rank",
-                "weight",
-                "height"
+                "rank"
             ],
             properties: {
                 id: { type: "integer" },
