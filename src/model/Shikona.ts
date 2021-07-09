@@ -5,7 +5,7 @@ import { JSONSchema, Model } from "objection";
 import { Field, ObjectType } from "type-graphql";
 
 @ObjectType({ description: "The Shikona model" })
-export class Shikona extends BaseModel {
+export class  Shikona extends BaseModel {
 
     static get tableName() {
         return "shikonas";

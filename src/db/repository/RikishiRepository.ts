@@ -89,4 +89,11 @@ export class RikishiRepository implements Repository<Rikishi> {
 
         return rikishi;
     }
+
+    public async findDetailedByShikona(shikona: string, fieldNodes: ReadonlyArray<FieldNode>): Promise<Rikishi[]> {
+        const shikonas: Shikona[] = (await Shikona.query().where({ shikona: shikona })) ?? [];
+        return Promise.all(shikonas.map(async (s: Shikona): Promise<Rikishi> => {
+            return this.findDetailed(s.rikishiId, fieldNodes);
+        }));
+    }
 }

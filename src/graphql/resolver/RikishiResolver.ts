@@ -17,6 +17,11 @@ export class RikishiResolver {
         return this.rikishiRepository.findDetailed(id, info.fieldNodes);
     }
 
+    @Query(() => [Rikishi])
+    public async rikishiByShikona(@Arg("shikona", () => String) shikona: string, @Info() info: GraphQLResolveInfo): Promise<Rikishi[]> {
+        return this.rikishiRepository.findDetailedByShikona(shikona, info.fieldNodes);
+    }
+
     @Mutation(() => RikishiMutationResponse)
     public async createRikishi(@Arg("rikishi") rikishi: CreateRikishiInput): Promise<RikishiMutationResponse> {
         const response: RikishiMutationResponse = new RikishiMutationResponse();
