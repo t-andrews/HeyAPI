@@ -3,7 +3,7 @@ import { FieldNode } from "graphql";
 import { Repository } from "./Repository";
 import { Rikishi } from "../../model/Rikishi";
 import { GraphQLNodeUtil } from "../../util/GraphQLNodeUtil";
-import { PartialModelObject, QueryBuilder } from "objection";
+import { PartialModelObject, QueryBuilder, raw } from "objection";
 import { GenericCRUDRepositoryUtil } from "../../util/GenericCRUDRepositoryUtil";
 import { Shikona } from "../../model/Shikona";
 
@@ -91,7 +91,7 @@ export class RikishiRepository implements Repository<Rikishi> {
     }
 
     public async findDetailedByShikona(shikona: string, fieldNodes: ReadonlyArray<FieldNode>): Promise<Rikishi[]> {
-        const shikonas: Shikona[] = (await Shikona.query().where({ shikona: shikona })) ?? [];
+        const shikonas: Shikona[] = (await Shikona.query().where(raw('lower("shikona")'), 'like', `%${shikona}%`)) ?? [];
         return Promise.all(shikonas.map(async (s: Shikona): Promise<Rikishi> => {
             return this.findDetailed(s.rikishiId, fieldNodes);
         }));
