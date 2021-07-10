@@ -4,6 +4,7 @@
 export enum Kihonwaza {
     ABISETAOSHI = "Abisetaoshi",
     OSHIDASHI = "Oshidashi",
+    OSHITAOSHI = "Oshitaoshi",
     TSUKIDASHI = "Tsukidashi",
     TSUKITAOSHI = "Tsukitaoshi",
     YORIKIRI = "Yorikiri",
