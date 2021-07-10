@@ -91,7 +91,12 @@ export class RikishiRepository implements Repository<Rikishi> {
     }
 
     public async findDetailedByShikona(shikona: string, fieldNodes: ReadonlyArray<FieldNode>): Promise<Rikishi[]> {
-        const shikonas: Shikona[] = (await Shikona.query().where(raw('lower("shikona")'), 'like', `%${shikona}%`)) ?? [];
+        const lowerShikona: string = shikona.toLowerCase();
+        const shikonas: Shikona[] = (
+            await Shikona.query()
+                .where(raw('lower(shikona)'), 'like', `%${lowerShikona}%`)
+                .orderByRaw(`SIMILARITY(shikona, '${lowerShikona}') desc`)
+        ) ?? [];
         return Promise.all(shikonas.map(async (s: Shikona): Promise<Rikishi> => {
             return this.findDetailed(s.rikishiId, fieldNodes);
         }));

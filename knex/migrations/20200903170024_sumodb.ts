@@ -39,7 +39,8 @@ export async function up(knex: Knex): Promise<void> {
             table.integer("weight").nullable();
             table.integer("height").nullable();
             table.unique(["rikishi_id", "basho_id"])
-        });
+        })
+        .raw('CREATE EXTENSION pg_trgm;');
 }
 
 export async function down(knex: Knex): Promise<void> {
