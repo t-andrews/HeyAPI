@@ -3,7 +3,7 @@ import sinonChai from "sinon-chai";
 import chai, { expect } from "chai";
 import { ValidationError } from "objection";
 import { getTracker, QueryDetails, Tracker } from "mock-knex";
-import { Banzuke } from "../../../../src/model/Banzuke";
+import { Banzuke } from "../../../../src/model/entity/Banzuke";
 import { GenericCRUDRepositoryUtil } from "../../../../src/util/GenericCRUDRepositoryUtil";
 import { BanzukeRepository } from "../../../../src/db/repository/BanzukeRepository";
 

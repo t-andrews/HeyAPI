@@ -1,4 +1,4 @@
-import { Bout } from "../../../model/Bout";
+import { Bout } from "../../../model/entity/Bout";
 import { Max, Min } from "class-validator";
 import { Field, InputType, Int } from "type-graphql";
 import { Kimarite } from "../../../constant/kimarite/Kimarite";

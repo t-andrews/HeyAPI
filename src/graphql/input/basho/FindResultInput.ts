@@ -1,15 +1,16 @@
 import { Min } from "class-validator";
-import { Basho } from "../../../model/entity/Basho";
 import { Field, InputType, Int } from "type-graphql";
 
 @InputType()
-export class AddBashoWinnerInput implements Partial<Basho> {
+export class FindResultInput {
 
-    @Min(1)
     @Field(() => Int)
-    id!: number;
+    bashoId!: number;
+
+    @Field(() => Int)
+    rikishiId!: number;
 
     @Min(1)
     @Field(() => Int, { nullable: true })
-    winnerId?: number;
+    day?: number;
 }

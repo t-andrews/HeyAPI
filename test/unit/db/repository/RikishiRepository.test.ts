@@ -2,12 +2,12 @@ import * as sinon from "sinon";
 import { cloneDeep } from "lodash";
 import sinonChai from "sinon-chai";
 import chai, { expect } from "chai";
-import { Rikishi } from "../../../../src/model/Rikishi";
+import { Rikishi } from "../../../../src/model/entity/Rikishi";
 import { getTracker, QueryDetails, Tracker } from "mock-knex";
 import { GraphQLNodeUtil } from "../../../../src/util/GraphQLNodeUtil";
 import { RikishiRepository } from "../../../../src/db/repository/RikishiRepository";
 import { GenericCRUDRepositoryUtil } from "../../../../src/util/GenericCRUDRepositoryUtil";
-import { Shikona } from "../../../../src/model/Shikona";
+import { Shikona } from "../../../../src/model/entity/Shikona";
 
 let sandbox: sinon.SinonSandbox;
 let knexTracker: Tracker;

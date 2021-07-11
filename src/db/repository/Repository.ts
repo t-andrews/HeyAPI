@@ -1,5 +1,5 @@
 import { PartialModelObject } from "objection";
-import { BaseModel } from "../../model/BaseModel";
+import { BaseModel } from "../../model/entity/BaseModel";
 
 export interface Repository<T extends BaseModel> {
     create(item: PartialModelObject<T>): Promise<T>

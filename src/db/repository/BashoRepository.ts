@@ -1,9 +1,11 @@
 import { Service } from "typedi";
 import { FieldNode } from "graphql";
 import { Repository } from "./Repository";
-import { Basho } from "../../model/Basho";
+import { Bout } from "../../model/entity/Bout";
+import { Basho } from "../../model/entity/Basho";
 import { GraphQLNodeUtil } from "../../util/GraphQLNodeUtil";
 import { PartialModelObject, QueryBuilder } from "objection";
+import { BoutResult } from "../../model/valueobject/BoutResult";
 import { GenericCRUDRepositoryUtil } from "../../util/GenericCRUDRepositoryUtil";
 
 @Service()
@@ -45,5 +47,25 @@ export class BashoRepository implements Repository<Basho> {
         }
 
         return queryBuilder;
+    }
+
+    public async findResult(bashoId: number, rikishiId: number, day?: number): Promise<BoutResult> {
+        const winsQueryBuilder: QueryBuilder<Bout, Bout[]> = Bout.query()
+            .where({ bashoId: bashoId, winnerId: rikishiId });
+        const lossesQueryBuilder: QueryBuilder<Bout, Bout[]> = Bout.query()
+            .where({ bashoId: bashoId, loserId: rikishiId });
+
+        if (day) {
+            winsQueryBuilder.andWhere('day', '<', day);
+            lossesQueryBuilder.andWhere('day', '<', day);
+        }
+
+        const wins = await winsQueryBuilder.resultSize();
+        const losses = await lossesQueryBuilder.resultSize();
+
+        return {
+            wins,
+            losses
+        };
     }
 }

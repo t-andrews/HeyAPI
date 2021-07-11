@@ -2,9 +2,9 @@ import * as sinon from "sinon";
 import sinonChai from "sinon-chai";
 import chai, { expect } from "chai";
 import { ValidationError } from "objection";
-import { Bout } from "../../../src/model/Bout";
-import { Basho } from "../../../src/model/Basho";
-import { Banzuke } from "../../../src/model/Banzuke";
+import { Bout } from "../../../src/model/entity/Bout";
+import { Basho } from "../../../src/model/entity/Basho";
+import { Banzuke } from "../../../src/model/entity/Banzuke";
 import { Tracker, getTracker, QueryDetails } from "mock-knex";
 import { GenericCRUDRepositoryUtil } from "../../../src/util/GenericCRUDRepositoryUtil";
 

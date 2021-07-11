@@ -1,6 +1,6 @@
 import { Service } from "typedi";
 import { GraphQLResolveInfo } from "graphql";
-import { Rikishi } from "../../model/Rikishi";
+import { Rikishi } from "../../model/entity/Rikishi";
 import { Arg, Info, Int, Mutation, Query, Resolver } from "type-graphql";
 import { CreateRikishiInput } from "../input/rikishi/CreateRikishiInput";
 import { RikishiRepository } from "../../db/repository/RikishiRepository";

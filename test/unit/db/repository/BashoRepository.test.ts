@@ -2,7 +2,7 @@ import * as sinon from "sinon";
 import { FieldNode} from "graphql";
 import sinonChai from "sinon-chai";
 import chai, { expect } from "chai";
-import { Basho } from "../../../../src/model/Basho";
+import { Basho } from "../../../../src/model/entity/Basho";
 import { getTracker, QueryDetails, Tracker } from "mock-knex";
 import { GraphQLNodeUtil } from "../../../../src/util/GraphQLNodeUtil";
 import { BashoRepository } from "../../../../src/db/repository/BashoRepository";

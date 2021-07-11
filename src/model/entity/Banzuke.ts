@@ -4,6 +4,7 @@ import { BaseModel } from "./BaseModel";
 import { JSONSchema, Model } from "objection";
 import { Field, ObjectType, Int } from "type-graphql";
 import { GraphQLString } from "graphql";
+import { BoutResult } from "../valueobject/BoutResult";
 
 @ObjectType({ description: "The Banzuke model" })
 export class Banzuke extends BaseModel {
@@ -26,6 +27,9 @@ export class Banzuke extends BaseModel {
 
     @Field(() => Rikishi)
     rikishi!: Rikishi;
+
+    @Field(() => BoutResult, { nullable: true })
+    bashoResult?: BoutResult;
 
     @Field(() => Int, { nullable: true })
     weight?: number;

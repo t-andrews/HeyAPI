@@ -1,5 +1,5 @@
 import { Field, ObjectType } from "type-graphql";
-import { BaseModel } from "../../../model/BaseModel";
+import { BaseModel } from "../../../model/entity/BaseModel";
 
 @ObjectType()
 export abstract class CreationResponse {

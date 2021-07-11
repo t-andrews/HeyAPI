@@ -3,7 +3,8 @@ import { Rikishi } from "./Rikishi";
 import { BaseModel } from "./BaseModel";
 import { JSONSchema, Model } from "objection";
 import { Field, ObjectType, Int } from "type-graphql";
-import { Kimarite } from "../constant/kimarite/Kimarite";
+import { Kimarite } from "../../constant/kimarite/Kimarite";
+import { BoutResult } from "../valueobject/BoutResult";
 
 @ObjectType({ description: "The Bout model" })
 export class Bout extends BaseModel {
@@ -30,6 +31,12 @@ export class Bout extends BaseModel {
 
     @Field(() => Kimarite)
     winningMethod!: Kimarite;
+
+    @Field(() => BoutResult)
+    winnerBoutResult?: BoutResult;
+
+    @Field(() => BoutResult)
+    loserBoutResult?: BoutResult;
 
     static get jsonSchema(): JSONSchema {
         return {

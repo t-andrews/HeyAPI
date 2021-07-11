@@ -1,11 +1,12 @@
 import { Service } from "typedi";
 import { GraphQLResolveInfo } from "graphql";
-import { Basho } from "../../model/Basho";
+import { Basho } from "../../model/entity/Basho";
 import { RikishiResolver } from "./RikishiResolver";
+import { BoutResult } from "../../model/valueobject/BoutResult";
 import { CreateBashoInput } from "../input/basho/CreateBashoInput";
-import { AddBashoWinnerInput } from "../input/basho/AddBashoWinnerInput";
 import { BashoRepository } from "../../db/repository/BashoRepository";
 import { Arg, Info, Int, Mutation, Query, Resolver } from "type-graphql";
+import { AddBashoWinnerInput } from "../input/basho/AddBashoWinnerInput";
 import { BashoMutationResponse } from "../response/mutation/BashoMutationResponse";
 
 @Service()
@@ -19,7 +20,16 @@ export class BashoResolver {
 
     @Query(() => Basho)
     public async basho(@Arg("id", () => Int) id: number, @Info() info: GraphQLResolveInfo): Promise<Basho> {
-        return await this.bashoRepository.findDetailled(id, info.fieldNodes);
+        return this.bashoRepository.findDetailled(id, info.fieldNodes);
+    }
+
+    @Query(() => BoutResult)
+    public async boutResult(
+        @Arg("bashoId", () => Int) bashoId: number,
+        @Arg("rikishiId", () => Int) rikishiId: number,
+        @Arg("day", () => Int, { nullable: true }) day?: number
+    ): Promise<BoutResult> {
+        return this.bashoRepository.findResult(bashoId, rikishiId, day);
     }
 
     @Mutation(() => BashoMutationResponse)

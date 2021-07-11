@@ -1,5 +1,5 @@
 import { Service } from "typedi";
-import { BaseModel } from "../model/BaseModel";
+import { BaseModel } from "../model/entity/BaseModel";
 import { ModelFieldValidator } from "../db/validator/ModelFieldValidator";
 import { PartialModelObject, QueryBuilder, ValidationError } from "objection";
 

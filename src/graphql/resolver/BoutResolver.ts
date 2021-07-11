@@ -1,14 +1,15 @@
 import { Service } from "typedi";
-import { Bout } from "../../model/Bout";
-import { Basho } from "../../model/Basho";
 import { GraphQLResolveInfo } from "graphql";
-import { Rikishi } from "../../model/Rikishi";
 import { BashoResolver } from "./BashoResolver";
+import { Bout } from "../../model/entity/Bout";
+import { Basho } from "../../model/entity/Basho";
 import { RikishiResolver } from "./RikishiResolver";
+import { Rikishi } from "../../model/entity/Rikishi";
 import { CreateBoutInput } from "../input/bout/CreateBoutInput";
 import { BoutRepository } from "../../db/repository/BoutRepository";
 import { BoutMutationResponse } from "../response/mutation/BoutMutationResponse";
 import { Arg, FieldResolver, Info, Int, Mutation, Query, Resolver, ResolverInterface, Root } from "type-graphql";
+import { BoutResult } from "../../model/valueobject/BoutResult";
 
 @Service()
 @Resolver(() => Bout)
@@ -22,22 +23,32 @@ export class BoutResolver implements ResolverInterface<Bout> {
 
     @FieldResolver()
     public async basho(@Root() source: Bout, @Info() info: GraphQLResolveInfo): Promise<Basho> {
-        return await this.bashoResolver.basho(source.bashoId, info);
+        return this.bashoResolver.basho(source.bashoId, info);
+    }
+
+    @FieldResolver()
+    public async winnerBoutResult(@Root() source: Bout, @Info() info: GraphQLResolveInfo): Promise<BoutResult> {
+        return this.bashoResolver.boutResult(source.bashoId, source.winnerId, source.day);
+    }
+
+    @FieldResolver()
+    public async loserBoutResult(@Root() source: Bout, @Info() info: GraphQLResolveInfo): Promise<BoutResult> {
+        return this.bashoResolver.boutResult(source.bashoId, source.loserId, source.day);
     }
 
     @FieldResolver()
     public async winner(@Root() source: Bout, @Info() info: GraphQLResolveInfo): Promise<Rikishi> {
-        return await this.rikishiResolver.rikishi(source.winnerId, info);
+        return this.rikishiResolver.rikishi(source.winnerId, info);
     }
 
     @FieldResolver()
     public async loser(@Root() source: Bout, @Info() info: GraphQLResolveInfo): Promise<Rikishi> {
-        return await this.rikishiResolver.rikishi(source.loserId, info);
+        return this.rikishiResolver.rikishi(source.loserId, info);
     }
 
     @Query(() => [Bout])
     public async bouts(@Arg("rikishiId", () => Int) id: number): Promise<Bout[]> {
-        return await this.boutRepository.findByRikishiId(id);
+        return this.boutRepository.findByRikishiId(id);
     }
 
     @Mutation(() => BoutMutationResponse)

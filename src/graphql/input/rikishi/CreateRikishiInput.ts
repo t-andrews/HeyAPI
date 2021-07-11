@@ -1,7 +1,7 @@
 import { GraphQLString } from "graphql";
 import { IsDate } from "../validation/IsDate";
 import { Field, InputType } from "type-graphql";
-import { Rikishi } from "../../../model/Rikishi";
+import { Rikishi } from "../../../model/entity/Rikishi";
 import { IsNotEmpty, IsUrl, MaxLength } from "class-validator";
 
 @InputType()

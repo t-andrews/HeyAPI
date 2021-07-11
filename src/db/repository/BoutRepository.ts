@@ -1,7 +1,7 @@
 import { Service } from "typedi";
 import { Repository } from "./Repository";
 import { PartialModelObject } from "objection";
-import { Bout } from "../../model/Bout";
+import { Bout } from "../../model/entity/Bout";
 import { GenericCRUDRepositoryUtil } from "../../util/GenericCRUDRepositoryUtil";
 
 @Service()

@@ -1,11 +1,11 @@
 import { Service } from "typedi";
 import { FieldNode } from "graphql";
 import { Repository } from "./Repository";
-import { Rikishi } from "../../model/Rikishi";
+import { Rikishi } from "../../model/entity/Rikishi";
 import { GraphQLNodeUtil } from "../../util/GraphQLNodeUtil";
 import { PartialModelObject, QueryBuilder, raw } from "objection";
 import { GenericCRUDRepositoryUtil } from "../../util/GenericCRUDRepositoryUtil";
-import { Shikona } from "../../model/Shikona";
+import { Shikona } from "../../model/entity/Shikona";
 
 @Service()
 export class RikishiRepository implements Repository<Rikishi> {

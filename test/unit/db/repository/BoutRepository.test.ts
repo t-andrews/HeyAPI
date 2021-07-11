@@ -2,7 +2,7 @@ import * as sinon from "sinon";
 import sinonChai from "sinon-chai";
 import chai, { expect } from "chai";
 import { ValidationError } from "objection";
-import { Bout } from "../../../../src/model/Bout";
+import { Bout } from "../../../../src/model/entity/Bout";
 import { Kimarite } from "../../../../src/constant/kimarite/Kimarite";
 import { getTracker, QueryDetails, Tracker } from "mock-knex";
 import { BoutRepository } from "../../../../src/db/repository/BoutRepository";

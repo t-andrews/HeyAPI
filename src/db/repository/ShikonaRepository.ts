@@ -2,7 +2,7 @@ import { Service } from "typedi";
 import { Repository } from "./Repository";
 import { PartialModelObject } from "objection";
 import { GenericCRUDRepositoryUtil } from "../../util/GenericCRUDRepositoryUtil";
-import { Shikona } from "../../model/Shikona";
+import { Shikona } from "../../model/entity/Shikona";
 
 @Service()
 export class ShikonaRepository implements Repository<Shikona> {

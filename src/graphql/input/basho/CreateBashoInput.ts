@@ -1,5 +1,5 @@
 import { GraphQLString } from "graphql";
-import { Basho } from "../../../model/Basho";
+import { Basho } from "../../../model/entity/Basho";
 import { Matches, Min } from "class-validator";
 import { Field, InputType, Int } from "type-graphql";
 import { ValidationPattern } from "../../../constant/validation/ValidationPattern";

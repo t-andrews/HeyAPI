@@ -1,5 +1,5 @@
 import { GraphQLString } from "graphql";
-import { Shikona } from "../../../model/Shikona";
+import { Shikona } from "../../../model/entity/Shikona";
 import { ArgsType, Field, InputType, Int } from "type-graphql";
 
 @ArgsType()

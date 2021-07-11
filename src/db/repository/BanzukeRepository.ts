@@ -2,7 +2,7 @@ import { Service } from "typedi";
 import { Repository } from "./Repository";
 import { PartialModelObject } from "objection";
 import { GenericCRUDRepositoryUtil } from "../../util/GenericCRUDRepositoryUtil";
-import { Banzuke } from "../../model/Banzuke";
+import { Banzuke } from "../../model/entity/Banzuke";
 
 @Service()
 export class BanzukeRepository implements Repository<Banzuke> {

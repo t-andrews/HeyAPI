@@ -1,5 +1,5 @@
 import { ArgsType, Field, InputType, Int } from "type-graphql";
-import { Banzuke } from "../../../model/Banzuke";
+import { Banzuke } from "../../../model/entity/Banzuke";
 import { GraphQLString } from "graphql";
 
 @ArgsType()

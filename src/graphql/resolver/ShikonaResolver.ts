@@ -1,7 +1,7 @@
 import { Service } from "typedi";
 import { GraphQLResolveInfo } from "graphql";
-import { Rikishi } from "../../model/Rikishi";
-import { Shikona } from "../../model/Shikona";
+import { Rikishi } from "../../model/entity/Rikishi";
+import { Shikona } from "../../model/entity/Shikona";
 import { RikishiResolver } from "./RikishiResolver";
 import { AddShikonaInput } from "../input/shikona/AddShikonaInput";
 import { ShikonaRepository } from "../../db/repository/ShikonaRepository";

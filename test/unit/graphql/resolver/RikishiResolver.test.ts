@@ -2,7 +2,7 @@ import * as sinon from "sinon";
 import sinonChai from "sinon-chai";
 import { cloneDeep } from "lodash";
 import chai, { expect } from "chai";
-import { Rikishi } from "../../../../src/model/Rikishi";
+import { Rikishi } from "../../../../src/model/entity/Rikishi";
 import { RikishiResolver } from "../../../../src/graphql/resolver/RikishiResolver";
 import { RikishiRepository } from "../../../../src/db/repository/RikishiRepository";
 import { GenericCRUDRepositoryUtil } from "../../../../src/util/GenericCRUDRepositoryUtil";

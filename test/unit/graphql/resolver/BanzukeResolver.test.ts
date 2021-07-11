@@ -9,7 +9,7 @@ import { BanzukeRepository } from "../../../../src/db/repository/BanzukeReposito
 import { AddBanzukesInput } from "../../../../src/graphql/input/banzuke/AddBanzukesInput";
 import { AddBanzukeInput } from "../../../../src/graphql/input/banzuke/AddBanzukeInput";
 import { BanzukeResolver } from "../../../../src/graphql/resolver/BanzukeResolver";
-import { Banzuke } from "../../../../src/model/Banzuke";
+import { Banzuke } from "../../../../src/model/entity/Banzuke";
 import { BashoResolver } from "../../../../src/graphql/resolver/BashoResolver";
 import { RikishiResolver } from "../../../../src/graphql/resolver/RikishiResolver";
 import {

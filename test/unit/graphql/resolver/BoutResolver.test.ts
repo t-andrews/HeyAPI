@@ -2,7 +2,7 @@ import * as sinon from "sinon";
 import sinonChai from "sinon-chai";
 import { cloneDeep } from "lodash";
 import chai, { expect } from "chai";
-import { Bout } from "../../../../src/model/Bout";
+import { Bout } from "../../../../src/model/entity/Bout";
 import { Kimarite } from "../../../../src/constant/kimarite/Kimarite";
 import { BoutResolver } from "../../../../src/graphql/resolver/BoutResolver";
 import { BoutRepository } from "../../../../src/db/repository/BoutRepository";

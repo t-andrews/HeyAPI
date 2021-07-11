@@ -1,4 +1,4 @@
-import { Rikishi } from "../../../model/Rikishi";
+import { Rikishi } from "../../../model/entity/Rikishi";
 import { Field, ObjectType } from "type-graphql";
 import { CreationResponse } from "./CreationResponse";
 

@@ -1,5 +1,5 @@
 import { Field, ObjectType } from "type-graphql";
-import { Basho } from "../../../model/Basho";
+import { Basho } from "../../../model/entity/Basho";
 import { CreationResponse } from "./CreationResponse";
 
 @ObjectType()
