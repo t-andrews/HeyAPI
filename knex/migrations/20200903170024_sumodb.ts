@@ -50,5 +50,6 @@ export async function down(knex: Knex): Promise<void> {
         .dropTable("bouts")
         .dropTable("bashos")
         .dropTable("rikishis")
-        .dropTable("heyas");
+        .dropTable("heyas")
+        .raw('drop extension pg_trgm;');
 }

@@ -21,7 +21,12 @@ npm install
     npm run knex:migrate:latest
     ```
 
-3) To populate the database, run the following command:
+3) To fetch thee required dataset, run the following command (with your data.world API token):
+    ```
+    npm run fetch:dataset --token=your_data.world_api_token
+    ```
+
+4) To populate the database, run the following command:
      ```
     npm run knex:seed:run
     ```
