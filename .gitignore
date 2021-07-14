@@ -15,3 +15,5 @@ lerna-debug.log*
 #IntelliJ
 .idea
 .iml
+
+knex/seeds/cervus-sumo-japan
