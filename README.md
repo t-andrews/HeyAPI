@@ -21,7 +21,7 @@ npm install
     npm run knex:migrate:latest
     ```
 
-3) To fetch thee required dataset, run the following command (with your data.world API token):
+3) To fetch the required dataset, run the following command (with a valid data.world API token):
     ```
     npm run fetch:dataset --token=your_data.world_api_token
     ```
@@ -34,7 +34,7 @@ npm install
 #### Starting the API
 To start the API locally, run the following command:
 ```
-npm start:dev
+npm run start:dev
 ```
 
 The GraphQL Playground should now be available on the url logged in the terminal!
