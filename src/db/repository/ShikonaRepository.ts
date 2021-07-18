@@ -1,8 +1,8 @@
 import { Service } from "typedi";
 import { Repository } from "./Repository";
-import { PartialModelObject } from "objection";
-import { GenericCRUDRepositoryUtil } from "../../util/GenericCRUDRepositoryUtil";
 import { Shikona } from "../../model/entity/Shikona";
+import { Model, PartialModelObject } from "objection";
+import { GenericCRUDRepositoryUtil } from "../../util/GenericCRUDRepositoryUtil";
 
 @Service()
 export class ShikonaRepository implements Repository<Shikona> {
@@ -31,5 +31,16 @@ export class ShikonaRepository implements Repository<Shikona> {
 
     public async findByRikishiId(id: number): Promise<Shikona[]> {
         return Shikona.query().where({ "rikishiId": id });
+    }
+
+    public async findCurrentShikona(rikishiId: number): Promise<Shikona> {
+        return Model.knex().raw<Shikona>(
+            "SELECT shikonas.id, shikonas.shikona, bashos.basho " +
+            "FROM shikonas, banzuke, bashos " +
+            `WHERE shikonas.rikishi_id = ${rikishiId} AND shikonas.id = banzuke.shikona_id AND banzuke.basho_id = bashos.id ` +
+            "ORDER BY bashos.basho DESC"
+        ).then((response: any): Shikona => {
+            return response.rows[0];
+        });
     }
 }

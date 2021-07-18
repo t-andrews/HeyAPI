@@ -23,7 +23,7 @@ npm install
 
 3) To fetch the required dataset, run the following command (with a valid data.world API token):
     ```
-    npm run fetch:dataset --token=your_data.world_api_token
+    npm run fetch:dataset token=your_data.world_api_token
     ```
 
 4) To populate the database, run the following command:

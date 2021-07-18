@@ -25,6 +25,9 @@ export class Rikishi extends BaseModel {
     @Field(() => [Banzuke], { nullable: true })
     banzukes?: Banzuke[];
 
+    @Field(() => Shikona, { nullable: true })
+    currentShikona?: Shikona;
+
     @Field(() => [Bout], { nullable: true })
     wins?: Bout[];
 

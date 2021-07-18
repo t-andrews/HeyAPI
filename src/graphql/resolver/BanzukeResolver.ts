@@ -2,9 +2,11 @@ import { Service } from "typedi";
 import { GraphQLResolveInfo } from "graphql";
 import { BashoResolver } from "./BashoResolver";
 import { Basho } from "../../model/entity/Basho";
+import { ShikonaResolver } from "./ShikonaResolver";
 import { RikishiResolver } from "./RikishiResolver";
 import { Banzuke } from "../../model/entity/Banzuke";
 import { Rikishi } from "../../model/entity/Rikishi";
+import { Shikona } from "../../model/entity/Shikona";
 import { BoutResult } from "../../model/valueobject/BoutResult";
 import { AddBanzukeInput } from "../input/banzuke/AddBanzukeInput";
 import { AddBanzukesInput } from "../input/banzuke/AddBanzukesInput";
@@ -19,7 +21,8 @@ export class BanzukeResolver {
     constructor(
         private banzukeRepository: BanzukeRepository,
         private bashoResolver: BashoResolver,
-        private rikishiResolver: RikishiResolver
+        private rikishiResolver: RikishiResolver,
+        private shikonaResolver: ShikonaResolver,
     ) {}
 
     @Query(() => [Banzuke])
@@ -41,6 +44,12 @@ export class BanzukeResolver {
     public async bashoResult(@Root() source: Banzuke): Promise<BoutResult> {
         return this.bashoResolver.boutResult(source.bashoId, source.rikishiId);
     }
+
+    @FieldResolver()
+    public async shikona(@Root() source: Banzuke): Promise<Shikona> {
+        return this.shikonaResolver.shikona(source.shikonaId);
+    }
+
 
     @Mutation(() => BanzukeMutationResponse)
     public async addBanzuke(@Args() addBanzukeInput: AddBanzukeInput): Promise<BanzukeMutationResponse> {

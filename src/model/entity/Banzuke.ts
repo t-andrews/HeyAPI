@@ -5,6 +5,7 @@ import { JSONSchema, Model } from "objection";
 import { Field, ObjectType, Int } from "type-graphql";
 import { GraphQLString } from "graphql";
 import { BoutResult } from "../valueobject/BoutResult";
+import { Shikona } from "./Shikona";
 
 @ObjectType({ description: "The Banzuke model" })
 export class Banzuke extends BaseModel {
@@ -14,6 +15,7 @@ export class Banzuke extends BaseModel {
     }
 
     rikishiId!: number;
+    shikonaId!: number;
     bashoId!: number;
 
     @Field(() => GraphQLString)
@@ -27,6 +29,9 @@ export class Banzuke extends BaseModel {
 
     @Field(() => Rikishi)
     rikishi!: Rikishi;
+
+    @Field(() => Shikona)
+    shikona!: Shikona;
 
     @Field(() => BoutResult, { nullable: true })
     bashoResult?: BoutResult;
@@ -43,6 +48,7 @@ export class Banzuke extends BaseModel {
             required: [
                 "rikishiId",
                 "bashoId",
+                "shikonaId",
                 "heya",
                 "rank"
             ],
@@ -50,6 +56,7 @@ export class Banzuke extends BaseModel {
                 id: { type: "integer" },
                 rikishiId: { type: "integer" },
                 bashoId: { type: "integer" },
+                shikonaId: { type: "integer" },
                 heya: { type: "string" },
                 rank: { type: "string" },
                 weight: { type: "integer" },
@@ -74,6 +81,14 @@ export class Banzuke extends BaseModel {
                 join: {
                     from: "banzuke.bashoId",
                     to: "bashos.id"
+                }
+            },
+            shikona: {
+                relation: Model.HasOneRelation,
+                modelClass: Shikona,
+                join: {
+                    from: "banzuke.shikonaId",
+                    to: "shikonas.id"
                 }
             }
         };

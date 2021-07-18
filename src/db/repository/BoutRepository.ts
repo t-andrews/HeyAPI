@@ -1,6 +1,6 @@
 import { Service } from "typedi";
 import { Repository } from "./Repository";
-import { PartialModelObject } from "objection";
+import { PartialModelObject, QueryBuilder } from "objection";
 import { Bout } from "../../model/entity/Bout";
 import { GenericCRUDRepositoryUtil } from "../../util/GenericCRUDRepositoryUtil";
 
@@ -29,10 +29,16 @@ export class BoutRepository implements Repository<Bout> {
         return Bout.query().insert(bouts);
     }
 
-    public async findByRikishiId(id: number): Promise<Bout[]> {
-        return Bout.query()
+    public async findByRikishiId(id: number, limit?: number): Promise<Bout[]> {
+        const queryBuilder: QueryBuilder<Bout, Bout[]> = Bout.query()
             .where({ "winnerId": id })
             .orWhere({ "loserId": id });
+
+        if (limit) {
+            queryBuilder.limit(limit);
+        }
+
+        return queryBuilder;
     }
 
     public async findByBashoId(id: number): Promise<Bout[]> {

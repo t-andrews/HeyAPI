@@ -59,16 +59,18 @@ export async function seed(knex: Knex): Promise<void> {
         FROM results_staging
         INNER JOIN bashos ON (results_staging.basho = bashos.basho);
         
-        INSERT INTO banzuke(rikishi_id,basho_id,heya,rank,weight,height)
+        INSERT INTO banzuke(rikishi_id,basho_id,shikona_id,heya,rank,weight,height)
         SELECT 
             banzuke_staging.id,
             bashos.id,
+            shikonas.id,
             banzuke_staging.heya,
             banzuke_staging.rank,
             banzuke_staging.weight,
             banzuke_staging.height
         FROM banzuke_staging
-        INNER JOIN bashos ON (banzuke_staging.basho = bashos.basho);
+        INNER JOIN bashos ON (banzuke_staging.basho = bashos.basho)
+        INNER JOIN shikonas ON (banzuke_staging.rikishi = shikonas.shikona);
         
         -- Adjusting sequences to start from the last value inserted after seeding
         SELECT setval('banzuke_id_seq', (SELECT MAX(id) FROM banzuke), true),

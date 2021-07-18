@@ -12,7 +12,7 @@ export async function up(knex: Knex): Promise<void> {
             table.increments("id").primary();
             table.integer("rikishi_id").references("id").inTable("rikishis").onDelete("cascade");
             table.string("shikona").nullable();
-            table.unique(["rikishi_id", "shikona"])
+            table.unique(["rikishi_id", "shikona"]);
         })
         .createTable("bashos", table => {
             table.increments("id").primary();
@@ -34,13 +34,14 @@ export async function up(knex: Knex): Promise<void> {
             table.increments("id").primary();
             table.integer("rikishi_id").notNullable().references("id").inTable("rikishis").onDelete("cascade");
             table.integer("basho_id").notNullable().references("id").inTable("bashos").onDelete("cascade");
+            table.integer("shikona_id").notNullable().references("id").inTable("shikonas").onDelete("cascade");
             table.string("heya", 32).notNullable();
             table.string("rank", 8).notNullable().references("rank").inTable("ranks");
             table.integer("weight").nullable();
             table.integer("height").nullable();
-            table.unique(["rikishi_id", "basho_id"])
+            table.unique(["rikishi_id", "basho_id", "shikona_id"])
         })
-        .raw('CREATE EXTENSION pg_trgm;');
+        .raw('CREATE EXTENSION IF NOT EXISTS pg_trgm;');
 }
 
 export async function down(knex: Knex): Promise<void> {

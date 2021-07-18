@@ -5,8 +5,8 @@ import { Shikona } from "../../model/entity/Shikona";
 import { RikishiResolver } from "./RikishiResolver";
 import { AddShikonaInput } from "../input/shikona/AddShikonaInput";
 import { ShikonaRepository } from "../../db/repository/ShikonaRepository";
-import { Arg, Args, FieldResolver, Info, Int, Mutation, Query, Resolver, Root } from "type-graphql";
 import { ShikonaMutationResponse } from "../response/mutation/ShikonaMutationResponse";
+import { Arg, Args, FieldResolver, Info, Int, Mutation, Query, Resolver, Root } from "type-graphql";
 
 @Service()
 @Resolver(() => Shikona)
@@ -17,9 +17,19 @@ export class ShikonaResolver {
         private rikishiResolver: RikishiResolver
     ) {}
 
+    @Query(() => Shikona)
+    public async shikona(@Arg("shikonaId", () => Int) id: number): Promise<Shikona> {
+        return this.shikonaRepository.find(id);
+    }
+
     @Query(() => [Shikona])
-    public async shikona(@Arg("rikishiId", () => Int) id: number, @Info() info: GraphQLResolveInfo): Promise<Shikona[]> {
+    public async shikonaByRikishiId(@Arg("rikishiId", () => Int) id: number, @Info() info: GraphQLResolveInfo): Promise<Shikona[]> {
         return this.shikonaRepository.findByRikishiId(id);
+    }
+
+    @Query(() => Shikona)
+    public async currentShikona(@Arg("rikishiId", () => Int) rikishiId: number): Promise<Shikona> {
+        return this.shikonaRepository.findCurrentShikona(rikishiId);
     }
 
     @FieldResolver()

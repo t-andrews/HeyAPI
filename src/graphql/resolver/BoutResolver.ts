@@ -47,8 +47,8 @@ export class BoutResolver implements ResolverInterface<Bout> {
     }
 
     @Query(() => [Bout])
-    public async bouts(@Arg("rikishiId", () => Int) id: number): Promise<Bout[]> {
-        return this.boutRepository.findByRikishiId(id);
+    public async bouts(@Arg("rikishiId", () => Int) id: number, @Arg("limit", () => Int, { nullable: true }) limit?: number): Promise<Bout[]> {
+        return this.boutRepository.findByRikishiId(id, limit);
     }
 
     @Mutation(() => BoutMutationResponse)
