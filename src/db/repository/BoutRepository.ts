@@ -29,13 +29,16 @@ export class BoutRepository implements Repository<Bout> {
         return Bout.query().insert(bouts);
     }
 
-    public async findByRikishiId(id: number, limit?: number): Promise<Bout[]> {
+    public async findByRikishiId(id: number, limit?: number, offset?: number): Promise<Bout[]> {
         const queryBuilder: QueryBuilder<Bout, Bout[]> = Bout.query()
             .where({ "winnerId": id })
             .orWhere({ "loserId": id });
 
         if (limit) {
             queryBuilder.limit(limit);
+        }
+        if (offset) {
+            queryBuilder.offset(offset);
         }
 
         return queryBuilder;
@@ -44,5 +47,13 @@ export class BoutRepository implements Repository<Bout> {
     public async findByBashoId(id: number): Promise<Bout[]> {
         return Bout.query()
             .where({ "basho_id": id });
+    }
+
+    public async getTotalNbBouts(rikishiId: number): Promise<number> {
+        return Bout.query()
+            .where({ "winnerId": rikishiId })
+            .orWhere({ "loserId": rikishiId })
+            .count('*', { as: 'nbBouts' })
+            .then(([res]) => res && (<any> res).nbBouts!)
     }
 }

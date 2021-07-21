@@ -1,15 +1,15 @@
 import { Service } from "typedi";
 import { GraphQLResolveInfo } from "graphql";
-import { BashoResolver } from "./BashoResolver";
 import { Bout } from "../../model/entity/Bout";
+import { BashoResolver } from "./BashoResolver";
 import { Basho } from "../../model/entity/Basho";
 import { RikishiResolver } from "./RikishiResolver";
 import { Rikishi } from "../../model/entity/Rikishi";
+import { BoutResult } from "../../model/valueobject/BoutResult";
 import { CreateBoutInput } from "../input/bout/CreateBoutInput";
 import { BoutRepository } from "../../db/repository/BoutRepository";
 import { BoutMutationResponse } from "../response/mutation/BoutMutationResponse";
 import { Arg, FieldResolver, Info, Int, Mutation, Query, Resolver, ResolverInterface, Root } from "type-graphql";
-import { BoutResult } from "../../model/valueobject/BoutResult";
 
 @Service()
 @Resolver(() => Bout)
@@ -47,8 +47,17 @@ export class BoutResolver implements ResolverInterface<Bout> {
     }
 
     @Query(() => [Bout])
-    public async bouts(@Arg("rikishiId", () => Int) id: number, @Arg("limit", () => Int, { nullable: true }) limit?: number): Promise<Bout[]> {
-        return this.boutRepository.findByRikishiId(id, limit);
+    public async bouts(
+        @Arg("rikishiId", () => Int) id: number,
+        @Arg("limit", () => Int, { nullable: true }) limit?: number,
+        @Arg("offset", () => Int, { nullable: true }) offset?: number,
+    ): Promise<Bout[]> {
+        return this.boutRepository.findByRikishiId(id, limit, offset);
+    }
+
+    @Query(() => Int)
+    public async totalNbBouts(@Arg("rikishiId", () => Int) id: number): Promise<number> {
+        return this.boutRepository.getTotalNbBouts(id);
     }
 
     @Mutation(() => BoutMutationResponse)
