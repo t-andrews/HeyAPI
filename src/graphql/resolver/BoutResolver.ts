@@ -55,6 +55,14 @@ export class BoutResolver implements ResolverInterface<Bout> {
         return this.boutRepository.findByRikishiId(id, limit, offset);
     }
 
+    @Query(() => [Bout])
+    public async boutsByParticipants(
+        @Arg("rikishiId1", () => Int) rikishiId1: number,
+        @Arg("rikishiId2", () => Int, { nullable: true }) rikishiId2?: number,
+    ): Promise<Bout[]> {
+        return this.boutRepository.findByRikishiIds(rikishiId1, rikishiId2);
+    }
+
     @Query(() => Int)
     public async totalNbBouts(@Arg("rikishiId", () => Int) id: number): Promise<number> {
         return this.boutRepository.getTotalNbBouts(id);

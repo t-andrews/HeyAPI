@@ -44,6 +44,20 @@ export class BoutRepository implements Repository<Bout> {
         return queryBuilder;
     }
 
+    public async findByRikishiIds(id1: number, id2?: number): Promise<Bout[]> {
+        const queryBuilder: QueryBuilder<Bout, Bout[]> = Bout.query().where(function() {
+            this.where({ "winnerId": id1 }).andWhere({ "loserId": id2 })
+        })
+
+        if (id2) {
+            queryBuilder.orWhere(function() {
+                this.where({ "winnerId": id2 }).andWhere({ "loserId": id1 })
+            });
+        }
+
+        return queryBuilder;
+    }
+
     public async findByBashoId(id: number): Promise<Bout[]> {
         return Bout.query()
             .where({ "basho_id": id });
