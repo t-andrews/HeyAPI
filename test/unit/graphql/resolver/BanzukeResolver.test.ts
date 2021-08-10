@@ -16,6 +16,7 @@ import {
     BanzukeMutationResponse,
     BanzukesMutationResponse
 } from "../../../../src/graphql/response/mutation/BanzukeMutationResponse";
+import { ShikonaResolver } from "../../../../src/graphql/resolver/ShikonaResolver";
 
 let sandbox: sinon.SinonSandbox;
 
@@ -33,6 +34,7 @@ const validBanzukeInput: AddBanzukeInput = {
 let banzukeRepository: BanzukeRepository;
 let bashoResolver: BashoResolver;
 let rikishiResolver: RikishiResolver;
+let shikonaResolver: ShikonaResolver;
 
 describe("Rank Resolver",  () => {
 
@@ -58,7 +60,7 @@ describe("Rank Resolver",  () => {
 
             sandbox.stub(banzukeRepository, "create").resolves(<Banzuke> validBanzukeInput);
 
-            const resolver: BanzukeResolver = new BanzukeResolver(banzukeRepository, bashoResolver, rikishiResolver);
+            const resolver: BanzukeResolver = new BanzukeResolver(banzukeRepository, bashoResolver, rikishiResolver, shikonaResolver);
 
             const result: BanzukeMutationResponse = await resolver.addBanzuke(validBanzukeInput);
 
@@ -83,7 +85,7 @@ describe("Rank Resolver",  () => {
 
             sandbox.stub(banzukeRepository, "createMany").resolves(<Banzuke[]>addBanzukesInput.banzukes);
 
-            const resolver: BanzukeResolver = new BanzukeResolver(banzukeRepository, bashoResolver, rikishiResolver);
+            const resolver: BanzukeResolver = new BanzukeResolver(banzukeRepository, bashoResolver, rikishiResolver, shikonaResolver);
 
             const result: BanzukesMutationResponse = await resolver.addBanzukes(addBanzukesInput);
 
@@ -100,7 +102,7 @@ describe("Rank Resolver",  () => {
 
             sandbox.stub(banzukeRepository, "create").rejects(error);
 
-            const resolver: BanzukeResolver = new BanzukeResolver(banzukeRepository, bashoResolver, rikishiResolver);
+            const resolver: BanzukeResolver = new BanzukeResolver(banzukeRepository, bashoResolver, rikishiResolver, shikonaResolver);
 
             const result: BanzukeMutationResponse = await resolver.addBanzuke(validBanzukeInput);
 
@@ -126,7 +128,7 @@ describe("Rank Resolver",  () => {
 
             sandbox.stub(banzukeRepository, "createMany").rejects(error);
 
-            const resolver: BanzukeResolver = new BanzukeResolver(banzukeRepository, bashoResolver, rikishiResolver);
+            const resolver: BanzukeResolver = new BanzukeResolver(banzukeRepository, bashoResolver, rikishiResolver, shikonaResolver);
 
             const result: BanzukesMutationResponse = await resolver.addBanzukes(addBanzukesInput);
 

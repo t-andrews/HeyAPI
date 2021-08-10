@@ -8,12 +8,14 @@ import { RikishiRepository } from "../../../../src/db/repository/RikishiReposito
 import { GenericCRUDRepositoryUtil } from "../../../../src/util/GenericCRUDRepositoryUtil";
 import { CreateRikishiInput } from "../../../../src/graphql/input/rikishi/CreateRikishiInput";
 import { RikishiMutationResponse } from "../../../../src/graphql/response/mutation/RikishiMutationResponse";
+import { ShikonaResolver } from "../../../../src/graphql/resolver/ShikonaResolver";
 
 let sandbox: sinon.SinonSandbox;
 
 chai.use(sinonChai);
 
 let rikishiRepository: RikishiRepository;
+let shikonaResolver: ShikonaResolver;
 
 describe("Rikishi Resolver",  () => {
 
@@ -48,7 +50,7 @@ describe("Rikishi Resolver",  () => {
 
             sandbox.stub(rikishiRepository, "create").resolves(returnedRikishi);
 
-            const resolver: RikishiResolver = new RikishiResolver(rikishiRepository);
+            const resolver: RikishiResolver = new RikishiResolver(rikishiRepository, shikonaResolver);
 
             const result: RikishiMutationResponse = await resolver.createRikishi(insertedRikishi);
 
@@ -59,7 +61,7 @@ describe("Rikishi Resolver",  () => {
 
             sandbox.stub(rikishiRepository, "findDetailed").resolves(returnedRikishi);
 
-            const resolver: RikishiResolver = new RikishiResolver(rikishiRepository);
+            const resolver: RikishiResolver = new RikishiResolver(rikishiRepository, shikonaResolver);
 
             const result: Rikishi = await resolver.rikishi(123, <any> { fieldNodes: [] });
 
@@ -78,7 +80,7 @@ describe("Rikishi Resolver",  () => {
 
             sandbox.stub(rikishiRepository, "create").rejects(error);
 
-            const resolver: RikishiResolver = new RikishiResolver(rikishiRepository);
+            const resolver: RikishiResolver = new RikishiResolver(rikishiRepository, shikonaResolver);
 
             const result: RikishiMutationResponse = await resolver.createRikishi(insertedRikishi);
 

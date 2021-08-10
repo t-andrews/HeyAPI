@@ -64,6 +64,7 @@ describe("Banzuke Repository",  () => {
                 banzukes.push(<Banzuke> {
                     id: i,
                     rikishiId: i,
+                    shikonaId: i,
                     bashoId: i,
                     weight: i,
                     height: i,
@@ -92,6 +93,7 @@ describe("Banzuke Repository",  () => {
                 await repository.create({
                     id: 12,
                     rikishiId: 34,
+                    shikonaId: 23,
                     bashoId: 56,
                     weight: 78,
                     height: 91,

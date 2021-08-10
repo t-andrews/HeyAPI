@@ -125,6 +125,7 @@ describe("Generic CRUD Repository Util",  () => {
                     <Banzuke> {
                         id: 12,
                         bashoId: 34,
+                        shikonaId: 56,
                         weight: 100,
                         height: 179,
                         rank: "Y1e",
