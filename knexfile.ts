@@ -4,6 +4,6 @@ import { knexSnakeCaseMappers } from "objection";
 import { KnexConfig } from "./src/config/knex/KnexConfig";
 
 module.exports = ({
-    ...config.get<KnexConfig>("knex"),
+    ...structuredClone(config.get<KnexConfig>("knex")),
     ...knexSnakeCaseMappers()
 })

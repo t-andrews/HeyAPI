@@ -1,4 +1,4 @@
-import * as Knex from "knex";
+import { Knex } from "knex";
 
 export async function seed(knex: Knex): Promise<void> {
     return knex.raw(`
@@ -33,8 +33,8 @@ export async function seed(knex: Knex): Promise<void> {
             rikishi2_win INTEGER
         );
         
-        COPY banzuke_staging FROM '${process.cwd()}\\knex\\seeds\\cervus-sumo-japan\\banzuke.csv' with delimiter ',' CSV HEADER;
-        COPY results_staging FROM '${process.cwd()}\\knex\\seeds\\cervus-sumo-japan\\results.csv' with delimiter ',' CSV HEADER;
+        COPY banzuke_staging FROM 'C:\\Users\\Public\\seeds\\cervus-sumo-japan\\banzuke.csv' with delimiter ',' CSV HEADER;
+        COPY results_staging FROM 'C:\\Users\\Public\\seeds\\cervus-sumo-japan\\results.csv' with delimiter ',' CSV HEADER;
         
         INSERT INTO ranks(rank)
         SELECT DISTINCT rank FROM banzuke_staging;
